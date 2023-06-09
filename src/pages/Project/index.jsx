@@ -2,6 +2,7 @@ import React from "react";
 import { ProjectPage } from "./Styles";
 import NavbarLeft from "../../components/NavbarLeft";
 import Sidebar from "../../components/Sidebar";
+import Modal from "../../components/Modal";
 const Projetc = () => {
   const project = {
     id: 135048,
@@ -131,10 +132,12 @@ const Projetc = () => {
       },
     ],
   };
+  // const issueSearchModalHelpers
   return (
     <ProjectPage>
       <NavbarLeft />
       {/* <Sidebar project={project}></Sidebar> */}
+      <Modal isOpen={true} />
     </ProjectPage>
   );
 };

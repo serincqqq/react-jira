@@ -1,15 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
-
+import PubSub from "pubsub-js";
 import { NavLeft, LogoLink, StyledLogo, Bottom, Item, ItemText } from "./Styles";
 
 // const propTypes = {
 //   issueSearchModalOpen: PropTypes.func.isRequired,
 //   issueCreateModalOpen: PropTypes.func.isRequired,
 // };
-
-const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => (
+const issueSearchModalOpen = () => {
+  PubSub.publish("modalType", { modal: "modal_search" });
+};
+const issueCreateModalOpen = () => {
+  PubSub.publish("modalType", { modal: "modal_create" });
+};
+const NavbarLeft = () => (
   <NavLeft>
     <LogoLink to="/">
       <StyledLogo color="#fff" />
@@ -17,7 +22,6 @@ const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => (
 
     <Item onClick={issueSearchModalOpen}>
       <SearchOutlined style={{ fontSize: "24px" }} />
-      {/* <Icon type="search" size={22} top={1} left={3} /> */}
       <ItemText>Search issues</ItemText>
     </Item>
 
@@ -30,4 +34,4 @@ const ProjectNavbarLeft = ({ issueSearchModalOpen, issueCreateModalOpen }) => (
 
 // ProjectNavbarLeft.propTypes = propTypes;
 
-export default ProjectNavbarLeft;
+export default NavbarLeft;
