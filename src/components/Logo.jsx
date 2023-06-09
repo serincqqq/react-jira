@@ -15,7 +15,7 @@ const Logo = ({ className, size }) => (
   <span className={className}>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.76 75.76" width={size}>
       <defs>
-        <linearGradient
+        {/* <linearGradient
           id="linear-gradient"
           x1="34.64"
           y1="15.35"
@@ -25,7 +25,7 @@ const Logo = ({ className, size }) => (
         >
           <stop offset="0.18" stopColor="rgba(0, 82, 204, 0.2)" />
           <stop offset="1" stopColor="#DEEBFE" />
-        </linearGradient>
+        </linearGradient> */}
         <linearGradient
           id="linear-gradient-2"
           x1="38.78"

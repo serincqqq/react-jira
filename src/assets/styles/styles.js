@@ -1,8 +1,6 @@
 import { css } from "styled-components";
 import Color from "color";
 
-import { IssueType, IssueStatus, IssuePriority } from "../constants/issues";
-
 export const color = {
   primary: "#0052cc", // Blue
   success: "#0B875B", // green
@@ -26,34 +24,6 @@ export const color = {
   borderLightest: "#dfe1e6",
   borderLight: "#C1C7D0",
   borderInputFocus: "#4c9aff",
-};
-
-export const issueTypeColors = {
-  [IssueType.TASK]: "#4FADE6", // blue
-  [IssueType.BUG]: "#E44D42", // red
-  [IssueType.STORY]: "#65BA43", // green
-};
-
-export const issuePriorityColors = {
-  [IssuePriority.HIGHEST]: "#CD1317", // red
-  [IssuePriority.HIGH]: "#E9494A", // orange
-  [IssuePriority.MEDIUM]: "#E97F33", // orange
-  [IssuePriority.LOW]: "#2D8738", // green
-  [IssuePriority.LOWEST]: "#57A55A", // green
-};
-
-export const issueStatusColors = {
-  [IssueStatus.BACKLOG]: color.textDark,
-  [IssueStatus.INPROGRESS]: "#fff",
-  [IssueStatus.SELECTED]: color.textDark,
-  [IssueStatus.DONE]: "#fff",
-};
-
-export const issueStatusBackgroundColors = {
-  [IssueStatus.BACKLOG]: color.backgroundMedium,
-  [IssueStatus.INPROGRESS]: color.primary,
-  [IssueStatus.SELECTED]: color.backgroundMedium,
-  [IssueStatus.DONE]: color.success,
 };
 
 export const sizes = {

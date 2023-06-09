@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
-import { font, sizes, color, mixin, zIndexValues } from "../../shared/utils/styles";
-import { Logo } from "../../shared/components";
+import { font, sizes, color, mixin, zIndexValues } from "../../assets/styles/styles";
+import Logo from "../Logo";
 
 export const NavLeft = styled.aside`
   z-index: ${zIndexValues.navLeft};
@@ -44,26 +44,21 @@ export const Bottom = styled.div`
 `;
 
 export const Item = styled.div`
-  position: relative;
-  width: 100%;
-  height: 42px;
-  line-height: 42px;
-  padding-left: 64px;
+  display: flex;
+  height: 38px;
+  line-height: 30px;
+  margin-bottom: 10px;
+  padding: 6px 0 0 20px;
   color: #deebff;
   transition: color 0.1s;
   ${mixin.clickable}
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
-  i {
-    position: absolute;
-    left: 18px;
-  }
 `;
 
 export const ItemText = styled.div`
-  position: relative;
-  right: 12px;
+  margin-left: 22px;
   visibility: hidden;
   opacity: 0;
   text-transform: uppercase;
