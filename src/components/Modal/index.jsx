@@ -1,15 +1,17 @@
 import React, { Fragment, useState, useRef, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
-import { Drawer, Input } from "antd";
+import { Drawer, Modal, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import PubSub from "pubsub-js";
 import { SectionTitle, SearchInput, SearchInputDebounced } from "./Styles";
 import Issue from "../Issue";
 
-function Modal() {
-  const size = "700px";
+function NavbarModal() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [createOpen, setCreateOpen] = useState(false);
+  const submit = () => {
+    console.log("yes");
+  };
   const onClose = () => {
     setSearchOpen(false);
     setCreateOpen(false);
@@ -18,6 +20,9 @@ function Modal() {
     if (modalType.modal === "modal_search") setSearchOpen(true);
     else setCreateOpen(true);
   });
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
   return (
     <Fragment>
       <Drawer style={{ width: "520px" }} placement="left" closable={false} onClose={onClose} open={searchOpen}>
@@ -28,9 +33,19 @@ function Modal() {
         <SectionTitle>Recent Issues</SectionTitle>
         <Issue></Issue>
       </Drawer>
-      <Drawer title="Basic Drawer" placement="left" closable={false} onClose={onClose} open={createOpen}>
-        <p>Some contents...</p>
-      </Drawer>
+      <Modal title="Modal" open={createOpen} onOk={submit} onCancel={onClose} okText="确认" cancelText="取消">
+        <Select
+          defaultValue="lucy"
+          style={{ width: 450 }}
+          onChange={handleChange}
+          options={[
+            { value: "jack", label: "Jack" },
+            { value: "lucy", label: "Lucy" },
+            { value: "Yiminghe", label: "yiminghe" },
+            { value: "disabled", label: "Disabled", disabled: true },
+          ]}
+        />
+      </Modal>
     </Fragment>
   );
 }
@@ -38,4 +53,4 @@ function Modal() {
 // Modal.propTypes = propTypes;
 // Modal.defaultProps = defaultProps;
 
-export default Modal;
+export default NavbarModal;
