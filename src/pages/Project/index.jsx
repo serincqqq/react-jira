@@ -3,6 +3,7 @@ import { ProjectPage } from "./Styles";
 import NavbarLeft from "../../components/NavbarLeft";
 import Sidebar from "../../components/Sidebar";
 import Modal from "../../components/Modal";
+import Navbar from "../../components/Navbar";
 const Projetc = () => {
   const project = {
     id: 135048,
@@ -135,6 +136,7 @@ const Projetc = () => {
   // const issueSearchModalHelpers
   return (
     <ProjectPage>
+      <Navbar></Navbar>
       <NavbarLeft />
       {/* <Sidebar project={project}></Sidebar> */}
       <Modal isOpen={true} />
