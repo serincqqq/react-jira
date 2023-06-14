@@ -1,0 +1,11 @@
+.ql-editor {
+  min-height: 120px;
+  padding: 12px 0 !important;
+}
+.react-quill {
+  width: 620px;
+}
+.ql-container,
+ql-snow {
+  padding: 0px 12px;
+}

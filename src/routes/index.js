@@ -21,6 +21,6 @@ export default [
   },
   {
     path: '/',
-    element: <Navigate to="/project" />,
+    element: <Navigate to="/project/board" />,
   },
 ]
