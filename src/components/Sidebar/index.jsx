@@ -1,53 +1,24 @@
-// import React from "react";
-// import PropTypes from "prop-types";
-// import { NavLink, useMatch } from "react-router-dom";
-
-// import { ProjectCategoryCopy } from "../../shared/constants/projects";
-// import { Icon, ProjectAvatar } from "../../shared/components";
-
-// import { Sidebar, ProjectInfo, ProjectTexts, ProjectName, ProjectCategory, Divider, LinkItem, LinkText, NotImplemented } from "./Styles";
-
-// const propTypes = {
-//   project: PropTypes.object.isRequired,
-// };
-
-// const ProjectSidebar = ({ project }) => {
-//   const match = useMatch("/project");
-
-//   return (
-//     <Sidebar>
-//       <ProjectInfo>
-//         <ProjectAvatar />
-//         <ProjectTexts>
-//           <ProjectName>{project.name}</ProjectName>
-//           <ProjectCategory>{ProjectCategoryCopy[project.category]} project</ProjectCategory>
-//         </ProjectTexts>
-//       </ProjectInfo>
-
-//       {renderLinkItem(match, "Kanban Board", "board", "/board")}
-//       {renderLinkItem(match, "Project settings", "settings", "/settings")}
-//       <Divider />
-//       {renderLinkItem(match, "Releases", "shipping")}
-//       {renderLinkItem(match, "Issues and filters", "issues")}
-//       {renderLinkItem(match, "Pages", "page")}
-//       {renderLinkItem(match, "Reports", "reports")}
-//       {renderLinkItem(match, "Components", "component")}
-//     </Sidebar>
-//   );
-// };
-
-// const renderLinkItem = (match, text, iconType, path) => {
-//   const isImplemented = !!path;
-//   const linkItemProps = isImplemented ? { as: NavLink, exact: true, to: `${match.pathname}${path}` } : { as: "div" };
-//   return (
-//     <LinkItem {...linkItemProps}>
-//       <Icon type={iconType} />
-//       <LinkText>{text}</LinkText>
-//       {!isImplemented && <NotImplemented>Not implemented</NotImplemented>}
-//     </LinkItem>
-//   );
-// };
-
-// ProjectSidebar.propTypes = propTypes;
-
-// export default ProjectSidebar;
+import { LinkItem, ProjectInfo, ProjectHeader, LinkText, ProjectAvatar, ProjectTitle, ProjectTexts, ProjectDes } from './Styles'
+import { SettingOutlined, FundProjectionScreenOutlined } from '@ant-design/icons'
+import { NavLink } from 'react-router-dom'
+export default function Sidebar() {
+  return (
+    <ProjectInfo>
+      <ProjectHeader>
+        <ProjectAvatar></ProjectAvatar>
+        <ProjectTexts>
+          <ProjectTitle>singularity 1.0</ProjectTitle>
+          <ProjectDes>Software project</ProjectDes>
+        </ProjectTexts>
+      </ProjectHeader>
+      <LinkItem as={NavLink} to="/project/board">
+        <FundProjectionScreenOutlined style={{ fontSize: '18px', marginRight: '20px' }} />
+        <LinkText>Kanban Board</LinkText>
+      </LinkItem>
+      <LinkItem as={NavLink} to="/project/setting">
+        <SettingOutlined style={{ fontSize: '18px', marginRight: '20px' }} />
+        <LinkText>Project settings</LinkText>
+      </LinkItem>
+    </ProjectInfo>
+  )
+}

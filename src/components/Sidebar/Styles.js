@@ -1,93 +1,75 @@
-import styled from "styled-components";
+import styled, { css } from 'styled-components'
 
-import { color, sizes, font, mixin, zIndexValues } from "../../shared/utils/styles";
-
-export const Sidebar = styled.div`
-  position: fixed;
-  z-index: ${zIndexValues.navLeft - 1};
-  top: 0;
-  left: ${sizes.appNavBarLeftWidth}px;
-  height: 100vh;
-  width: ${sizes.secondarySideBarWidth}px;
-  padding: 0 16px 24px;
-  background: ${color.backgroundLightest};
-  border-right: 1px solid ${color.borderLightest};
-  ${mixin.scrollableY}
-  ${mixin.customScrollbar()}
-  @media (max-width: 1100px) {
-    width: ${sizes.secondarySideBarWidth - 10}px;
-  }
-  @media (max-width: 999px) {
-    display: none;
-  }
-`;
-
+import { color, mixin, zIndexValues, font } from '../../assets/styles/styles'
+//import Icon from "";
 export const ProjectInfo = styled.div`
+  height: 100vh;
+  width: 230px;
+  background-color: #f4f5f7;
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 64px;
+  padding: 0 16px 24px;
+  ${font.bold}
+  ${font.size(11.5)}
+`
+export const ProjectAvatar = styled.div`
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  background-image: url(https://i.ibb.co/7JM1P2r/picke-rick.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #ebecf0;
+`
+export const ProjectTitle = styled.span`
+  color: #42526e;
+  font-size: 15px;
+  font-family: 'CircularStdMedium';
+  font-weight: normal;
+  ${font.size(18)};
+`
+export const ProjectTexts = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 4px 10px;
+`
+
+export const ProjectDes = styled.span`
+  color: #5e6c84;
+  ${font.size(14)};
+  font-family: 'CircularStdBook';
+`
+
+export const ProjectFunc = styled.div`
+  min-height: 100%;
+  background: rgba(9, 30, 66, 0.54);
+`
+
+export const ProjectHeader = styled.div`
   display: flex;
   padding: 24px 4px;
-`;
-
-export const ProjectTexts = styled.div`
-  padding: 3px 0 0 10px;
-`;
-
-export const ProjectName = styled.div`
-  color: ${color.textDark};
-  ${font.size(15)};
-  ${font.medium};
-`;
-
-export const ProjectCategory = styled.div`
-  color: ${color.textMedium};
-  ${font.size(13)};
-`;
-
-export const Divider = styled.div`
-  margin-top: 17px;
-  padding-top: 18px;
-  border-top: 1px solid ${color.borderLight};
-`;
-
+`
 export const LinkItem = styled.div`
   position: relative;
   display: flex;
-  padding: 8px 12px;
-  border-radius: 3px;
-  ${mixin.clickable}
-  ${(props) => (!props.to ? `cursor: not-allowed;` : `&:hover { background: ${color.backgroundLight}; }`)}
+  padding: 10px 12px;
+  border-radius: 6px;
+  &:hover {
+    background: #ebecf0;
+  }
   i {
     margin-right: 15px;
     font-size: 20px;
   }
   &.active {
-    color: ${color.primary};
-    background: ${color.backgroundLight};
-    i {
-      color: ${color.primary};
-    }
+    color: #0052cc;
+    background: #ebecf0;
   }
-`;
+`
 
 export const LinkText = styled.div`
-  padding-top: 2px;
-  ${font.size(14.7)};
-`;
-
-export const NotImplemented = styled.div`
-  display: inline-block;
-  position: absolute;
-  top: 7px;
-  left: 40px;
-  width: 140px;
-  padding: 5px 0 5px 8px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  color: ${color.textDark};
-  background: ${color.backgroundMedium};
-  opacity: 0;
-  ${font.size(11.5)};
-  ${font.bold}
-  ${LinkItem}:hover & {
-    opacity: 1;
-  }
-`;
+  ${font.size(15)};
+  font-family: 'CircularStdBook';
+`
