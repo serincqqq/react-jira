@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom'
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
   {
-    path: '/project',
+    path: '/project/:projectId',
     element: <Project></Project>,
     children: [
       {

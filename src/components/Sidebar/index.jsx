@@ -2,6 +2,7 @@ import { LinkItem, ProjectInfo, ProjectHeader, LinkText, ProjectAvatar, ProjectT
 import { SettingOutlined, FundProjectionScreenOutlined } from '@ant-design/icons'
 import { NavLink } from 'react-router-dom'
 export default function Sidebar() {
+  const projectId = '001'
   return (
     <ProjectInfo>
       <ProjectHeader>
@@ -11,11 +12,11 @@ export default function Sidebar() {
           <ProjectDes>Software project</ProjectDes>
         </ProjectTexts>
       </ProjectHeader>
-      <LinkItem as={NavLink} to="/project/board">
+      <LinkItem as={NavLink} to={`/project/${projectId}/board`}>
         <FundProjectionScreenOutlined style={{ fontSize: '18px', marginRight: '20px' }} />
         <LinkText>Kanban Board</LinkText>
       </LinkItem>
-      <LinkItem as={NavLink} to="/project/setting">
+      <LinkItem as={NavLink} to={`/project/${projectId}/setting`}>
         <SettingOutlined style={{ fontSize: '18px', marginRight: '20px' }} />
         <LinkText>Project settings</LinkText>
       </LinkItem>

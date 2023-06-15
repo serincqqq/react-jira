@@ -35,3 +35,15 @@ export const Issues = styled.div`
   height: 100%;
   padding: 0 5px;
 `
+export const Nav = styled.div`
+  display: flex;
+  font-family: CircularStdBook;
+  color: rgb(94, 108, 132);
+  font-size: 16px;
+  margin-bottom: 10px;
+`
+export const Divider = styled.span`
+  position: relative;
+  margin: 0 10px;
+  ${font.size(18)};
+`

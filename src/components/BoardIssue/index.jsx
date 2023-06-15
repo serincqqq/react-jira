@@ -2,8 +2,8 @@ import { IssueLink, Issue, Bottom, Assignees, IssueTitle, AssigneeAvatar } from 
 import { SearchOutlined, ArrowUpOutlined, ArrowDownOutlined, ExclamationCircleFilled, CheckSquareFilled } from '@ant-design/icons'
 import { Draggable } from 'react-beautiful-dnd'
 import { useState } from 'react'
-export default function BoardIssue() {
-  const index = useState(1)
+export default function BoardIssue({ issue, index }) {
+  //const index = useState(1)
   const [assignees] = useState([
     {
       id: '1',
@@ -15,11 +15,11 @@ export default function BoardIssue() {
     // },
   ])
   return (
-    <Draggable draggableId="11" index={index}>
+    <Draggable draggableId={issue.id.toString()} index={index}>
       {(provided, snapshot) => (
-        <IssueLink>
-          <Issue>
-            <IssueTitle>Try leaving a comment on this issue.</IssueTitle>
+        <IssueLink ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+          <Issue isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}>
+            <IssueTitle>{issue.title}</IssueTitle>
             <Bottom>
               <div>
                 <CheckSquareFilled style={{ color: '#4FADE6', marginRight: '10px' }} />
