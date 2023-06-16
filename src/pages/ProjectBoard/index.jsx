@@ -1,5 +1,5 @@
-import { useLocation, useParams } from 'react-router-dom'
-import { Droppable, DragDropContext, Draggable } from 'react-beautiful-dnd'
+import { Outlet, useParams } from 'react-router-dom'
+import { Droppable, DragDropContext } from 'react-beautiful-dnd'
 import { List, Title, IssuesCount, Issues, Nav, Divider } from './Styles'
 import { useState, Fragment } from 'react'
 
@@ -10,28 +10,10 @@ export const IssueStatus = {
   INPROGRESS: 'inprogress',
   DONE: 'done',
 }
+
 export default function ProjectBoard() {
-  const location = useLocation()
   const params = useParams()
-  const currentPath = location.pathname
-  const [projectBoardList] = useState([
-    {
-      name: 'BACKLOG',
-      count: '3',
-    },
-    {
-      name: 'IN PROGESS',
-      count: '3',
-    },
-    {
-      name: 'COMPLETED',
-      count: '3',
-    },
-    {
-      name: 'FIXED',
-      count: '3',
-    },
-  ])
+
   const issues = [
     {
       id: 1097637,
@@ -124,18 +106,20 @@ export default function ProjectBoard() {
   ]
   const Breadcrumbs = ['Projects', params.projectId, 'Project Details']
   const getSortedListIssues = (issues, status) => issues.filter((issue) => issue.status === status).sort((a, b) => a.listPosition - b.listPosition)
-  // const filteredListIssues = getSortedListIssues(issues, IssueStatus);
-  const [test, setTest] = useState([])
+
   const handleDragUpdate = (dragUpdate) => {
-    console.log('status', dragUpdate)
-    const { destination, source } = dragUpdate
+    //实际接口中在这里修改状态
+    const { destination, source, draggableId } = dragUpdate
+    let test = issues.filter((item) => item.id === Number(draggableId))
+    test[0].status = destination.droppableId
+
     if (!destination) {
       return
     }
-    //destination, source的 droppableId可以知道item要拖拽到哪个组件中，因此要求每个状态必须有自己对应的数组
-    // if (destination.index === source.index) {
-    //   return;
-    // }
+    //destination, source的 droppableId可以知道item要拖拽到哪个组件中，因此要求每个状态必须有自己对应的数组,根据id从数组里面找值
+    if (destination.index === source.index) {
+      return
+    }
   }
   return (
     <>
@@ -153,7 +137,6 @@ export default function ProjectBoard() {
       <DragDropContext onDragUpdate={handleDragUpdate}>
         <div style={{ display: 'flex' }}>
           {Object.values(IssueStatus).map((status) => {
-            // setTest()
             return (
               <Droppable droppableId={status} key={status}>
                 {(provided) => (
@@ -175,21 +158,6 @@ export default function ProjectBoard() {
           })}
         </div>
       </DragDropContext>
-      {/* <div style={{ display: 'flex' }}>
-        {projectBoardList.map((item) => {
-          return (
-            <List>
-              <Title>
-                {item.name}
-                <IssuesCount>{item.count}</IssuesCount>
-              </Title>
-              <Issues>
-                <BoardIssue></BoardIssue>
-              </Issues>
-            </List>
-          )
-        })}
-      </div> */}
     </>
   )
 }

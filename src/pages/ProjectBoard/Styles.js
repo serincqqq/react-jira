@@ -18,11 +18,18 @@ export const List = styled.div`
 `
 
 export const Title = styled.div`
-  padding: 13px 10px 17px;
+  margin: 10px 6px 10px;
+  padding: 4px;
+  border-radius: 6px;
+  width: 130px;
   text-transform: uppercase;
   color: #5e6c84;
-  ${font.size(12.5)};
-  ${mixin.truncateText}
+  ${font.size(14)};
+  ${mixin.truncateText};
+
+  &:hover {
+    background: ${(props) => (props.bgColor ? props.bgColor : '')};
+  }
 `
 
 export const IssuesCount = styled.span`
