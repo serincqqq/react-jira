@@ -43,7 +43,7 @@ export default function BoardIssue({ issue, index }) {
         )}
       </Draggable>
       <Modal width={670} open={location.pathname === `/project/${params.projectId}/board/issue/${params.issueId}`} onOk={hideModal} onCancel={hideModal} okText="确认" cancelText="取消">
-        <Outlet></Outlet>
+        {/* <Outlet></Outlet> */}
       </Modal>
     </>
   )
