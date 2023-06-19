@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
+  //要补上一个所有项目的起始页
   {
     path: '/project/:projectId',
     element: <Project></Project>,
@@ -28,6 +29,6 @@ export default [
   },
   {
     path: '/',
-    element: <Navigate to="/project/board" />,
+    element: <Navigate to="/project/setting" />,
   },
 ]

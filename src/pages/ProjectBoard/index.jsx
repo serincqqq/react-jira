@@ -1,8 +1,8 @@
-import { Outlet, useParams } from 'react-router-dom'
+import { Outlet, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { Droppable, DragDropContext } from 'react-beautiful-dnd'
 import { List, Title, IssuesCount, Issues, Nav, Divider } from './Styles'
 import { useState, Fragment } from 'react'
-
+import { Modal } from 'antd'
 import BoardIssue from '../../components/BoardIssue'
 export const IssueStatus = {
   BACKLOG: 'backlog',
@@ -13,6 +13,8 @@ export const IssueStatus = {
 
 export default function ProjectBoard() {
   const params = useParams()
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const issues = [
     {
@@ -106,7 +108,9 @@ export default function ProjectBoard() {
   ]
   const Breadcrumbs = ['Projects', params.projectId, 'Project Details']
   const getSortedListIssues = (issues, status) => issues.filter((issue) => issue.status === status).sort((a, b) => a.listPosition - b.listPosition)
-
+  const hideModal = () => {
+    navigate(-1)
+  }
   const handleDragUpdate = (dragUpdate) => {
     //实际接口中在这里修改状态
     const { destination, source, draggableId } = dragUpdate
@@ -121,6 +125,7 @@ export default function ProjectBoard() {
       return
     }
   }
+
   return (
     <>
       <Nav>
@@ -158,6 +163,9 @@ export default function ProjectBoard() {
           })}
         </div>
       </DragDropContext>
+      <Modal width={670} open={location.pathname === `/project/${params.projectId}/board/issue/${params.issueId}`} onOk={hideModal} onCancel={hideModal} okText="确认" cancelText="取消">
+        <Outlet></Outlet>
+      </Modal>
     </>
   )
 }

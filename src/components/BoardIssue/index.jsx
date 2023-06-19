@@ -1,10 +1,9 @@
-import { IssueLink, Issue, Bottom, Assignees, IssueTitle, AssigneeAvatar } from './Styles'
+import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { SearchOutlined, ArrowUpOutlined, ArrowDownOutlined, ExclamationCircleFilled, CheckSquareFilled } from '@ant-design/icons'
 import { Draggable } from 'react-beautiful-dnd'
-import { Modal, Space } from 'antd'
-import { useState } from 'react'
-import { useParams, useLocation, Outlet, useNavigate } from 'react-router-dom'
 
+import { IssueLink, Issue, Bottom, Assignees, IssueTitle, AssigneeAvatar } from './Styles'
 export default function BoardIssue({ issue, index }) {
   const [assignees] = useState([
     {
@@ -13,12 +12,7 @@ export default function BoardIssue({ issue, index }) {
     },
   ])
   const location = useLocation()
-  const params = useParams()
-  const navigate = useNavigate()
 
-  const hideModal = () => {
-    navigate(-1)
-  }
   return (
     <>
       <Draggable draggableId={issue.id.toString()} index={index}>
@@ -42,9 +36,6 @@ export default function BoardIssue({ issue, index }) {
           </IssueLink>
         )}
       </Draggable>
-      <Modal width={670} open={location.pathname === `/project/${params.projectId}/board/issue/${params.issueId}`} onOk={hideModal} onCancel={hideModal} okText="确认" cancelText="取消">
-        {/* <Outlet></Outlet> */}
-      </Modal>
     </>
   )
 }
