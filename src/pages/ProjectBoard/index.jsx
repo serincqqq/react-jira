@@ -1,9 +1,9 @@
+import { useState, Fragment } from 'react'
 import { Outlet, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { Droppable, DragDropContext } from 'react-beautiful-dnd'
-import { List, Title, IssuesCount, Issues, Nav, Divider } from './Styles'
-import { useState, Fragment } from 'react'
 import { Modal } from 'antd'
-import BoardIssue from '../../components/BoardIssue'
+import { List, Title, IssuesCount, Issues, Nav, Divider } from './Styles'
+import BoardIssue from '@/components/BoardIssue'
 export const IssueStatus = {
   BACKLOG: 'backlog',
   SELECTED: 'selected',
@@ -163,7 +163,7 @@ export default function ProjectBoard() {
           })}
         </div>
       </DragDropContext>
-      <Modal width={670} open={location.pathname === `/project/${params.projectId}/board/issue/${params.issueId}`} onOk={hideModal} onCancel={hideModal} okText="确认" cancelText="取消">
+      <Modal footer={null} width={950} open={location.pathname === `/project/${params.projectId}/board/issue/${params.issueId}`} onOk={hideModal} onCancel={hideModal} okText="确认" cancelText="取消">
         <Outlet></Outlet>
       </Modal>
     </>

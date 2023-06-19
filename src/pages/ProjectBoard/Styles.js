@@ -1,11 +1,6 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-import { color, font, mixin, sizes } from '../../assets/styles/styles'
-
-// export const List = styled.div``
-// export const Title = styled.span``
-// export const Issues = styled.div``
-// export const Issue = styled.div``
+import { font, mixin } from '../../assets/styles/styles'
 
 export const List = styled.div`
   display: flex;

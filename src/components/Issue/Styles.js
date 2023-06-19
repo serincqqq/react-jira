@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { color, mixin, zIndexValues, font } from "../../assets/styles/styles";
+import styled from 'styled-components'
+import { color, mixin, font } from '@/assets/styles/styles'
 
 export const IssueSearch = styled.div`
   display: flex;
@@ -11,21 +11,21 @@ export const IssueSearch = styled.div`
   &:hover {
     background: ${color.backgroundLight};
   }
-`;
+`
 
 export const IssueData = styled.div`
   padding-left: 15px;
-`;
+`
 
 export const IssueTitle = styled.div`
   color: ${color.textDark};
   ${font.regular}
   ${font.size(15)}
-`;
+`
 
 export const IssueTypeId = styled.div`
   text-transform: uppercase;
   color: ${color.textMedium};
   ${font.regular};
   ${font.size(12.5)}
-`;
+`

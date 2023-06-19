@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
-import { font, sizes, color, mixin, zIndexValues } from "../../assets/styles/styles";
-import Logo from "../Logo";
+import { font, sizes, color, mixin, zIndexValues } from '@/assets/styles/styles'
+import Logo from '../Logo'
 
 export const NavLeft = styled.aside`
   z-index: ${zIndexValues.navLeft};
@@ -19,7 +19,7 @@ export const NavLeft = styled.aside`
     width: 200px;
     box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.6);
   }
-`;
+`
 
 export const LogoLink = styled(NavLink)`
   display: block;
@@ -27,21 +27,21 @@ export const LogoLink = styled(NavLink)`
   left: 0;
   margin: 20px 0 10px;
   transition: left 0.1s;
-`;
+`
 
 export const StyledLogo = styled(Logo)`
   display: inline-block;
   margin-left: 8px;
   padding: 10px;
   ${mixin.clickable}
-`;
+`
 
 export const Bottom = styled.div`
   position: absolute;
   bottom: 20px;
   left: 0;
   width: 100%;
-`;
+`
 
 export const Item = styled.div`
   display: flex;
@@ -55,7 +55,7 @@ export const Item = styled.div`
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
-`;
+`
 
 export const ItemText = styled.div`
   margin-left: 22px;
@@ -71,4 +71,4 @@ export const ItemText = styled.div`
     visibility: visible;
     opacity: 1;
   }
-`;
+`

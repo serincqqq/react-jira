@@ -1,8 +1,8 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import '@wangeditor/editor/dist/css/style.css'
 import { Button } from 'antd'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
-
+import { Des, Edit, EditContainer } from './Styles'
 function DesEditor() {
   const [editor, setEditor] = useState(null) // 存储 editor 实例
   const [html, setHtml] = useState('<p>hello</p>')
@@ -37,22 +37,23 @@ function DesEditor() {
     //有接口后需要在这里向接口发送内容保存
   }
   return (
-    <>
+    <Des>
+      <span>Description</span>
       {!isVisible ? (
-        <div>
-          <div style={{ border: '1px solid #ccc', zIndex: 100, margin: '15px 0px' }}>
+        <Edit>
+          <EditContainer>
             <Toolbar editor={editor} defaultConfig={toolbarConfig} mode="simple" style={{ borderBottom: '1px solid #ccc' }} />
             <Editor defaultConfig={editorConfig} value={html} onCreated={setEditor} onChange={(editor) => setHtml(editor.getHtml())} mode="default" />
-          </div>
+          </EditContainer>
           <Button onClick={save} type="primary" style={{ marginRight: '10px' }}>
             Save
           </Button>
           <Button onClick={() => setIsVisible(true)}>Cancel</Button>
-        </div>
+        </Edit>
       ) : null}
 
-      {isVisible ? <div onClick={() => setIsVisible(false)} dangerouslySetInnerHTML={{ __html: html }} /> : null}
-    </>
+      {isVisible ? <Edit onClick={() => setIsVisible(false)} dangerouslySetInnerHTML={{ __html: html }} /> : null}
+    </Des>
   )
 }
 

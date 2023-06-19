@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components'
 
 import { Link } from 'react-router-dom'
-import { color, mixin, zIndexValues, font } from '../../assets/styles/styles'
+import { color, mixin, font } from '@/assets/styles/styles'
 
 export const Issue = styled.div`
   padding: 10px;
@@ -45,8 +45,8 @@ export const Assignees = styled.div`
 `
 
 export const AssigneeAvatar = styled.div`
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: inline-block;
   margin-left: -2px;
   background-repeat: no-repeat;

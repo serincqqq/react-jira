@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 import ReactQuill from 'react-quill'
 import { useState } from 'react'
-import './test.css'
+import './quill.css'
 export default function ProjectSetting() {
   const location = useLocation()
   const currentPath = location.pathname

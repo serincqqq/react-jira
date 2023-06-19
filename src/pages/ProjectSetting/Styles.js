@@ -1,8 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components'
+import { sizes } from '@/assets/styles/styles'
 
-import { sizes } from "../../assets/styles/styles";
-
-const paddingLeft = sizes.appNavBarLeftWidth + sizes.secondarySideBarWidth + 40;
+const paddingLeft = sizes.appNavBarLeftWidth + sizes.secondarySideBarWidth + 40
 
 export const ProjectPage = styled.div`
   padding: 25px 32px 50px ${paddingLeft}px;
@@ -13,4 +12,4 @@ export const ProjectPage = styled.div`
   @media (max-width: 999px) {
     padding-left: ${paddingLeft - 20 - sizes.secondarySideBarWidth}px;
   }
-`;
+`

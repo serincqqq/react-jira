@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-import { color, mixin, zIndexValues, font } from '../../assets/styles/styles'
-//import Icon from "";
+import { font } from '@/assets/styles/styles'
+
 export const ProjectInfo = styled.div`
   height: 100vh;
   width: 230px;
