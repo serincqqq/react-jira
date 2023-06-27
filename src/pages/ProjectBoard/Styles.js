@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { font, mixin } from '../../assets/styles/styles'
+import { font, mixin } from '@/assets/styles/styles'
 
 export const List = styled.div`
   display: flex;

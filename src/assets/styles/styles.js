@@ -1,42 +1,55 @@
-import { css } from "styled-components";
-import Color from "color";
+import { css } from 'styled-components'
+import Color from 'color'
+import { IssueStatus } from '@/shared/constants/issues'
 
 export const color = {
-  primary: "#0052cc", // Blue
-  success: "#0B875B", // green
-  danger: "#E13C3C", // red
-  warning: "#F89C1C", // orange
-  secondary: "#F4F5F7", // light grey
+  primary: '#0052cc', // Blue
+  success: '#0B875B', // green
+  danger: '#E13C3C', // red
+  warning: '#F89C1C', // orange
+  secondary: '#F4F5F7', // light grey
 
-  textDarkest: "#172b4d",
-  textDark: "#42526E",
-  textMedium: "#5E6C84",
-  textLight: "#8993a4",
-  textLink: "#0052cc",
+  textDarkest: '#172b4d',
+  textDark: '#42526E',
+  textMedium: '#5E6C84',
+  textLight: '#8993a4',
+  textLink: '#0052cc',
 
-  backgroundDarkPrimary: "#0747A6",
-  backgroundMedium: "#dfe1e6",
-  backgroundLight: "#ebecf0",
-  backgroundLightest: "#F4F5F7",
-  backgroundLightPrimary: "#D2E5FE",
-  backgroundLightSuccess: "#E4FCEF",
+  backgroundDarkPrimary: '#0747A6',
+  backgroundMedium: '#dfe1e6',
+  backgroundLight: '#ebecf0',
+  backgroundLightest: '#F4F5F7',
+  backgroundLightPrimary: '#D2E5FE',
+  backgroundLightSuccess: '#E4FCEF',
 
-  borderLightest: "#dfe1e6",
-  borderLight: "#C1C7D0",
-  borderInputFocus: "#4c9aff",
-};
+  borderLightest: '#dfe1e6',
+  borderLight: '#C1C7D0',
+  borderInputFocus: '#4c9aff',
+}
+export const issueStatusColors = {
+  [IssueStatus.BACKLOG]: color.textDark,
+  [IssueStatus.INPROGRESS]: '#fff',
+  [IssueStatus.SELECTED]: color.textDark,
+  [IssueStatus.DONE]: '#fff',
+}
+export const issueStatusBackgroundColors = {
+  [IssueStatus.BACKLOG]: color.backgroundMedium,
+  [IssueStatus.INPROGRESS]: color.primary,
+  [IssueStatus.SELECTED]: color.backgroundMedium,
+  [IssueStatus.DONE]: color.success,
+}
 
 export const sizes = {
   appNavBarLeftWidth: 64,
   secondarySideBarWidth: 230,
   minViewportWidth: 1000,
-};
+}
 
 export const zIndexValues = {
   modal: 1000,
   dropdown: 101,
   navLeft: 100,
-};
+}
 
 export const font = {
   regular: 'font-family: "CircularStdBook"; font-weight: normal;',
@@ -44,7 +57,7 @@ export const font = {
   bold: 'font-family: "CircularStdBold"; font-weight: normal;',
   black: 'font-family: "CircularStdBlack"; font-weight: normal;',
   size: (size) => `font-size: ${size}px;`,
-};
+}
 
 export const mixin = {
   darken: (colorValue, amount) => Color(colorValue).darken(amount).string(),
@@ -111,7 +124,7 @@ export const mixin = {
     }
   `,
   backgroundImage: (imageURL) => css`
-    background-image: url("${imageURL}");
+    background-image: url('${imageURL}');
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -144,4 +157,4 @@ export const mixin = {
       margin-left: 4px;
     }
   `,
-};
+}

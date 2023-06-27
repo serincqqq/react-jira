@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CheckSquareFilled, LinkOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
-
+import { TitleTextarea, Comments, Left, Right, Content, TopActions, Copy, DetailFun } from './Styles'
+import Status from './components/Status'
 import DesEditor from './components/DesEditor'
 import { Title } from '../ProjectBoard/Styles'
-import { TitleTextarea, Comments, Left, Right, Content, TopActions, Copy, DetailFun } from './Styles'
 import Create from './components/Create'
 import Comment from './components/Comment'
 
@@ -77,9 +77,9 @@ export default function IssueDetails() {
           </Comments>
         </Left>
         <Right>
-          <span>ASSIGNEES</span>
-          {/* <Status issue={issue} updateIssue={updateIssue} />
-          <AssigneesReporter issue={issue} updateIssue={updateIssue} projectUsers={projectUsers} />
+          <p>ASSIGNEES</p>
+          <Status />
+          {/*issue={issue} updateIssue={updateIssue}  <AssigneesReporter issue={issue} updateIssue={updateIssue} projectUsers={projectUsers} />
           <Priority issue={issue} updateIssue={updateIssue} />
           <EstimateTracking issue={issue} updateIssue={updateIssue} />
           <Dates issue={issue} /> */}

@@ -1,15 +1,15 @@
 import styled from 'styled-components'
-import { sizes } from '@/assets/styles/styles'
-
-const paddingLeft = sizes.appNavBarLeftWidth + sizes.secondarySideBarWidth + 40
-
-export const ProjectPage = styled.div`
-  padding: 25px 32px 50px ${paddingLeft}px;
-
-  @media (max-width: 1100px) {
-    padding: 25px 20px 50px ${paddingLeft - 20}px;
-  }
-  @media (max-width: 999px) {
-    padding-left: ${paddingLeft - 20 - sizes.secondarySideBarWidth}px;
-  }
+import { font, mixin } from '@/assets/styles/styles'
+export const Setting = styled.div``
+export const Nav = styled.div`
+  display: flex;
+  font-family: CircularStdBook;
+  color: rgb(94, 108, 132);
+  font-size: 16px;
+  margin-bottom: 10px;
+`
+export const Divider = styled.span`
+  position: relative;
+  margin: 0 10px;
+  ${font.size(18)};
 `

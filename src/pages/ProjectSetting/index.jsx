@@ -1,17 +1,28 @@
-import { useLocation } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 import ReactQuill from 'react-quill'
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import './quill.css'
+import { Setting, Nav, Divider } from './Styles'
+
 export default function ProjectSetting() {
-  const location = useLocation()
-  const currentPath = location.pathname
+  const params = useParams()
   const [form] = Form.useForm()
+  const Breadcrumbs = ['Projects', params.projectId, 'Project Details']
   const [description, setDescription] = useState('')
   return (
-    <>
-      <nav>{currentPath}</nav>
-      <h1 style={{ margin: '20px 0 30px 0' }}>Project Details</h1>
+    <Setting>
+      <Nav>
+        {Breadcrumbs.map((item, index) => {
+          return (
+            <Fragment key={item}>
+              {index !== 0 && <Divider>/</Divider>}
+              {item}
+            </Fragment>
+          )
+        })}
+      </Nav>
+      <h2 style={{ margin: '20px 0 30px 0' }}>Project Details</h2>
 
       <Form style={{ fontFamily: ' CircularStdBook' }} layout="vertical" form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 30 }} style={{ maxWidth: 600 }} initialValues={{ remember: true }} autoComplete="off">
         <Form.Item label="Name" name="name">
@@ -29,6 +40,6 @@ export default function ProjectSetting() {
           </Button>
         </Form.Item>
       </Form>
-    </>
+    </Setting>
   )
 }
