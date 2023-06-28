@@ -1,6 +1,8 @@
-import { StyledSelect, ValueContainer, Options, OptionsItem, Option } from './Styles'
-import { DownOutlined } from '@ant-design/icons'
 import { useState, useEffect, useRef } from 'react'
+import { DownOutlined } from '@ant-design/icons'
+
+import { SectionTitle } from '../../Styles'
+import { StyledSelect, ValueContainer, Options, OptionsItem, Option } from './Styles'
 export default function Status() {
   const statusOptions = [
     {
@@ -18,14 +20,13 @@ export default function Status() {
     {
       label: 'in progress',
       key: 'inprogress',
-    }
+    },
   ]
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedStatus,setSelectedStatus] = useState({
+  const [selectedStatus, setSelectedStatus] = useState({
     label: 'in progress',
     key: 'inprogress',
   })
-  const [iconColor,setIconColor]=useState('#fff')
 
   useEffect(() => {
     document.addEventListener('click', (e) => setIsDrawerOpen(false))
@@ -40,22 +41,21 @@ export default function Status() {
   }
   const select = (item, e) => {
     stopPropagation(e)
-   setSelectedStatus(item)
-   setIsDrawerOpen(!isDrawerOpen)
+    setSelectedStatus(item)
+    setIsDrawerOpen(!isDrawerOpen)
   }
   return (
     <>
+      <p>STATUS</p>
       <StyledSelect color={selectedStatus.key} onClick={changeStatus}>
         <ValueContainer>{selectedStatus.label}</ValueContainer>
-        <DownOutlined style={{ color: selectedStatus.key==='done'||selectedStatus.key==='inprogress'?'#fff':'#42526E'}} />
+        <DownOutlined style={{ color: selectedStatus.key === 'done' || selectedStatus.key === 'inprogress' ? '#fff' : '#42526E' }} />
       </StyledSelect>
       {isDrawerOpen ? (
         <Options>
           {statusOptions.map((item) => (
             <Option onClick={(e) => select(item, e)} key={item.key}>
-              <OptionsItem color={item.key}>
-                {item.label}
-              </OptionsItem>
+              <OptionsItem color={item.key}>{item.label}</OptionsItem>
             </Option>
           ))}
         </Options>

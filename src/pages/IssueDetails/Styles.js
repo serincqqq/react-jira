@@ -67,3 +67,10 @@ export const DetailFun = styled.div`
     cursor: pointer;
   }
 `
+export const SectionTitle = styled.div`
+  margin: 24px 0 5px;
+  text-transform: uppercase;
+  color: ${color.textMedium};
+  ${font.size(12.5)}
+  ${font.bold}
+`;

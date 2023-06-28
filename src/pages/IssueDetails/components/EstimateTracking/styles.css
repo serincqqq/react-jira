@@ -1,0 +1,16 @@
+.progress {
+  margin-bottom: 0px;
+}
+.time-icon {
+  font-size: 26px;
+  margin-right: 10px;
+}
+.time-modal {
+  margin-top: 140px;
+}
+.input {
+  background-color: rgb(244, 245, 247);
+}
+.input:focus {
+  background-color: white;
+}

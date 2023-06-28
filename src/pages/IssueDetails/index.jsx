@@ -4,11 +4,12 @@ import { CheckSquareFilled, LinkOutlined, DeleteOutlined } from '@ant-design/ico
 import { Input } from 'antd'
 import { TitleTextarea, Comments, Left, Right, Content, TopActions, Copy, DetailFun } from './Styles'
 import Status from './components/Status'
+import EstimateTracking from './components/EstimateTracking'
 import DesEditor from './components/DesEditor'
 import { Title } from '../ProjectBoard/Styles'
 import Create from './components/Create'
 import Comment from './components/Comment'
-
+import Priority from './components/Priority'
 const { TextArea } = Input
 
 export default function IssueDetails() {
@@ -77,11 +78,12 @@ export default function IssueDetails() {
           </Comments>
         </Left>
         <Right>
-          <p>ASSIGNEES</p>
           <Status />
+          <EstimateTracking />
+          <Priority />
           {/*issue={issue} updateIssue={updateIssue}  <AssigneesReporter issue={issue} updateIssue={updateIssue} projectUsers={projectUsers} />
           <Priority issue={issue} updateIssue={updateIssue} />
-          <EstimateTracking issue={issue} updateIssue={updateIssue} />
+          
           <Dates issue={issue} /> */}
         </Right>
       </Content>

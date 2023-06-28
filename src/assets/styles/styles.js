@@ -1,7 +1,7 @@
 import { css } from 'styled-components'
 import Color from 'color'
 import { IssueStatus } from '@/shared/constants/issues'
-
+import { IssuePriority } from '@/shared/constants/priority'
 export const color = {
   primary: '#0052cc', // Blue
   success: '#0B875B', // green
@@ -38,7 +38,13 @@ export const issueStatusBackgroundColors = {
   [IssueStatus.SELECTED]: color.backgroundMedium,
   [IssueStatus.DONE]: color.success,
 }
-
+export const issuePriorityColors = {
+  [IssuePriority.HIGHEST]: '#CD1317', // red
+  [IssuePriority.HIGH]: '#E9494A', // orange
+  [IssuePriority.MEDIUM]: '#E97F33', // orange
+  [IssuePriority.LOW]: '#2D8738', // green
+  [IssuePriority.LOWEST]: '#57A55A', // green
+}
 export const sizes = {
   appNavBarLeftWidth: 64,
   secondarySideBarWidth: 230,
