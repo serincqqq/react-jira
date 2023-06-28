@@ -1,8 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { DownOutlined } from '@ant-design/icons'
-
-import { SectionTitle } from '../../Styles'
-import { StyledSelect, ValueContainer, Options, OptionsItem, Option } from './Styles'
+import { useState, useEffect, Fragment } from 'react'
+import Select from '@/components/Select'
 export default function Status() {
   const statusOptions = [
     {
@@ -39,14 +36,15 @@ export default function Status() {
     stopPropagation(e)
     setIsDrawerOpen(!isDrawerOpen)
   }
-  const select = (item, e) => {
+  const selectStatus = (item, e) => {
     stopPropagation(e)
     setSelectedStatus(item)
     setIsDrawerOpen(!isDrawerOpen)
   }
   return (
-    <>
-      <p>STATUS</p>
+    <Fragment>
+      <Select name="status" select={selectStatus} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="STATUS" selected={selectedStatus} options={statusOptions}></Select>
+      {/* <p>STATUS</p>
       <StyledSelect color={selectedStatus.key} onClick={changeStatus}>
         <ValueContainer>{selectedStatus.label}</ValueContainer>
         <DownOutlined style={{ color: selectedStatus.key === 'done' || selectedStatus.key === 'inprogress' ? '#fff' : '#42526E' }} />
@@ -59,7 +57,7 @@ export default function Status() {
             </Option>
           ))}
         </Options>
-      ) : null}
-    </>
+      ) : null} */}
+    </Fragment>
   )
 }

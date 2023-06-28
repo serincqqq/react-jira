@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-//import { Icon } from 'antd'
-import Icon, { DownOutlined, ArrowUpOutlined } from '@ant-design/icons'
+import Icon, { DownOutlined } from '@ant-design/icons'
 import { StyledSelect, ValueContainer, Options, OptionsItem, Option, PrioritySelect, IconStyle } from './Styles'
 export default function Select({ name, isDrawerOpen, title, options, selected, onClick, select }) {
   const handelChange = (e) => {
@@ -29,8 +28,14 @@ export default function Select({ name, isDrawerOpen, title, options, selected, o
         <Options>
           {options.map((item) => (
             <Option onClick={(e) => select(item, e)} key={item.key}>
-              {name === 'priority' ? <span>11</span> : ''}
               <OptionsItem name={name} color={item.key}>
+                {name === 'priority' ? (
+                  <IconStyle priority={item.key}>
+                    <Icon component={item.icon} />
+                  </IconStyle>
+                ) : (
+                  ''
+                )}
                 {item.label}
               </OptionsItem>
             </Option>

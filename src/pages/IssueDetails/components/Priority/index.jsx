@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { ArrowUpOutlined } from '@ant-design/icons'
+import { useState, useEffect, Fragment } from 'react'
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import Select from '@/components/Select'
 import './Styles.css'
 export default function Priority() {
@@ -7,22 +7,27 @@ export default function Priority() {
     {
       label: 'Highest',
       key: 'Highest',
+      icon: ArrowUpOutlined,
     },
     {
       label: 'High',
       key: 'High',
+      icon: ArrowUpOutlined,
     },
     {
       label: 'Medium',
       key: 'Medium',
+      icon: ArrowUpOutlined,
     },
     {
       label: 'Low',
       key: 'Low',
+      icon: ArrowDownOutlined,
     },
     {
       label: 'Lowest',
       key: 'Lowest',
+      icon: ArrowDownOutlined,
     },
   ]
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -49,8 +54,8 @@ export default function Priority() {
     setIsDrawerOpen(!isDrawerOpen)
   }
   return (
-    <>
+    <Fragment>
       <Select name="priority" select={selectPriority} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="PRIORITY" selected={selectedPriority} options={priorityOptions}></Select>
-    </>
+    </Fragment>
   )
 }
