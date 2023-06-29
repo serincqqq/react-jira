@@ -1,8 +1,9 @@
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect, Fragment, useRef } from 'react'
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import Select from '@/components/Select'
 import './Styles.css'
 export default function Priority() {
+  const ref = useRef(null)
   const priorityOptions = [
     {
       label: 'Highest',
@@ -38,24 +39,25 @@ export default function Priority() {
   })
 
   useEffect(() => {
-    document.addEventListener('click', (e) => setIsDrawerOpen(false))
-  }, [])
-  const stopPropagation = (e) => {
-    e.nativeEvent.stopImmediatePropagation()
-  }
+    document.addEventListener('click', (e) => changeStatus(e))
+    return () => {
+      document.removeEventListener('click', (e) => changeStatus(e))
+    }
+  })
   const changeStatus = (e) => {
-    // 使用 react 的 e.stopPropagation 不能阻止冒泡，需要使用 e.nativeEvent.stopImmediatePropagation，这里我们对其进行封装，方便多次调用
-    stopPropagation(e)
-    setIsDrawerOpen(!isDrawerOpen)
+    if (!ref.current.contains(e.target)) {
+      setIsDrawerOpen(false)
+    } else {
+      setIsDrawerOpen(true)
+    }
   }
   const selectPriority = (item, e) => {
-    stopPropagation(e)
     setSelectedPriority(item)
     setIsDrawerOpen(!isDrawerOpen)
   }
   return (
-    <Fragment>
+    <div ref={ref}>
       <Select name="priority" select={selectPriority} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="PRIORITY" selected={selectedPriority} options={priorityOptions}></Select>
-    </Fragment>
+    </div>
   )
 }

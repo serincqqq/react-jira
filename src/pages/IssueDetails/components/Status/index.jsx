@@ -1,6 +1,7 @@
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect, Fragment, useRef } from 'react'
 import Select from '@/components/Select'
 export default function Status() {
+  const childRef = useRef(null)
   const statusOptions = [
     {
       label: 'done',
@@ -26,15 +27,21 @@ export default function Status() {
   })
 
   useEffect(() => {
-    document.addEventListener('click', (e) => setIsDrawerOpen(false))
-  }, [])
+    document.addEventListener('click', (e) => changeStatus(e))
+    return () => {
+      document.removeEventListener('click', (e) => changeStatus(e))
+    }
+  })
   const stopPropagation = (e) => {
     e.nativeEvent.stopImmediatePropagation()
   }
   const changeStatus = (e) => {
-    // 使用 react 的 e.stopPropagation 不能阻止冒泡，需要使用 e.nativeEvent.stopImmediatePropagation，这里我们对其进行封装，方便多次调用
-    stopPropagation(e)
-    setIsDrawerOpen(!isDrawerOpen)
+    console.log(!childRef.current.contains(e.target), e.target)
+    if (!childRef.current.contains(e.target)) {
+      setIsDrawerOpen(false)
+    } else {
+      setIsDrawerOpen(true)
+    }
   }
   const selectStatus = (item, e) => {
     stopPropagation(e)
@@ -42,22 +49,8 @@ export default function Status() {
     setIsDrawerOpen(!isDrawerOpen)
   }
   return (
-    <Fragment>
+    <div ref={childRef}>
       <Select name="status" select={selectStatus} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="STATUS" selected={selectedStatus} options={statusOptions}></Select>
-      {/* <p>STATUS</p>
-      <StyledSelect color={selectedStatus.key} onClick={changeStatus}>
-        <ValueContainer>{selectedStatus.label}</ValueContainer>
-        <DownOutlined style={{ color: selectedStatus.key === 'done' || selectedStatus.key === 'inprogress' ? '#fff' : '#42526E' }} />
-      </StyledSelect>
-      {isDrawerOpen ? (
-        <Options>
-          {statusOptions.map((item) => (
-            <Option onClick={(e) => select(item, e)} key={item.key}>
-              <OptionsItem color={item.key}>{item.label}</OptionsItem>
-            </Option>
-          ))}
-        </Options>
-      ) : null} */}
-    </Fragment>
+    </div>
   )
 }

@@ -81,6 +81,7 @@ export default function IssueDetails() {
           <Status />
           <EstimateTracking />
           <Priority />
+          {/* 发现一个问题，点了一个下拉框之后再去点另一个，前一个的下拉框没有消失*/}
           {/*issue={issue} updateIssue={updateIssue}  <AssigneesReporter issue={issue} updateIssue={updateIssue} projectUsers={projectUsers} />
           <Priority issue={issue} updateIssue={updateIssue} />
           
