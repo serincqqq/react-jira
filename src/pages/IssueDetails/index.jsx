@@ -2,14 +2,16 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CheckSquareFilled, LinkOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
+import { Title } from '../ProjectBoard/Styles'
 import { TitleTextarea, Comments, Left, Right, Content, TopActions, Copy, DetailFun } from './Styles'
 import Status from './components/Status'
 import EstimateTracking from './components/EstimateTracking'
 import DesEditor from './components/DesEditor'
-import { Title } from '../ProjectBoard/Styles'
 import Create from './components/Create'
 import Comment from './components/Comment'
 import Priority from './components/Priority'
+import AssigneesReporter from './components/AssigneesReporter'
+
 const { TextArea } = Input
 
 export default function IssueDetails() {
@@ -81,8 +83,8 @@ export default function IssueDetails() {
           <Status />
           <EstimateTracking />
           <Priority />
-          {/* 发现一个问题，点了一个下拉框之后再去点另一个，前一个的下拉框没有消失*/}
-          {/*issue={issue} updateIssue={updateIssue}  <AssigneesReporter issue={issue} updateIssue={updateIssue} projectUsers={projectUsers} />
+          <AssigneesReporter />
+          {/*issue={issue} updateIssue={updateIssue}  
           <Priority issue={issue} updateIssue={updateIssue} />
           
           <Dates issue={issue} /> */}

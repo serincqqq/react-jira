@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { ArrowUpOutlined, CheckSquareFilled } from '@ant-design/icons'
 import { Draggable } from 'react-beautiful-dnd'
-
+import Avatar from '@/components/Avatar'
 import { IssueLink, Issue, Bottom, Assignees, IssueTitle, AssigneeAvatar } from './Styles'
 export default function BoardIssue({ issue, index }) {
   const [assignees] = useState([
@@ -26,11 +26,7 @@ export default function BoardIssue({ issue, index }) {
                   <ArrowUpOutlined style={{ color: '#CD1317' }} />
                 </div>
                 {/* 这里是经办人的头像列表 */}
-                <Assignees>
-                  {assignees.map((user) => (
-                    <AssigneeAvatar key={user.id} avatarUrl={user.avatarUrl} />
-                  ))}
-                </Assignees>
+                <Avatar assignees={assignees} />
               </Bottom>
             </Issue>
           </IssueLink>

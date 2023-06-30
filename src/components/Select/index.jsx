@@ -1,28 +1,60 @@
 import { useState, useEffect } from 'react'
+import Avatar from '../Avatar'
 import Icon, { DownOutlined } from '@ant-design/icons'
-import { StyledSelect, ValueContainer, Options, OptionsItem, Option, PrioritySelect, IconStyle } from './Styles'
-export default function Select({ name, isDrawerOpen, title, options, selected, onClick, select }) {
-  const handelChange = (e) => {
-    //在这里要触发父组件的方法
-    onClick(e)
+import {
+  ARSelect,
+  StyledSelect,
+  ValueContainer,
+  Options,
+  OptionsItem,
+  Option,
+  PrioritySelect,
+  IconStyle,
+} from './Styles'
+function Priority({ selected }) {
+  return (
+    <PrioritySelect color={selected.key}>
+      <IconStyle priority={selected.key}>
+        <Icon component={selected.icon} />
+      </IconStyle>
+      <ValueContainer>{selected.label}</ValueContainer>
+    </PrioritySelect>
+  )
+}
+function Status({ selected }) {
+  return (
+    <StyledSelect color={selected.key}>
+      <ValueContainer>{selected.label}</ValueContainer>
+      <DownOutlined />
+    </StyledSelect>
+  )
+}
+function AssigneesReporter({ selected }) {
+  return (
+    <ARSelect color={selected.key}>
+      <Avatar assignees={selected.avatar} />
+      <ValueContainer>{selected.label}</ValueContainer>
+    </ARSelect>
+  )
+}
+function createChildComponent(type, data) {
+  //console.log('type', type, data)
+  switch (type) {
+    case 'priority':
+      return <Priority selected={data} />
+    case 'status':
+      return <Status selected={data} />
+    case 'assignees':
+      return <AssigneesReporter selected={data} />
+    default:
+      return null // 未知类型，返回空
   }
-  // 难点，根据传来的icon显示，而且一个的icon在前一个在后
+}
+export default function Select({ name, isDrawerOpen, title, options, selected, select }) {
   return (
     <>
       <p style={{ margin: '8px 0' }}>{title}</p>
-      {name === 'priority' ? (
-        <PrioritySelect color={selected.key} onClick={handelChange}>
-          <IconStyle priority={selected.key}>
-            <Icon component={selected.icon} />
-          </IconStyle>
-          <ValueContainer>{selected.label}</ValueContainer>
-        </PrioritySelect>
-      ) : (
-        <StyledSelect color={selected.key} onClick={handelChange}>
-          <ValueContainer>{selected.label}</ValueContainer>
-          <DownOutlined />
-        </StyledSelect>
-      )}
+      {createChildComponent(name, selected)}
 
       {isDrawerOpen ? (
         <Options>

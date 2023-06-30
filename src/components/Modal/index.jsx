@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useRef, useMemo } from 'react'
 import debounce from 'lodash/debounce'
 import { nanoid } from 'nanoid'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { Drawer, Modal, Select, Form, Input, Space, Spin } from 'antd'

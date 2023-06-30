@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { font, mixin } from '@/assets/styles/styles'
+import { font } from '@/assets/styles/styles'
 export const Setting = styled.div``
 export const Nav = styled.div`
   display: flex;

@@ -22,8 +22,10 @@ export default function Status() {
   ]
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState({
-    label: 'in progress',
-    key: 'inprogress',
+    label: 'Jack',
+    //key暂时以名字做标记，但是之后的话需要生成每个人唯一的id作为标记
+    key: 'jack',
+    avatar: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
   })
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export default function Status() {
   }
   return (
     <div ref={childRef}>
-      <Select name="status" select={selectStatus} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="STATUS" selected={selectedStatus} options={statusOptions}></Select>
+      <Select name="assignees" select={selectStatus} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="ASSIGNEES" selected={selectedStatus} options={statusOptions}></Select>
     </div>
   )
 }

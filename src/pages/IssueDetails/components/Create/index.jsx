@@ -1,14 +1,20 @@
 import { Button, Input } from 'antd'
 import { useState } from 'react'
-import { AssigneeAvatar } from '@/components/BoardIssue/Styles'
+import Avatar from '@/components/Avatar'
 import { TextFunc, CommentCreate } from './Styles'
 const { TextArea } = Input
 export default function Create() {
+  const assignees = [
+    {
+      id: '1',
+      avatarUrl: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
+    },
+  ]
   const [create, setCreate] = useState('')
   return (
     <>
       <CommentCreate>
-        <AssigneeAvatar avatarUrl="https://i.ibb.co/7JM1P2r/picke-rick.jpg" />
+        <Avatar assignees={assignees} />
         <TextArea
           className="text"
           value={create}

@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components'
-import { issueStatusColors, issueStatusBackgroundColors, issuePriorityColors } from '@/assets/styles/styles'
+import {
+  issueStatusColors,
+  issueStatusBackgroundColors,
+  issuePriorityColors,
+} from '@/assets/styles/styles'
 import { color, mixin, font } from '@/assets/styles/styles'
 
 export const StyledSelect = styled.div`
@@ -16,9 +20,28 @@ export const StyledSelect = styled.div`
     transform: scale(1.1);
   } */
 `
-export const ValueContainer = styled.p`
-  margin-top: 2px;
+export const PrioritySelect = styled.div`
+  color: ${color.textDarkest};
+  padding: 2px 8px;
+  display: flex;
   font-size: 14px;
+  ${font.regular}
+`
+export const ARSelect = styled.div`
+  display: inline-flex;
+  color: ${color.textDarkest};
+  ${font.regular}
+  font-size: 16px;
+  margin: 0px 10px 5px 0px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgb(235, 236, 240);
+`
+
+export const ValueContainer = styled.p`
+  margin-left: 10px;
+  margin-top: 2px;
+
   margin-right: 6px;
 `
 export const Options = styled.div`
@@ -60,15 +83,9 @@ export const OptionsItem = styled.div`
       margin: 6px 14px;
     `};
 `
-export const PrioritySelect = styled.div`
-  padding: 2px 8px;
-  display: flex;
-  ${font.regular}
-`
 
 export const IconStyle = styled.div`
   font-size: 14px;
   line-height: 18px;
-  margin-right: 10px;
   color: ${(props) => issuePriorityColors[props.priority]};
 `

@@ -3,7 +3,7 @@ import { Outlet, useParams, useLocation, useNavigate } from 'react-router-dom'
 import { Droppable, DragDropContext } from 'react-beautiful-dnd'
 import { Modal } from 'antd'
 import { List, Title, IssuesCount, Issues, Nav, Divider } from './Styles'
-import BoardIssue from '@/components/BoardIssue'
+import BoardIssue from './components/BoardIssue'
 export const IssueStatus = {
   BACKLOG: 'backlog',
   SELECTED: 'selected',
