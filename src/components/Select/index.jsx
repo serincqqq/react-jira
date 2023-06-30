@@ -10,6 +10,7 @@ import {
   Option,
   PrioritySelect,
   IconStyle,
+  avatarLabel,
 } from './Styles'
 function Priority({ selected }) {
   return (
@@ -33,7 +34,7 @@ function AssigneesReporter({ selected }) {
   return (
     <ARSelect color={selected.key}>
       <Avatar assignees={selected.avatar} />
-      <ValueContainer>{selected.label}</ValueContainer>
+      <ValueContainer style={avatarLabel}>{selected.label}</ValueContainer>
     </ARSelect>
   )
 }
@@ -50,6 +51,20 @@ function createChildComponent(type, data) {
       return null // 未知类型，返回空
   }
 }
+function ItemTag(type, item) {
+  switch (type) {
+    case 'priority':
+      return (
+        <IconStyle priority={item.key}>
+          <Icon component={item.icon} />
+        </IconStyle>
+      )
+    case 'assignees':
+      return <Avatar style={{ marginRight: '10px' }} assignees={item.avatar} />
+    default:
+      return null // 未知类型，返回空
+  }
+}
 export default function Select({ name, isDrawerOpen, title, options, selected, select }) {
   return (
     <>
@@ -61,13 +76,7 @@ export default function Select({ name, isDrawerOpen, title, options, selected, s
           {options.map((item) => (
             <Option onClick={(e) => select(item, e)} key={item.key}>
               <OptionsItem name={name} color={item.key}>
-                {name === 'priority' ? (
-                  <IconStyle priority={item.key}>
-                    <Icon component={item.icon} />
-                  </IconStyle>
-                ) : (
-                  ''
-                )}
+                {ItemTag(name, item)}
                 {item.label}
               </OptionsItem>
             </Option>

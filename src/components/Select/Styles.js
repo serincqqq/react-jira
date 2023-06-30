@@ -5,9 +5,10 @@ import {
   issuePriorityColors,
 } from '@/assets/styles/styles'
 import { color, mixin, font } from '@/assets/styles/styles'
+import { Right } from '@/pages/IssueDetails/Styles'
 
 export const StyledSelect = styled.div`
-  padding: 4px 12px 2px;
+  padding: 4px 6px 2px;
   background-color: ${(props) => issueStatusBackgroundColors[props.color]};
   color: ${(props) => issueStatusColors[props.color]};
   display: inline-flex;
@@ -39,7 +40,6 @@ export const ARSelect = styled.div`
 `
 
 export const ValueContainer = styled.p`
-  margin-left: 10px;
   margin-top: 2px;
 
   margin-right: 6px;
@@ -62,20 +62,20 @@ export const Option = styled.div`
 `
 export const OptionsItem = styled.div`
   height: 25px;
-  padding: 3px 8px;
+  padding: 2px 8px;
   display: inline-flex;
 
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
   ${(props) =>
-    props.name === 'priority' &&
+    props.name !== 'status' &&
     css`
       margin: 4px 2px;
       ${font.regular}
-    `};
+    `}
   ${(props) =>
-    props.name !== 'priority' &&
+    props.name === 'status' &&
     css`
       color: ${(props) => issueStatusColors[props.color]};
       background-color: ${(props) => issueStatusBackgroundColors[props.color]};
@@ -85,7 +85,11 @@ export const OptionsItem = styled.div`
 `
 
 export const IconStyle = styled.div`
+  margin-right: 10px;
   font-size: 14px;
   line-height: 18px;
   color: ${(props) => issuePriorityColors[props.priority]};
 `
+export const avatarLabel = {
+  marginLeft: '10px',
+}
