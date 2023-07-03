@@ -10,7 +10,6 @@ import {
   Option,
   PrioritySelect,
   IconStyle,
-  avatarLabel,
 } from './Styles'
 function Priority({ selected }) {
   return (
@@ -34,12 +33,11 @@ function AssigneesReporter({ selected }) {
   return (
     <ARSelect color={selected.key}>
       <Avatar assignees={selected.avatar} />
-      <ValueContainer style={avatarLabel}>{selected.label}</ValueContainer>
+      <ValueContainer>{selected.label}</ValueContainer>
     </ARSelect>
   )
 }
 function createChildComponent(type, data) {
-  //console.log('type', type, data)
   switch (type) {
     case 'priority':
       return <Priority selected={data} />
@@ -60,7 +58,7 @@ function ItemTag(type, item) {
         </IconStyle>
       )
     case 'assignees':
-      return <Avatar style={{ marginRight: '10px' }} assignees={item.avatar} />
+      return <Avatar assignees={item.avatar} />
     default:
       return null // 未知类型，返回空
   }
@@ -73,14 +71,16 @@ export default function Select({ name, isDrawerOpen, title, options, selected, s
 
       {isDrawerOpen ? (
         <Options>
-          {options.map((item) => (
-            <Option onClick={(e) => select(item, e)} key={item.key}>
-              <OptionsItem name={name} color={item.key}>
-                {ItemTag(name, item)}
-                {item.label}
-              </OptionsItem>
-            </Option>
-          ))}
+          {options
+            .filter((item) => item.key !== selected.key)
+            .map((item) => (
+              <Option onClick={(e) => select(item, e)} key={item.key}>
+                <OptionsItem name={name} color={item.key}>
+                  {ItemTag(name, item)}
+                  {item.label}
+                </OptionsItem>
+              </Option>
+            ))}
         </Options>
       ) : null}
     </>

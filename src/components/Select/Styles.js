@@ -4,11 +4,10 @@ import {
   issueStatusBackgroundColors,
   issuePriorityColors,
 } from '@/assets/styles/styles'
-import { color, mixin, font } from '@/assets/styles/styles'
-import { Right } from '@/pages/IssueDetails/Styles'
+import { color, font } from '@/assets/styles/styles'
 
 export const StyledSelect = styled.div`
-  padding: 4px 6px 2px;
+  padding: 4px 6px;
   background-color: ${(props) => issueStatusBackgroundColors[props.color]};
   color: ${(props) => issueStatusColors[props.color]};
   display: inline-flex;
@@ -25,14 +24,14 @@ export const PrioritySelect = styled.div`
   color: ${color.textDarkest};
   padding: 2px 8px;
   display: flex;
-  font-size: 14px;
+  font-size: 15px;
   ${font.regular}
 `
 export const ARSelect = styled.div`
   display: inline-flex;
   color: ${color.textDarkest};
   ${font.regular}
-  font-size: 16px;
+  font-size: 15px;
   margin: 0px 10px 5px 0px;
   padding: 4px 8px;
   border-radius: 4px;
@@ -71,6 +70,8 @@ export const OptionsItem = styled.div`
   ${(props) =>
     props.name !== 'status' &&
     css`
+      font-size: 15px;
+      color: ${color.textDarkest};
       margin: 4px 2px;
       ${font.regular}
     `}

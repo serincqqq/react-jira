@@ -45,7 +45,7 @@ export default function Priority() {
     }
   })
   const changeStatus = (e) => {
-    if (!ref.current.contains(e.target)) {
+    if (!ref.current?.contains(e.target)) {
       setIsDrawerOpen(false)
     } else {
       setIsDrawerOpen(true)
@@ -57,7 +57,15 @@ export default function Priority() {
   }
   return (
     <div ref={ref}>
-      <Select name="priority" select={selectPriority} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="PRIORITY" selected={selectedPriority} options={priorityOptions}></Select>
+      <Select
+        name="priority"
+        select={selectPriority}
+        onClick={changeStatus}
+        isDrawerOpen={isDrawerOpen}
+        title="PRIORITY"
+        selected={selectedPriority}
+        options={priorityOptions}
+      ></Select>
     </div>
   )
 }

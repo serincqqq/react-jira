@@ -1,30 +1,34 @@
 import { useState, useEffect, useRef } from 'react'
 import Select from '@/components/Select'
 export default function Status() {
-  const childRef = useRef(null)
+  const assigneesRef = useRef(null)
   const statusOptions = [
     {
-      label: 'done',
-      key: 'done',
+      label: 'Lisa',
+      key: 'Lisa',
+      avatar: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
     },
     {
-      label: 'backlog',
-      key: 'backlog',
+      label: 'Evan',
+      key: 'Evan',
+      avatar: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
     },
     {
-      label: 'select for development',
-      key: 'selected',
+      label: 'Anna',
+      key: 'Anna',
+      avatar: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
     },
     {
-      label: 'in progress',
-      key: 'inprogress',
+      label: 'Serin',
+      key: 'Serin',
+      avatar: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
     },
   ]
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedStatus, setSelectedStatus] = useState({
-    label: 'Jack',
+    label: 'Serin',
+    key: 'Serin',
     //key暂时以名字做标记，但是之后的话需要生成每个人唯一的id作为标记
-    key: 'jack',
     avatar: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
   })
 
@@ -38,7 +42,7 @@ export default function Status() {
     e.nativeEvent.stopImmediatePropagation()
   }
   const changeStatus = (e) => {
-    if (!childRef.current.contains(e.target)) {
+    if (!assigneesRef.current?.contains(e.target)) {
       setIsDrawerOpen(false)
     } else {
       setIsDrawerOpen(true)
@@ -50,8 +54,16 @@ export default function Status() {
     setIsDrawerOpen(!isDrawerOpen)
   }
   return (
-    <div ref={childRef}>
-      <Select name="assignees" select={selectStatus} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="ASSIGNEES" selected={selectedStatus} options={statusOptions}></Select>
+    <div ref={assigneesRef}>
+      <Select
+        name="assignees"
+        select={selectStatus}
+        onClick={changeStatus}
+        isDrawerOpen={isDrawerOpen}
+        title="ASSIGNEES"
+        selected={selectedStatus}
+        options={statusOptions}
+      ></Select>
     </div>
   )
 }

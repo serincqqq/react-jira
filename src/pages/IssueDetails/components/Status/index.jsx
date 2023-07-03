@@ -36,7 +36,7 @@ export default function Status() {
     e.nativeEvent.stopImmediatePropagation()
   }
   const changeStatus = (e) => {
-    if (!childRef.current.contains(e.target)) {
+    if (!childRef.current?.contains(e.target)) {
       setIsDrawerOpen(false)
     } else {
       setIsDrawerOpen(true)
@@ -49,7 +49,15 @@ export default function Status() {
   }
   return (
     <div ref={childRef}>
-      <Select name="status" select={selectStatus} onClick={changeStatus} isDrawerOpen={isDrawerOpen} title="STATUS" selected={selectedStatus} options={statusOptions}></Select>
+      <Select
+        name="status"
+        select={selectStatus}
+        onClick={changeStatus}
+        isDrawerOpen={isDrawerOpen}
+        title="STATUS"
+        selected={selectedStatus}
+        options={statusOptions}
+      ></Select>
     </div>
   )
 }

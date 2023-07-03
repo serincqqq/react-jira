@@ -3,7 +3,16 @@ import { useParams } from 'react-router-dom'
 import { CheckSquareFilled, LinkOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
 import { Title } from '../ProjectBoard/Styles'
-import { TitleTextarea, Comments, Left, Right, Content, TopActions, Copy, DetailFun } from './Styles'
+import {
+  TitleTextarea,
+  Comments,
+  Left,
+  Right,
+  Content,
+  TopActions,
+  Copy,
+  DetailFun,
+} from './Styles'
 import Status from './components/Status'
 import EstimateTracking from './components/EstimateTracking'
 import DesEditor from './components/DesEditor'
@@ -16,7 +25,9 @@ const { TextArea } = Input
 
 export default function IssueDetails() {
   const params = useParams()
-  const [value, setValue] = useState('Try dragging issues to different columns to transition their status.')
+  const [value, setValue] = useState(
+    'Try dragging issues to different columns to transition their status.'
+  )
   const [bordered, setBordered] = useState(false)
   const [link, setLink] = useState('Copy Link')
   const [comments] = useState([
@@ -49,7 +60,9 @@ export default function IssueDetails() {
         console.error('复制失败', error)
       })
   }
-
+  const deleteIssue = () => {
+    console.log('xx', params.issueId)
+  }
   return (
     <>
       <TopActions>
@@ -62,13 +75,22 @@ export default function IssueDetails() {
             <LinkOutlined className="icon" />
             {link}
           </Copy>
-          <DeleteOutlined className="delete" />
+          <DeleteOutlined onClick={deleteIssue} className="delete" />
         </DetailFun>
       </TopActions>
       <Content>
         <Left>
           <TitleTextarea>
-            <TextArea className="titleText" bordered={bordered} onBlur={() => setBordered(false)} value={value} onFocus={() => setBordered(true)} onChange={(e) => setValue(e.target.value)} placeholder="Autosize height with minimum and maximum number of lines" autoSize />
+            <TextArea
+              className="titleText"
+              bordered={bordered}
+              onBlur={() => setBordered(false)}
+              value={value}
+              onFocus={() => setBordered(true)}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder="Autosize height with minimum and maximum number of lines"
+              autoSize
+            />
           </TitleTextarea>
           <DesEditor></DesEditor>
           <Comments>
