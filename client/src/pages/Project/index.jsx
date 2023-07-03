@@ -5,7 +5,7 @@ import NavbarLeft from '@/components/NavbarLeft'
 import Sidebar from '@/components/Sidebar'
 import Modal from '@/components/Modal'
 
-const Projetc = () => {
+const Project = () => {
   return (
     <ProjectPage>
       <NavbarLeft />
@@ -15,4 +15,4 @@ const Projetc = () => {
     </ProjectPage>
   )
 }
-export default Projetc
+export default Project

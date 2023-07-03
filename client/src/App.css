@@ -5,3 +5,12 @@ label {
 button {
   font-family: 'CircularStdMedium' !important;
 }
+h3 {
+  font-family: 'CircularStdBook' !important;
+  font-size: 24px;
+  color: #42526e;
+}
+h4 {
+  font-size: 16px;
+  color: #5e6c84;
+}

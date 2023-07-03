@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { ArrowUpOutlined, CheckSquareFilled } from '@ant-design/icons'
 import { Draggable } from 'react-beautiful-dnd'
 import Avatar from '@/components/Avatar'
-import { IssueLink, Issue, Bottom, Assignees, IssueTitle, AssigneeAvatar } from './Styles'
+import { IssueLink, Issue, Bottom, IssueTitle } from './Styles'
 export default function BoardIssue({ issue, index }) {
   const [assignees] = useState([
     {

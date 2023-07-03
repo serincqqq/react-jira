@@ -1,7 +1,16 @@
 import { NavLink } from 'react-router-dom'
 import { SettingOutlined, FundProjectionScreenOutlined } from '@ant-design/icons'
 
-import { LinkItem, ProjectInfo, ProjectHeader, LinkText, ProjectAvatar, ProjectTitle, ProjectTexts, ProjectDes } from './Styles'
+import {
+  LinkItem,
+  ProjectInfo,
+  ProjectHeader,
+  LinkText,
+  ProjectAvatar,
+  ProjectTitle,
+  ProjectTexts,
+  ProjectDes,
+} from './Styles'
 export default function Sidebar() {
   const projectId = '001'
   return (

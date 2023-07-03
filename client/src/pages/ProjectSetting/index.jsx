@@ -1,4 +1,4 @@
-import {  useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 import ReactQuill from 'react-quill'
 import { useState, Fragment } from 'react'
@@ -24,7 +24,15 @@ export default function ProjectSetting() {
       </Nav>
       <h2 style={{ margin: '20px 0 30px 0' }}>Project Details</h2>
 
-      <Form style={{ fontFamily: ' CircularStdBook' }} layout="vertical" form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 30 }} style={{ maxWidth: 600 }} initialValues={{ remember: true }} autoComplete="off">
+      <Form
+        style={{ fontFamily: ' CircularStdBook', maxWidth: 600 }}
+        layout="vertical"
+        form={form}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 30 }}
+        initialValues={{ remember: true }}
+        autoComplete="off"
+      >
         <Form.Item label="Name" name="name">
           <Input placeholder="choose project" />
         </Form.Item>

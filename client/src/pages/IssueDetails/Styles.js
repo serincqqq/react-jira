@@ -54,8 +54,12 @@ export const Copy = styled.div`
   overflow: hidden;
   ${font.size(16)};
   border-radius: 4px;
+  margin-right: 4px;
 `
 export const DetailFun = styled.div`
+  position: absolute;
+  right: 50px;
+  top: 14px;
   display: flex;
   .delete {
     height: 30px;
@@ -73,4 +77,4 @@ export const SectionTitle = styled.div`
   color: ${color.textMedium};
   ${font.size(12.5)}
   ${font.bold}
-`;
+`
