@@ -10,6 +10,7 @@
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-react": "^1.0.6",
     "antd": "^5.6.1",
+    "axios": "^1.4.0",
     "color": "^4.2.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",

@@ -27,7 +27,7 @@ export const contentStyle = {
 export const ProjectType = styled.div`
   ${commonStyles}
 `
-export const Type = styled.div`
+export const Type = styled.button`
   margin-top: 4px;
   display: flex;
   font-size: 16px;
@@ -39,6 +39,10 @@ export const Type = styled.div`
   &:hover:not(:focus) {
     background: ${color.backgroundLight};
   }
+  &:focus {
+    background: ${color.backgroundLight};
+  }
+
   .icon {
     margin-right: 10px;
     background-color: ${(props) => (props.software ? '#ffb703' : '#2684ff')};
@@ -53,7 +57,3 @@ export const PersonInfo = styled.div`
 export const PersonText = styled.div`
   margin-left: 10px;
 `
-export const active = {
-  backgroundColor: '#ebecf0',
-  color: '#0052cc',
-}

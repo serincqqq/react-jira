@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import { Input, Layout, Divider, Table, Tooltip } from 'antd'
 import { PicRightOutlined, BuildOutlined } from '@ant-design/icons'
@@ -25,34 +25,7 @@ const CustomOverlay = () => (
     </PersonText>
   </PersonInfo>
 )
-const columns = [
-  {
-    title: 'ProjectName',
-    dataIndex: 'projectName',
-    key: 'projectName',
-    render: (_, record) => (
-      <ProjectLink to={`/project/${record.key}/board`}>{record.name}</ProjectLink>
-    ),
-  },
-  {
-    title: 'ProjectType',
-    //通过这一项来匹配表格字段
-    dataIndex: 'age',
-    key: 'projectType',
-  },
-  {
-    title: 'ProjectManager',
-    dataIndex: 'address',
-    key: 'projectManager',
-    render: (_, record) => (
-      <Tooltip title="prompt text" overlay={CustomOverlay}>
-        <div>
-          <span>Tooltip will show on mouse enter.</span>
-        </div>
-      </Tooltip>
-    ),
-  },
-]
+
 const data = [
   {
     key: '1',
@@ -76,30 +49,44 @@ const data = [
     tags: ['cool', 'teacher'],
   },
 ]
+const columns = [
+  {
+    title: 'ProjectName',
+    dataIndex: 'projectName',
+    key: 'projectName',
+    render: (_, record) => (
+      <ProjectLink to={`/project/${record.key}/board`} target="_blank">
+        {record.name}
+      </ProjectLink>
+    ),
+  },
+  {
+    title: 'ProjectType',
+    //通过这一项来匹配表格字段
+    dataIndex: 'age',
+    key: 'projectType',
+  },
+  {
+    title: 'ProjectManager',
+    dataIndex: 'address',
+    key: 'projectManager',
+    render: (_, record) => (
+      <Tooltip title="prompt text" overlay={CustomOverlay}>
+        <div>
+          <span>Tooltip will show on mouse enter.</span>
+        </div>
+      </Tooltip>
+    ),
+  },
+]
 export default function BrowseProjects() {
-  const [isActive, setIsActive] = useState(false)
-
+  const [searchType, setSearchType] = useState('software')
   // 动态计算样式名
-  const className = isActive ? 'active' : ''
-  const navigate = useNavigate()
   const onSearch = (value) => {
     //获取输入的值来搜素
     console.log(value)
   }
-  const jumpToProject = () => {
-    //根据搜索结果显示出的item来选择
-    navigate('/project/001/board', {
-      replace: false,
-      // state: {
-      //   id: m.id,
-      //   title: m.title,
-      // },
-    })
-  }
-  const choosed = () => {
-    setIsActive(true)
-  }
-  // 写个nav包含项目类型（software和business) 选择nav时选择框的上方要显示不同的内容下的搜索
+
   return (
     <Layout>
       <Sider width="250" style={siderStyle}>
@@ -107,11 +94,11 @@ export default function BrowseProjects() {
         <Divider />
         <ProjectType>
           <h4>All project types</h4>
-          <Type className={className} software onClick={choosed}>
+          <Type autoFocus onClick={() => setSearchType('software')} software>
             <BuildOutlined className="icon" />
             <span>software</span>
           </Type>
-          <Type className={className} onClick={choosed}>
+          <Type onClick={() => setSearchType('business')}>
             <PicRightOutlined className="icon" />
             <TypeLabel>business</TypeLabel>
           </Type>
@@ -119,7 +106,7 @@ export default function BrowseProjects() {
       </Sider>
       <Layout>
         <Content style={contentStyle}>
-          <h3>business - All project types</h3>
+          <h3>{searchType} - All project types</h3>
           <Search
             style={{ width: '260px', margin: '20px 0' }}
             placeholder="input search text"
