@@ -1,5 +1,5 @@
 import Request from '@/utils/request'
-import { message } from 'ant-design-vue'
+import { message } from 'antd'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL
 const request = new Request({
@@ -15,13 +15,15 @@ const request = new Request({
       return error
     },
     responseInterceptor: (response) => {
-      if (response.data.code !== 0) {
-        message.error(response.data.msg)
+      if (response.status !== 200) {
+        console.error(response.statusText)
       }
       return response
     },
     responseInterceptorCatch: (error) => {
-      message.error(error.response?.data?.msg)
+      console.log('xx', error)
+      // console.error(error.response?.data?.msg)
+      // message.error(error.response?.data?.msg)
       return error
     },
   },

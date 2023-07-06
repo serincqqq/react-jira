@@ -1,8 +1,12 @@
 import request from '../http'
 const insertProject = (data) =>
   request.post({
-    url: '/editsys/edu/student/delete',
+    url: '/project/create',
     data,
   })
-
-export { insertProject }
+const getProject = (data) =>
+  request.get({
+    url: '/project/list',
+    data,
+  })
+export { insertProject, getProject }

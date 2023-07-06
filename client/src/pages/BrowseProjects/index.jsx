@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-
-import { Input, Layout, Divider, Table, Tooltip } from 'antd'
+import { insertProject, getProject } from '@/services'
+import { Input, Layout, Divider, Table, Tooltip, Button } from 'antd'
 import { PicRightOutlined, BuildOutlined } from '@ant-design/icons'
 import {
   TypeLabel,
@@ -80,11 +79,31 @@ const columns = [
   },
 ]
 export default function BrowseProjects() {
+  const init = () => {
+    getProject().then((res) => {
+      console.log('/', res)
+    })
+  }
+
   const [searchType, setSearchType] = useState('software')
   // 动态计算样式名
   const onSearch = (value) => {
     //获取输入的值来搜素
     console.log(value)
+  }
+  const create = () => {
+    const data = {
+      projectName: 'test',
+      managerName: 'jack',
+      managerEmail: '123@qq.com',
+      managerAvatar: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
+      keyWord: 'HardWare',
+    }
+    //需要开弹窗来填写相关信息
+    insertProject(data).then((res) => {
+      console.log('xx', res)
+      init()
+    })
   }
 
   return (
@@ -107,13 +126,17 @@ export default function BrowseProjects() {
       <Layout>
         <Content style={contentStyle}>
           <h3>{searchType} - All project types</h3>
+
           <Search
             style={{ width: '260px', margin: '20px 0' }}
             placeholder="input search text"
             onSearch={onSearch}
             enterButton
           />
-          <Table columns={columns} dataSource={data} />;
+          <Button onClick={create} style={{ float: 'right', marginRight: '100px' }} type="primary">
+            create project
+          </Button>
+          <Table columns={columns} dataSource={data} />
         </Content>
         {/* <Footer>Footer</Footer> */}
       </Layout>
