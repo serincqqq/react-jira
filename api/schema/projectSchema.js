@@ -8,7 +8,8 @@ const Project = Mongoose.model(
     managerName: String,
     managerEmail: String,
     managerAvatar: String,
-    keyWord: String,
+    projectType: String,
+    keyword: String,
   })
 )
 module.exports = Project

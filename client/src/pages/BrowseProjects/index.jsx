@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { insertProject, getProject } from '@/services'
 import {
   Input,
@@ -27,40 +27,17 @@ import {
 } from './Styles'
 const { Sider, Content } = Layout
 const { Search } = Input
-
-const CustomOverlay = () => (
+const { Option } = Select
+const CustomOverlay = (record) => (
   <PersonInfo>
     <img src="https://via.placeholder.com/40" alt="placeholder" />
     <PersonText>
-      <span>name</span>
-      <p>email</p>
+      <span>{record.managerName}</span>
+      <p>{record.managerEmail}</p>
     </PersonText>
   </PersonInfo>
 )
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-]
 const columns = [
   {
     title: 'ProjectName',
@@ -68,24 +45,24 @@ const columns = [
     key: 'projectName',
     render: (_, record) => (
       <ProjectLink to={`/project/${record.key}/board`} target="_blank">
-        {record.name}
+        {record.projectName}
       </ProjectLink>
     ),
   },
   {
     title: 'ProjectType',
     //通过这一项来匹配表格字段
-    dataIndex: 'age',
+    dataIndex: 'projectType',
     key: 'projectType',
   },
   {
-    title: 'ProjectManager',
-    dataIndex: 'address',
-    key: 'projectManager',
+    title: 'managerName',
+    dataIndex: 'managerName',
+    key: 'managerName',
     render: (_, record) => (
-      <Tooltip title="prompt text" overlay={CustomOverlay}>
+      <Tooltip title="prompt text" overlay={CustomOverlay(record)}>
         <div>
-          <span>Tooltip will show on mouse enter.</span>
+          <span>{record.managerName}</span>
         </div>
       </Tooltip>
     ),
@@ -94,23 +71,33 @@ const columns = [
 
 export default function BrowseProjects() {
   const [form] = Form.useForm()
+  const [data, setData] = useState([])
+  const [fileList, setFileList] = useState([])
   const [createOpen, setCreateOpen] = useState(false)
   const [searchType, setSearchType] = useState('software')
-
   const init = () => {
     getProject().then((res) => {
       console.log('/', res)
+      setData(res)
     })
   }
+  useEffect(() => {
+    init()
+  }, [])
+
   // 动态计算样式名
   const onSearch = (value) => {
     //获取输入的值来搜素
     console.log(value)
   }
-  const onFinish = () => {
-    insertProject(form.getFieldsValue()).then((res) => {
+
+  const onFinish = (values) => {
+    values.managerEmail = Object.keys(values.managerEmail)
+      .map((k) => values.managerEmail[k])
+      .join('')
+    insertProject(values).then((res) => {
       setCreateOpen(false)
-      init()
+      // init()
     })
   }
   const onFinishFailed = () => {}
@@ -149,7 +136,7 @@ export default function BrowseProjects() {
             create project
           </Button>
           <Table columns={columns} dataSource={data} />
-          <Modal width={500} open={createOpen} footer={null}>
+          <Modal width={500} open={createOpen} footer={null} onCancel={() => setCreateOpen(false)}>
             <Form
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
@@ -168,8 +155,8 @@ export default function BrowseProjects() {
                 <Input placeholder="input projectName" />
               </Form.Item>
               <Form.Item
-                label="Type"
-                name="type"
+                label="Project Type"
+                name="projectType"
                 rules={[{ required: true, message: 'Please select your type!' }]}
               >
                 <Select
@@ -192,22 +179,32 @@ export default function BrowseProjects() {
               >
                 <Input placeholder="input managerName" />
               </Form.Item>
-              <Form.Item
-                label="Manager Email"
-                name="managerEmail"
-                rules={[{ required: true, message: 'Please input your managerEmail!' }]}
-              >
-                <Space.Compact style={{ width: '100%' }}>
-                  <Input style={{ width: '700px' }} placeholder="Email" />
-                  <Select defaultValue="@gmail.com">
-                    <Select.Option value="@gmail.com">@gmail.com</Select.Option>
-                    <Select.Option value="@hotmail.com">@hotmail.com</Select.Option>
-                    <Select.Option value="@outlook.com">@outlook.com</Select.Option>
-                  </Select>
+              <Form.Item label="Manager Email">
+                <Space.Compact>
+                  <Form.Item name={['managerEmail', 'content']} noStyle>
+                    <Input
+                      style={{
+                        width: '330px',
+                      }}
+                      placeholder="Input street"
+                    />
+                  </Form.Item>
+                  <Form.Item name={['managerEmail', 'suffix']} noStyle>
+                    <Select
+                      style={{
+                        width: '40%',
+                      }}
+                    >
+                      <Select.Option value="@gmail.com">@gmail.com</Select.Option>
+                      <Select.Option value="@hotmail.com">@hotmail.com</Select.Option>
+                      <Select.Option value="@outlook.com">@outlook.com</Select.Option>
+                    </Select>
+                  </Form.Item>
                 </Space.Compact>
               </Form.Item>
+
               <Form.Item label="Manager Avatar" name="managerAvatar">
-                <Upload maxCount={1} action="/upload.do" listType="picture">
+                <Upload fileList={fileList} maxCount={1} action="/upload.do" listType="picture">
                   <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
                 </Upload>
               </Form.Item>
