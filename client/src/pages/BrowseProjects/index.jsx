@@ -1,7 +1,20 @@
 import React, { useState } from 'react'
 import { insertProject, getProject } from '@/services'
-import { Input, Layout, Divider, Table, Tooltip, Button } from 'antd'
-import { PicRightOutlined, BuildOutlined } from '@ant-design/icons'
+import {
+  Input,
+  Layout,
+  Divider,
+  Table,
+  Tooltip,
+  Button,
+  Modal,
+  Form,
+  Upload,
+  message,
+  Select,
+  Space,
+} from 'antd'
+import { PicRightOutlined, BuildOutlined, UploadOutlined } from '@ant-design/icons'
 import {
   TypeLabel,
   siderStyle,
@@ -78,34 +91,29 @@ const columns = [
     ),
   },
 ]
+
 export default function BrowseProjects() {
+  const [form] = Form.useForm()
+  const [createOpen, setCreateOpen] = useState(false)
+  const [searchType, setSearchType] = useState('software')
+
   const init = () => {
     getProject().then((res) => {
       console.log('/', res)
     })
   }
-
-  const [searchType, setSearchType] = useState('software')
   // 动态计算样式名
   const onSearch = (value) => {
     //获取输入的值来搜素
     console.log(value)
   }
-  const create = () => {
-    const data = {
-      projectName: 'test',
-      managerName: 'jack',
-      managerEmail: '123@qq.com',
-      managerAvatar: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
-      keyWord: 'HardWare',
-    }
-    //需要开弹窗来填写相关信息
-    insertProject(data).then((res) => {
-      console.log('xx', res)
+  const onFinish = () => {
+    insertProject(form.getFieldsValue()).then((res) => {
+      setCreateOpen(false)
       init()
     })
   }
-
+  const onFinishFailed = () => {}
   return (
     <Layout>
       <Sider width="250" style={siderStyle}>
@@ -133,10 +141,87 @@ export default function BrowseProjects() {
             onSearch={onSearch}
             enterButton
           />
-          <Button onClick={create} style={{ float: 'right', marginRight: '100px' }} type="primary">
+          <Button
+            onClick={() => setCreateOpen(true)}
+            style={{ float: 'right', marginRight: '100px' }}
+            type="primary"
+          >
             create project
           </Button>
           <Table columns={columns} dataSource={data} />
+          <Modal width={500} open={createOpen} footer={null}>
+            <Form
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              style={{ fontFamily: ' CircularStdBook' }}
+              layout="vertical"
+              form={form}
+              labelCol={{ span: 10 }}
+              wrapperCol={{ span: 24 }}
+              autoComplete="off"
+            >
+              <Form.Item
+                label="Project Name"
+                name="projectName"
+                rules={[{ required: true, message: 'Please input your projectName!' }]}
+              >
+                <Input placeholder="input projectName" />
+              </Form.Item>
+              <Form.Item
+                label="Type"
+                name="type"
+                rules={[{ required: true, message: 'Please select your type!' }]}
+              >
+                <Select
+                  options={[
+                    {
+                      value: 'software',
+                      label: 'Software',
+                    },
+                    {
+                      value: 'business',
+                      label: 'Business',
+                    },
+                  ]}
+                />
+              </Form.Item>
+              <Form.Item
+                label="Manager Name"
+                name="managerName"
+                rules={[{ required: true, message: 'Please input your managerName!' }]}
+              >
+                <Input placeholder="input managerName" />
+              </Form.Item>
+              <Form.Item
+                label="Manager Email"
+                name="managerEmail"
+                rules={[{ required: true, message: 'Please input your managerEmail!' }]}
+              >
+                <Space.Compact style={{ width: '100%' }}>
+                  <Input style={{ width: '700px' }} placeholder="Email" />
+                  <Select defaultValue="@gmail.com">
+                    <Select.Option value="@gmail.com">@gmail.com</Select.Option>
+                    <Select.Option value="@hotmail.com">@hotmail.com</Select.Option>
+                    <Select.Option value="@outlook.com">@outlook.com</Select.Option>
+                  </Select>
+                </Space.Compact>
+              </Form.Item>
+              <Form.Item label="Manager Avatar" name="managerAvatar">
+                <Upload maxCount={1} action="/upload.do" listType="picture">
+                  <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
+                </Upload>
+              </Form.Item>
+              <Form.Item label="KeyWord" name="keyword">
+                <Input placeholder="input keyword" />
+              </Form.Item>
+              <Button style={{ marginLeft: '300px' }} onClick={() => setCreateOpen(false)}>
+                取消
+              </Button>
+              <Button type="primary" style={{ marginLeft: '20px' }} htmlType="submit">
+                确定
+              </Button>
+            </Form>
+          </Modal>
         </Content>
         {/* <Footer>Footer</Footer> */}
       </Layout>

@@ -70,7 +70,13 @@ export default function ProjectBoardIssueDetailsEstimateTracking() {
         <Actions>
           <InputCont>
             <InputLabel>Time spent (hours) </InputLabel>
-            <Input className="input" type="text" defaultValue={spent} value={spent} onChange={spentChange} />
+            <Input
+              className="input"
+              type="text"
+              initialValues={spent}
+              value={spent}
+              onChange={spentChange}
+            />
           </InputCont>
           <InputCont>
             <InputLabel>Time remaining (hours)</InputLabel>

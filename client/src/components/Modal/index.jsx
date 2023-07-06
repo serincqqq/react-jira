@@ -5,7 +5,13 @@ import { nanoid } from 'nanoid'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { Drawer, Modal, Select, Form, Input, Space, Spin } from 'antd'
-import { SearchOutlined, ArrowUpOutlined, ArrowDownOutlined, ExclamationCircleFilled, CheckSquareFilled } from '@ant-design/icons'
+import {
+  SearchOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+  ExclamationCircleFilled,
+  CheckSquareFilled,
+} from '@ant-design/icons'
 import PubSub from 'pubsub-js'
 import { SectionTitle, SearchInput, SearchInputDebounced } from './Styles'
 import Issue from '../Issue'
@@ -64,7 +70,16 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
     }
     return debounce(loadOptions, debounceTimeout)
   }, [fetchOptions, debounceTimeout])
-  return <Select labelInValue filterOption={false} onSearch={debounceFetcher} notFoundContent={fetching ? <Spin size="small" /> : null} {...props} options={options} />
+  return (
+    <Select
+      labelInValue
+      filterOption={false}
+      onSearch={debounceFetcher}
+      notFoundContent={fetching ? <Spin size="small" /> : null}
+      {...props}
+      options={options}
+    />
+  )
 }
 async function fetchUserList(username) {
   //console.log('fetching user', username)
@@ -100,7 +115,13 @@ function NavbarModal() {
   }
   return (
     <Fragment>
-      <Drawer style={{ width: '520px' }} placement="left" closable={false} onClose={onClose} open={searchOpen}>
+      <Drawer
+        style={{ width: '520px' }}
+        placement="left"
+        closable={false}
+        onClose={onClose}
+        open={searchOpen}
+      >
         <SearchInput>
           <SearchOutlined style={{ fontSize: '22px', marginTop: '2px' }} />
           <SearchInputDebounced placeholder="Search issues by summary, description..."></SearchInputDebounced>
@@ -108,12 +129,36 @@ function NavbarModal() {
         <SectionTitle>Recent Issues</SectionTitle>
         <Issue></Issue>
       </Drawer>
-      <Modal width={670} open={createOpen} onOk={submit} onCancel={onClose} okText="Create Issue" cancelText="Cancel">
-        <Form style={{ fontFamily: ' CircularStdBook' }} layout="vertical" form={form} labelCol={{ span: 6 }} wrapperCol={{ span: 30 }} style={{ maxWidth: 600 }} initialValues={{ remember: true }} autoComplete="off">
-          <Form.Item label="Project" name="project" rules={[{ required: true, message: 'Please input your username!' }]}>
+      <Modal
+        width={670}
+        open={createOpen}
+        onOk={submit}
+        onCancel={onClose}
+        okText="Create Issue"
+        cancelText="Cancel"
+      >
+        <Form
+          style={{ fontFamily: ' CircularStdBook', maxWidth: 600 }}
+          layout="vertical"
+          form={form}
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 30 }}
+          initialValues={{ remember: true }}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Project"
+            name="project"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
             <Input placeholder="choose project" />
           </Form.Item>
-          <Form.Item initialValue="Task" label="Issue Type" name="issuetype" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item
+            initialValue="Task"
+            label="Issue Type"
+            name="issuetype"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
             <Select optionLabelProp="label" onChange={handleChange}>
               {issueType.map((item) => {
                 return (
@@ -140,9 +185,19 @@ function NavbarModal() {
             <Input placeholder="Concisely summarize the issue in one or two sentences." />
           </Form.Item>
           <Form.Item label="Description" name="description">
-            <ReactQuill style={{ width: 600 }} theme="snow" value={description} onChange={setValue} />
+            <ReactQuill
+              style={{ width: 600 }}
+              theme="snow"
+              value={description}
+              onChange={setValue}
+            />
           </Form.Item>
-          <Form.Item initialValue="Medium" label="Priority" name="priority" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item
+            initialValue="Medium"
+            label="Priority"
+            name="priority"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
             <Select optionLabelProp="label" onChange={handleChange}>
               {prioritys.map((item) => {
                 return (
@@ -165,7 +220,11 @@ function NavbarModal() {
               })}
             </Select>
           </Form.Item>
-          <Form.Item label="Reporter" name="reporter" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item
+            label="Reporter"
+            name="reporter"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
             {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect
               mode="multiple"
@@ -181,7 +240,11 @@ function NavbarModal() {
             />
           </Form.Item>
 
-          <Form.Item label="Assignees" name="assignees" rules={[{ required: true, message: 'Please input your username!' }]}>
+          <Form.Item
+            label="Assignees"
+            name="assignees"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
             {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect
               mode="multiple"
