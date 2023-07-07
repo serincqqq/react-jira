@@ -9,4 +9,8 @@ const insertIssue = (data) =>
     url: '/issue/create',
     data,
   })
-export { insertIssue, deleteIssue }
+const getIssueList = (data) =>
+  request.get({
+    url: '/issue/list',
+  })
+export { getIssueList, insertIssue, deleteIssue }

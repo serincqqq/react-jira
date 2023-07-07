@@ -2,6 +2,9 @@ const express = require('express')
 const Issue = require('../schema/issueSchema')
 const app = express()
 const issuesRouter = express.Router()
+issuesRouter.get('/list', async function (req, res) {
+  res.send(await Issue.find()) //通过find查找Product中的信息
+})
 issuesRouter.get('/delete', async function (req, res) {
   res.send(await Issue.find()) //通过find查找Product中的信息
 })

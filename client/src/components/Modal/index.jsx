@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef, useMemo } from 'react'
+import React, { Fragment, useState, useRef, useMemo, useEffect } from 'react'
 import debounce from 'lodash/debounce'
 import { nanoid } from 'nanoid'
 // import PropTypes from 'prop-types'
@@ -15,7 +15,7 @@ import {
 import PubSub from 'pubsub-js'
 import { SectionTitle, SearchInput, SearchInputDebounced } from './Styles'
 import Issue from '../Issue'
-import { getUserList, insertIssue } from '@/services'
+import { getIssueList, getUserList, insertIssue } from '@/services'
 
 const { Option } = Select
 //抽成常量存在一个文件
@@ -110,6 +110,13 @@ function NavbarModal() {
   const [reporter] = useState({})
   const [assignee] = useState({})
   const [description] = useState('')
+  const init = () => {
+    getIssueList().then((res) => {})
+  }
+  useEffect(() => {
+    init()
+  }, [])
+
   const onClose = () => {
     setSearchOpen(false)
     setCreateOpen(false)
@@ -117,8 +124,10 @@ function NavbarModal() {
   const onFinish = (values) => {
     //创建成功后正常来说要刷新问题列表，但是鉴于接口还没写完。。。默认放在未完成的列表中
     console.log('dd', values)
-    insertIssue({ ...values, createdAt: new Date() }).then((res) => {
+    insertIssue({ ...values, status: 'backlog', createdAt: new Date() }).then((res) => {
       onClose()
+      form.resetFields()
+      // init()
     })
   }
 
