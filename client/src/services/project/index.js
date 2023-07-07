@@ -4,9 +4,17 @@ const insertProject = (data) =>
     url: '/project/create',
     data,
   })
-const getProject = (data) =>
+const getProject = () =>
   request.get({
     url: '/project/list',
-    data,
   })
-export { insertProject, getProject }
+
+const searchProject = (data) =>
+  request.get({
+    url: '/project/search',
+    params: {
+      searchQuery: data,
+    },
+  })
+
+export { insertProject, getProject, searchProject }

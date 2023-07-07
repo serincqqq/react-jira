@@ -53,7 +53,7 @@ class Request {
           if (response.status === 200) {
             resolve(response.data)
           }
-          resolve(response.response.data)
+          // resolve(response.response.data)
         })
         .catch((error) => {
           reject(error)

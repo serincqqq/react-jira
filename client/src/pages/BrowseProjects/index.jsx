@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { insertProject, getProject } from '@/services'
+import { insertProject, getProject, searchProject, getSuffixOption } from '@/services'
 import {
   Input,
   Layout,
@@ -24,6 +24,8 @@ import {
   ProjectLink,
   PersonInfo,
   PersonText,
+  softIcon,
+  businessIcon,
 } from './Styles'
 const { Sider, Content } = Layout
 const { Search } = Input
@@ -50,17 +52,32 @@ const columns = [
     ),
   },
   {
+    title: 'keyword',
+    dataIndex: 'keyword',
+    key: 'keyword',
+  },
+  {
     title: 'ProjectType',
     //通过这一项来匹配表格字段
     dataIndex: 'projectType',
     key: 'projectType',
+    render: (_, record) => (
+      <div>
+        {record.projectType === 'Software' ? (
+          <BuildOutlined style={softIcon} />
+        ) : (
+          <PicRightOutlined style={businessIcon} />
+        )}
+        <span>{record.projectType}</span>
+      </div>
+    ),
   },
   {
     title: 'managerName',
     dataIndex: 'managerName',
     key: 'managerName',
     render: (_, record) => (
-      <Tooltip title="prompt text" overlay={CustomOverlay(record)}>
+      <Tooltip placement="bottomLeft" overlay={CustomOverlay(record)}>
         <div>
           <span>{record.managerName}</span>
         </div>
@@ -74,21 +91,25 @@ export default function BrowseProjects() {
   const [data, setData] = useState([])
   const [fileList, setFileList] = useState([])
   const [createOpen, setCreateOpen] = useState(false)
-  const [searchType, setSearchType] = useState('software')
+  const [searchType, setSearchType] = useState('Software')
+  const [suffixOption, setSuffixOption] = useState([])
   const init = () => {
     getProject().then((res) => {
-      console.log('/', res)
       setData(res)
     })
   }
   useEffect(() => {
+    getSuffixOption().then((res) => {
+      setSuffixOption(res)
+    })
     init()
   }, [])
 
   // 动态计算样式名
   const onSearch = (value) => {
-    //获取输入的值来搜素
-    console.log(value)
+    searchProject(value).then((res) => {
+      setData(res)
+    })
   }
 
   const onFinish = (values) => {
@@ -97,10 +118,14 @@ export default function BrowseProjects() {
       .join('')
     insertProject(values).then((res) => {
       setCreateOpen(false)
-      // init()
+      form.resetFields()
+      init()
     })
   }
-  const onFinishFailed = () => {}
+  const cancel = () => {
+    setCreateOpen(false)
+    form.resetFields()
+  }
   return (
     <Layout>
       <Sider width="250" style={siderStyle}>
@@ -108,13 +133,13 @@ export default function BrowseProjects() {
         <Divider />
         <ProjectType>
           <h4>All project types</h4>
-          <Type autoFocus onClick={() => setSearchType('software')} software>
+          <Type autoFocus onClick={() => setSearchType('Software')} software>
             <BuildOutlined className="icon" />
-            <span>software</span>
+            <span>Software</span>
           </Type>
-          <Type onClick={() => setSearchType('business')}>
+          <Type onClick={() => setSearchType('Business')}>
             <PicRightOutlined className="icon" />
-            <TypeLabel>business</TypeLabel>
+            <TypeLabel>Business</TypeLabel>
           </Type>
         </ProjectType>
       </Sider>
@@ -135,17 +160,17 @@ export default function BrowseProjects() {
           >
             create project
           </Button>
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={data} rowKey="_id" />
           <Modal width={500} open={createOpen} footer={null} onCancel={() => setCreateOpen(false)}>
             <Form
               onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
               style={{ fontFamily: ' CircularStdBook' }}
               layout="vertical"
               form={form}
               labelCol={{ span: 10 }}
               wrapperCol={{ span: 24 }}
               autoComplete="off"
+              initialValues={{ projectType: 'Software', managerEmail: { suffix: '@gmail.com' } }}
             >
               <Form.Item
                 label="Project Name"
@@ -162,11 +187,11 @@ export default function BrowseProjects() {
                 <Select
                   options={[
                     {
-                      value: 'software',
+                      value: 'Software',
                       label: 'Software',
                     },
                     {
-                      value: 'business',
+                      value: 'Business',
                       label: 'Business',
                     },
                   ]}
@@ -179,25 +204,30 @@ export default function BrowseProjects() {
               >
                 <Input placeholder="input managerName" />
               </Form.Item>
-              <Form.Item label="Manager Email">
+              <Form.Item label="Manager Email" style={{ marginBottom: 0 }}>
                 <Space.Compact>
-                  <Form.Item name={['managerEmail', 'content']} noStyle>
-                    <Input
-                      style={{
-                        width: '330px',
-                      }}
-                      placeholder="Input street"
-                    />
+                  <Form.Item
+                    name={['managerEmail', 'content']}
+                    style={{ width: '300px' }}
+                    rules={[{ required: true, message: 'content is required' }]}
+                  >
+                    <Input placeholder="Input street" />
                   </Form.Item>
-                  <Form.Item name={['managerEmail', 'suffix']} noStyle>
-                    <Select
-                      style={{
-                        width: '40%',
-                      }}
-                    >
-                      <Select.Option value="@gmail.com">@gmail.com</Select.Option>
-                      <Select.Option value="@hotmail.com">@hotmail.com</Select.Option>
-                      <Select.Option value="@outlook.com">@outlook.com</Select.Option>
+                  <Form.Item
+                    name={['managerEmail', 'suffix']}
+                    style={{ width: '150px' }}
+                    rules={[{ required: true, message: 'suffix is required' }]}
+                  >
+                    <Select>
+                      {/* 可以考虑下拉框的值不写死，从接口获取，然后提成循环渲染 */}
+                      {suffixOption.map((item) => (
+                        <Option key={item._id} value={item.value}>
+                          {item.label}
+                        </Option>
+                      ))}
+                      {/* <Option value="@gmail.com">@gmail.com</Option>
+                      <Option value="@hotmail.com">@hotmail.com</Option>
+                      <Option value="@outlook.com">@outlook.com</Option> */}
                     </Select>
                   </Form.Item>
                 </Space.Compact>
@@ -211,11 +241,11 @@ export default function BrowseProjects() {
               <Form.Item label="KeyWord" name="keyword">
                 <Input placeholder="input keyword" />
               </Form.Item>
-              <Button style={{ marginLeft: '300px' }} onClick={() => setCreateOpen(false)}>
-                取消
+              <Button style={{ marginLeft: '260px' }} onClick={cancel}>
+                Cancel
               </Button>
               <Button type="primary" style={{ marginLeft: '20px' }} htmlType="submit">
-                确定
+                Submit
               </Button>
             </Form>
           </Modal>

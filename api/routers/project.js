@@ -5,8 +5,24 @@ const projectsRouter = express.Router()
 projectsRouter.get('/list', async function (req, res) {
   res.send(await Project.find()) //通过find查找Product中的信息
 })
+
 projectsRouter.get('/search', async function (req, res) {
-  res.send('xx', req, res)
+  const { searchQuery } = req.query
+  Project.find({
+    $or: [
+      { projectName: { $regex: searchQuery, $options: 'i' } },
+      { managerName: { $regex: searchQuery, $options: 'i' } },
+      { keyword: { $regex: searchQuery, $options: 'i' } },
+      // ... 其他字段
+    ],
+  }).then((response) => {
+    res.send(response)
+  })
+  // Project.find({
+  //   projectName: searchQuery,
+  // }).then((response) => {
+  //   res.send(response)
+  // })
 })
 projectsRouter.post('/create', async function (req, res) {
   // const data = req.body

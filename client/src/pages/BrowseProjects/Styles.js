@@ -57,3 +57,16 @@ export const PersonInfo = styled.div`
 export const PersonText = styled.div`
   margin-left: 10px;
 `
+export const icon = {
+  marginRight: '4px',
+  padding: '2px',
+  borderRadius: '50%',
+}
+export const softIcon = {
+  ...icon,
+  background: '#ffb703',
+}
+export const businessIcon = {
+  ...icon,
+  background: '#2684ff',
+}
