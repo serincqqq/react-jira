@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Select from '@/components/Select'
 export default function Status() {
   const assigneesRef = useRef(null)
+
   const statusOptions = [
     {
       label: 'Lisa',

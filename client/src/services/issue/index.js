@@ -1,8 +1,12 @@
 import request from '../http'
-const deleteStuInfo = (data) =>
-  request.post({
-    url: '/editsys/edu/student/delete',
+const deleteIssue = (data) =>
+  request.get({
+    url: '/issue/delete',
     data,
   })
-
-export { deleteStuInfo }
+const insertIssue = (data) =>
+  request.post({
+    url: '/issue/create',
+    data,
+  })
+export { insertIssue, deleteIssue }

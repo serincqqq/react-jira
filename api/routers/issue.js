@@ -11,8 +11,16 @@ issuesRouter.get('/detail', async function (req, res) {
 issuesRouter.get('/modify', async function (req, res) {
   console.log('modify', req, res)
 })
-issuesRouter.get('/create', async function (req, res) {
-  console.log('info', req, res)
+issuesRouter.post('/create', async function (req, res) {
+  const issue = new Issue(req.body)
+  try {
+    const savedData = await issue.save()
+    console.log(savedData)
+    res.status(200).json(savedData)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Internal server error')
+  }
 })
 issuesRouter.get('/search', async function (req, res) {
   console.log('info', req, res)

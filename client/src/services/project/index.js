@@ -9,11 +9,12 @@ const getProject = () =>
     url: '/project/list',
   })
 
-const searchProject = (data) =>
+const searchProject = (data, type) =>
   request.get({
     url: '/project/search',
     params: {
       searchQuery: data,
+      searchType: type,
     },
   })
 

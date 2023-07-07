@@ -46,7 +46,7 @@ const columns = [
     dataIndex: 'projectName',
     key: 'projectName',
     render: (_, record) => (
-      <ProjectLink to={`/project/${record.key}/board`} target="_blank">
+      <ProjectLink to={`/project/${record._id}/board`} target="_blank">
         {record.projectName}
       </ProjectLink>
     ),
@@ -107,7 +107,7 @@ export default function BrowseProjects() {
 
   // 动态计算样式名
   const onSearch = (value) => {
-    searchProject(value).then((res) => {
+    searchProject(value, searchType).then((res) => {
       setData(res)
     })
   }
@@ -133,6 +133,7 @@ export default function BrowseProjects() {
         <Divider />
         <ProjectType>
           <h4>All project types</h4>
+          {/* 不能用foucus，一旦失去焦点又没颜色了 */}
           <Type autoFocus onClick={() => setSearchType('Software')} software>
             <BuildOutlined className="icon" />
             <span>Software</span>

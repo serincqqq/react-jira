@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 // import PropTypes from 'prop-types'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { Drawer, Modal, Select, Form, Input, Space, Spin } from 'antd'
+import { Drawer, Modal, Select, Form, Input, Space, Spin, Button } from 'antd'
 import {
   SearchOutlined,
   ArrowUpOutlined,
@@ -15,8 +15,10 @@ import {
 import PubSub from 'pubsub-js'
 import { SectionTitle, SearchInput, SearchInputDebounced } from './Styles'
 import Issue from '../Issue'
+import { getUserList, insertIssue } from '@/services'
 
 const { Option } = Select
+//抽成常量存在一个文件
 const prioritys = [
   {
     icon: <ArrowUpOutlined style={{ color: '#CD1317' }} />,
@@ -74,6 +76,7 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
     <Select
       labelInValue
       filterOption={false}
+      showSearch
       onSearch={debounceFetcher}
       notFoundContent={fetching ? <Spin size="small" /> : null}
       {...props}
@@ -81,31 +84,44 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
     />
   )
 }
-async function fetchUserList(username) {
-  //console.log('fetching user', username)
-  return fetch('https://randomuser.me/api/?results=5')
-    .then((response) => response.json())
-    .then((body) =>
-      body.results.map((user) => ({
-        label: `${user.name.first} ${user.name.last}`,
-        value: user.login.username,
-      }))
-    )
+//可以抽成一个公共方法
+async function fetchReporterList(username) {
+  return getUserList(username, 'reporter').then((res) =>
+    res.map((user) => ({
+      label: user.userName,
+      value: user._id,
+    }))
+  )
+}
+async function fetchAssigneeList(username) {
+  console.log('fetching user', username)
+  return getUserList(username, 'assignees').then((res) =>
+    res.map((user) => ({
+      label: user.userName,
+      value: user._id,
+    }))
+  )
 }
 function NavbarModal() {
   const [form] = Form.useForm()
   const [searchOpen, setSearchOpen] = useState(false)
   const [createOpen, setCreateOpen] = useState(false)
   const [value, setValue] = useState([])
+  const [reporter] = useState({})
+  const [assignee] = useState({})
   const [description] = useState('')
-
-  const submit = () => {
-    console.log('yes', form.getFieldsValue())
-  }
   const onClose = () => {
     setSearchOpen(false)
     setCreateOpen(false)
   }
+  const onFinish = (values) => {
+    //创建成功后正常来说要刷新问题列表，但是鉴于接口还没写完。。。默认放在未完成的列表中
+    console.log('dd', values)
+    insertIssue({ ...values, createdAt: new Date() }).then((res) => {
+      onClose()
+    })
+  }
+
   PubSub.subscribe('modalType', (_, modalType) => {
     if (modalType.modal === 'modal_search') setSearchOpen(true)
     else setCreateOpen(true)
@@ -129,15 +145,9 @@ function NavbarModal() {
         <SectionTitle>Recent Issues</SectionTitle>
         <Issue></Issue>
       </Drawer>
-      <Modal
-        width={670}
-        open={createOpen}
-        onOk={submit}
-        onCancel={onClose}
-        okText="Create Issue"
-        cancelText="Cancel"
-      >
+      <Modal width={670} open={createOpen} onCancel={onClose} footer={null}>
         <Form
+          onFinish={onFinish}
           style={{ fontFamily: ' CircularStdBook', maxWidth: 600 }}
           layout="vertical"
           form={form}
@@ -147,8 +157,8 @@ function NavbarModal() {
           autoComplete="off"
         >
           <Form.Item
-            label="Project"
-            name="project"
+            label="Issue Name"
+            name="issuename"
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
             <Input placeholder="choose project" />
@@ -159,6 +169,7 @@ function NavbarModal() {
             name="issuetype"
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
+            {/* 这里也复用一下之前写的select */}
             <Select optionLabelProp="label" onChange={handleChange}>
               {issueType.map((item) => {
                 return (
@@ -227,10 +238,9 @@ function NavbarModal() {
           >
             {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect
-              mode="multiple"
-              value={value}
+              value={reporter}
               placeholder="Select users"
-              fetchOptions={fetchUserList}
+              fetchOptions={fetchReporterList}
               onChange={(newValue) => {
                 setValue(newValue)
               }}
@@ -241,16 +251,15 @@ function NavbarModal() {
           </Form.Item>
 
           <Form.Item
-            label="Assignees"
-            name="assignees"
+            label="Assignee"
+            name="assignee"
             rules={[{ required: true, message: 'Please input your username!' }]}
           >
             {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect
-              mode="multiple"
-              value={value}
+              value={assignee}
               placeholder="Select users"
-              fetchOptions={fetchUserList}
+              fetchOptions={fetchAssigneeList}
               onChange={(newValue) => {
                 setValue(newValue)
               }}
@@ -259,6 +268,12 @@ function NavbarModal() {
               }}
             />
           </Form.Item>
+          <Button style={{ marginLeft: '260px' }} onClick={onClose}>
+            Cancel
+          </Button>
+          <Button type="primary" style={{ marginLeft: '20px' }} htmlType="submit">
+            Submit
+          </Button>
         </Form>
       </Modal>
     </Fragment>

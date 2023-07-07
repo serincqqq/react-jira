@@ -7,8 +7,9 @@ projectsRouter.get('/list', async function (req, res) {
 })
 
 projectsRouter.get('/search', async function (req, res) {
-  const { searchQuery } = req.query
+  const { searchQuery, searchType } = req.query
   Project.find({
+    projectType: searchType,
     $or: [
       { projectName: { $regex: searchQuery, $options: 'i' } },
       { managerName: { $regex: searchQuery, $options: 'i' } },
@@ -18,11 +19,6 @@ projectsRouter.get('/search', async function (req, res) {
   }).then((response) => {
     res.send(response)
   })
-  // Project.find({
-  //   projectName: searchQuery,
-  // }).then((response) => {
-  //   res.send(response)
-  // })
 })
 projectsRouter.post('/create', async function (req, res) {
   // const data = req.body
