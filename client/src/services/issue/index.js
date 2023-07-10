@@ -1,4 +1,12 @@
 import request from '../http'
+const updateIssue = (id, data) =>
+  request.post({
+    url: '/issue/update',
+    params: {
+      issueId: id,
+    },
+    data,
+  })
 const deleteIssue = (data) =>
   request.get({
     url: '/issue/delete',
@@ -13,4 +21,12 @@ const getIssueList = (data) =>
   request.get({
     url: '/issue/list',
   })
-export { getIssueList, insertIssue, deleteIssue }
+const getIssueDetail = (data) =>
+  request.get({
+    url: '/issue/detail',
+    params: {
+      issueId: data,
+    },
+  })
+
+export { updateIssue, getIssueList, insertIssue, deleteIssue, getIssueDetail }

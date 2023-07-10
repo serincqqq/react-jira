@@ -86,7 +86,7 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
 }
 //可以抽成一个公共方法
 async function fetchReporterList(username) {
-  return getUserList(username, 'reporter').then((res) =>
+  return getUserList(username).then((res) =>
     res.map((user) => ({
       label: user.userName,
       value: user._id,
@@ -95,7 +95,7 @@ async function fetchReporterList(username) {
 }
 async function fetchAssigneeList(username) {
   console.log('fetching user', username)
-  return getUserList(username, 'assignees').then((res) =>
+  return getUserList(username).then((res) =>
     res.map((user) => ({
       label: user.userName,
       value: user._id,
@@ -168,7 +168,7 @@ function NavbarModal() {
           <Form.Item
             label="Issue Name"
             name="issuename"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            rules={[{ required: true, message: 'Please input your issuename!' }]}
           >
             <Input placeholder="choose project" />
           </Form.Item>
@@ -176,7 +176,7 @@ function NavbarModal() {
             initialValue="Task"
             label="Issue Type"
             name="issuetype"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            rules={[{ required: true, message: 'Please select your issuetype!' }]}
           >
             {/* 这里也复用一下之前写的select */}
             <Select optionLabelProp="label" onChange={handleChange}>
@@ -216,7 +216,7 @@ function NavbarModal() {
             initialValue="Medium"
             label="Priority"
             name="priority"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            rules={[{ required: true, message: 'Please select your priority!' }]}
           >
             <Select optionLabelProp="label" onChange={handleChange}>
               {prioritys.map((item) => {
@@ -243,7 +243,7 @@ function NavbarModal() {
           <Form.Item
             label="Reporter"
             name="reporter"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            rules={[{ required: true, message: 'Please input your reporter!' }]}
           >
             {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect
@@ -262,7 +262,7 @@ function NavbarModal() {
           <Form.Item
             label="Assignee"
             name="assignee"
-            rules={[{ required: true, message: 'Please input your username!' }]}
+            rules={[{ required: true, message: 'Please input your assignee!' }]}
           >
             {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect

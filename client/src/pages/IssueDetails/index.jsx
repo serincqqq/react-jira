@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CheckSquareFilled, LinkOutlined, DeleteOutlined } from '@ant-design/icons'
-import { Input } from 'antd'
+import { Input, Button } from 'antd'
 import { Title } from '../ProjectBoard/Styles'
 import {
   TitleTextarea,
@@ -12,6 +12,8 @@ import {
   TopActions,
   Copy,
   DetailFun,
+  TextFunc,
+  CommentCreate,
 } from './Styles'
 import Status from './components/Status'
 import EstimateTracking from './components/EstimateTracking'
@@ -20,35 +22,36 @@ import Create from './components/Create'
 import Comment from './components/Comment'
 import Priority from './components/Priority'
 import AssigneesReporter from './components/AssigneesReporter'
-
+import { getIssueDetail } from '@/services'
+import Avatar from '@/components/Avatar'
 const { TextArea } = Input
 
 export default function IssueDetails() {
   const params = useParams()
-  const [value, setValue] = useState(
-    'Try dragging issues to different columns to transition their status.'
-  )
+  const [value, setValue] = useState('')
+  const [content, setContent] = useState('')
+  const [issueData, setIssueData] = useState()
   const [bordered, setBordered] = useState(false)
   const [link, setLink] = useState('Copy Link')
-  const [comments] = useState([
+  const assignees = [
     {
-      id: 1090046,
-      body: "Light of the moon<br>Moves west, flowers' shadows",
-      createdAt: '2023-05-17T07:09:07.584Z',
-      updatedAt: '2023-05-17T07:09:07.584Z',
-      userId: 405881,
-      issueId: 1097639,
-      user: {
-        id: 405881,
-        name: 'Lord Gaben',
-        email: 'gaben@jira.guest',
-        avatarUrl: 'https://i.ibb.co/6RJ5hq6/gaben.jpg',
-        createdAt: '2023-05-17',
-        updatedAt: '2023-05-17',
-        projectId: 135048,
-      },
+      id: '1',
+      avatarUrl: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
     },
-  ])
+  ]
+  const [create, setCreate] = useState('')
+  //搜索算法，拿一下路由的参数
+  const [comments] = useState([])
+  const init = () => {
+    getIssueDetail(params.issueId).then((res) => {
+      setValue(res.issuename)
+      setContent(res.description)
+      setIssueData(res)
+    })
+  }
+  useEffect(() => {
+    init()
+  }, [])
   const getUrl = () => {
     const currentUrl = window.location.href
     navigator.clipboard
@@ -62,6 +65,9 @@ export default function IssueDetails() {
   }
   const deleteIssue = () => {
     console.log('xx', params.issueId)
+  }
+  const saveComment = () => {
+    //要有发表评论人的头像，id，名字，时间，内容
   }
   return (
     <>
@@ -92,20 +98,39 @@ export default function IssueDetails() {
               autoSize
             />
           </TitleTextarea>
-          <DesEditor></DesEditor>
+          <DesEditor content={content} issueData={issueData}></DesEditor>
           <Comments>
             <p>Comments</p>
-            <Create></Create>
-            {comments.map((comment) => (
+            {/* <Create></Create> */}
+            <CommentCreate>
+              <Avatar assignees={assignees} />
+              <TextArea
+                className="text"
+                value={create}
+                onChange={(e) => setCreate(e.target.value)}
+                placeholder="Autosize height with minimum and maximum number of lines"
+                autoSize={{
+                  minRows: 2,
+                }}
+              />
+            </CommentCreate>
+            <TextFunc>
+              <Button onClick={saveComment} type="primary">
+                Save
+              </Button>
+              <Button className="cancel">Cancel</Button>
+            </TextFunc>
+            {/* {comments.map((comment) => (
               <Comment key={comment.id} comment={comment} />
-            ))}
+            ))} */}
           </Comments>
         </Left>
         <Right>
           <Status />
           <EstimateTracking />
           <Priority />
-          <AssigneesReporter />
+          <AssigneesReporter type="Assignee" issueData={issueData?.assignee} />
+          <AssigneesReporter type="Reporter" issueData={issueData?.reporter} />
           {/*issue={issue} updateIssue={updateIssue}  
           <Priority issue={issue} updateIssue={updateIssue} />
           

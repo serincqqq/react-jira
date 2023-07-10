@@ -15,6 +15,6 @@ app.use('/jira/project', projectsRouter)
 app.use('/jira/issue', issuesRouter)
 app.use('/jira/option', suffixRouter)
 app.use('/jira/user', userRouter)
-app.listen(3000, () => {
-  console.log('App listening on port 3000!')
+app.listen(3001, () => {
+  console.log('App listening on port 3001!')
 })

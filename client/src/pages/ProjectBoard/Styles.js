@@ -16,7 +16,7 @@ export const Title = styled.div`
   margin: 10px 6px 10px;
   padding: 4px;
   border-radius: 6px;
-  width: 130px;
+  width: 260px;
   text-transform: uppercase;
   color: #5e6c84;
   ${font.size(14)};
