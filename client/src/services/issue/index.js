@@ -10,7 +10,9 @@ const updateIssue = (id, data) =>
 const deleteIssue = (data) =>
   request.get({
     url: '/issue/delete',
-    data,
+    params: {
+      issueId: data,
+    },
   })
 const insertIssue = (data) =>
   request.post({

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import dayjs from 'dayjs'
 import { CheckSquareFilled, LinkOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Input, Button } from 'antd'
 import { Title } from '../ProjectBoard/Styles'
@@ -22,7 +23,7 @@ import Create from './components/Create'
 import Comment from './components/Comment'
 import Priority from './components/Priority'
 import AssigneesReporter from './components/AssigneesReporter'
-import { getIssueDetail } from '@/services'
+import { getIssueDetail, updateIssue } from '@/services'
 import Avatar from '@/components/Avatar'
 const { TextArea } = Input
 
@@ -35,17 +36,18 @@ export default function IssueDetails() {
   const [link, setLink] = useState('Copy Link')
   const assignees = [
     {
-      id: '1',
+      id: '13252524',
       avatarUrl: 'https://i.ibb.co/7JM1P2r/picke-rick.jpg',
     },
   ]
   const [create, setCreate] = useState('')
   //搜索算法，拿一下路由的参数
-  const [comments] = useState([])
+  const [comments, setComments] = useState([])
   const init = () => {
     getIssueDetail(params.issueId).then((res) => {
       setValue(res.issuename)
       setContent(res.description)
+      setComments(res.comments)
       setIssueData(res)
     })
   }
@@ -64,10 +66,27 @@ export default function IssueDetails() {
       })
   }
   const deleteIssue = () => {
-    console.log('xx', params.issueId)
+    deleteIssue(params.issueId).then((res) => {
+      //插入提示删除成功的message
+      console.log('r', res)
+    })
+    console.log('xx')
   }
   const saveComment = () => {
+    const date = dayjs()
+
+    const data = {
+      name: 'pinkPig',
+      avatar: assignees[0].avatarUrl,
+      id: assignees[0].id,
+      publishTime: date.format('YYYY-MM-DD HH:mm:ss'),
+      content: create,
+    }
+    console.log('create', { ...issueData, comments: data })
     //要有发表评论人的头像，id，名字，时间，内容
+    updateIssue(issueData._id, { ...issueData, comments: data }).then((res) =>
+      console.log('x', res)
+    )
   }
   return (
     <>
@@ -120,9 +139,9 @@ export default function IssueDetails() {
               </Button>
               <Button className="cancel">Cancel</Button>
             </TextFunc>
-            {/* {comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} />
-            ))} */}
+            {comments.map((comment) => (
+              <Comment key={comment._id} comment={comment} />
+            ))}
           </Comments>
         </Left>
         <Right>
@@ -131,10 +150,6 @@ export default function IssueDetails() {
           <Priority />
           <AssigneesReporter type="Assignee" issueData={issueData?.assignee} />
           <AssigneesReporter type="Reporter" issueData={issueData?.reporter} />
-          {/*issue={issue} updateIssue={updateIssue}  
-          <Priority issue={issue} updateIssue={updateIssue} />
-          
-          <Dates issue={issue} /> */}
         </Right>
       </Content>
     </>

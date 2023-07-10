@@ -6,7 +6,7 @@ export default function Avatar({ assignees }) {
       {assigneesType ? (
         assignees.map((user) => <AssigneeAvatar key={user.id} avatarUrl={user.avatarUrl} />)
       ) : (
-        <AssigneeAvatar avatarUrl={assignees} />
+        <AssigneeAvatar avatarUrl={assignees.avatarUrl} />
       )}
     </Assignees>
   )

@@ -6,7 +6,7 @@ export const CommentItem = styled.div`
   margin-top: 20px;
 `
 export const UserInfo = styled.div`
-  margin-left: 10px;
+  margin-left: 5px;
 `
 export const BodyForm = styled.div`
   margin-left: 34px;
