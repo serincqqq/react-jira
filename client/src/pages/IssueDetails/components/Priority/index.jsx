@@ -2,7 +2,7 @@ import { useState, useEffect, Fragment, useRef } from 'react'
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import Select from '@/components/Select'
 import './Styles.css'
-export default function Priority() {
+export default function Priority({ issueData }) {
   const ref = useRef(null)
   const priorityOptions = [
     {
@@ -31,10 +31,10 @@ export default function Priority() {
       icon: ArrowDownOutlined,
     },
   ]
+
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedPriority, setSelectedPriority] = useState({
-    label: 'Medium',
-    key: 'Medium',
+    ...issueData.priority,
     icon: ArrowUpOutlined,
   })
 

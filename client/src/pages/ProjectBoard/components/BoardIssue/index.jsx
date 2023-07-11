@@ -58,7 +58,7 @@ export default function BoardIssue({ issue, index }) {
             {...provided.dragHandleProps}
           >
             <Issue isBeingDragged={snapshot.isDragging && !snapshot.isDropAnimating}>
-              <IssueTitle>{issue.issuename}</IssueTitle>
+              <IssueTitle>{issue.summary}</IssueTitle>
               <Bottom>
                 <div style={{ display: 'flex' }}>
                   {issue.issuetype === 'Task' ? (
@@ -69,9 +69,11 @@ export default function BoardIssue({ issue, index }) {
                     <ExclamationCircleFilled style={{ color: '#E44D42' }} />
                   )}
                   {/* 这里需要根据不同的权重展示图标和颜色 */}
-                  <IconStyle priority={issue.priority}>
+                  <IconStyle priority={issue.priority.key}>
                     <Icon
-                      component={priorityOptions.find((item) => item.key === issue.priority)?.icon}
+                      component={
+                        priorityOptions.find((item) => item.key === issue.priority.key)?.icon
+                      }
                     />
                   </IconStyle>
                 </div>

@@ -66,7 +66,7 @@ function ItemTag(type, item) {
 export default function Select({ name, isDrawerOpen, title, options, selected, select }) {
   return (
     <>
-      <p style={{ margin: '8px 0' }}>{title}</p>
+      <p style={{ margin: '20px 0 10px 0' }}>{title}</p>
       {createChildComponent(name, selected)}
 
       {isDrawerOpen ? (

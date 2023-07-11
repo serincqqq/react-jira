@@ -15,7 +15,7 @@ import {
 import PubSub from 'pubsub-js'
 import { SectionTitle, SearchInput, SearchInputDebounced } from './Styles'
 import Issue from '../Issue'
-import { getIssueList, getUserList, insertIssue } from '@/services'
+import { getUserList, insertIssue } from '@/services'
 
 const { Option } = Select
 //抽成常量存在一个文件
@@ -85,7 +85,7 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
   )
 }
 //可以抽成一个公共方法
-async function fetchReporterList(username) {
+async function fetchUser(username) {
   return getUserList(username).then((res) =>
     res.map((user) => ({
       label: user.userName,
@@ -93,15 +93,7 @@ async function fetchReporterList(username) {
     }))
   )
 }
-async function fetchAssigneeList(username) {
-  console.log('fetching user', username)
-  return getUserList(username).then((res) =>
-    res.map((user) => ({
-      label: user.userName,
-      value: user._id,
-    }))
-  )
-}
+
 function NavbarModal() {
   const [form] = Form.useForm()
   const [searchOpen, setSearchOpen] = useState(false)
@@ -110,12 +102,6 @@ function NavbarModal() {
   const [reporter] = useState({})
   const [assignee] = useState({})
   const [description] = useState('')
-  const init = () => {
-    getIssueList().then((res) => {})
-  }
-  useEffect(() => {
-    init()
-  }, [])
 
   const onClose = () => {
     setSearchOpen(false)
@@ -123,11 +109,21 @@ function NavbarModal() {
   }
   const onFinish = (values) => {
     //创建成功后正常来说要刷新问题列表，但是鉴于接口还没写完。。。默认放在未完成的列表中
-    console.log('dd', values)
-    insertIssue({ ...values, status: 'backlog', createdAt: new Date() }).then((res) => {
+    insertIssue({
+      ...values,
+      priority: {
+        label: values.priority,
+        key: values.priority,
+      },
+      status: {
+        label: 'backlog',
+        key: 'backlog',
+      },
+      createdAt: new Date(),
+    }).then((res) => {
       onClose()
       form.resetFields()
-      // init()
+      PubSub.publish('refresh')
     })
   }
 
@@ -166,13 +162,6 @@ function NavbarModal() {
           autoComplete="off"
         >
           <Form.Item
-            label="Issue Name"
-            name="issuename"
-            rules={[{ required: true, message: 'Please input your issuename!' }]}
-          >
-            <Input placeholder="choose project" />
-          </Form.Item>
-          <Form.Item
             initialValue="Task"
             label="Issue Type"
             name="issuetype"
@@ -201,7 +190,11 @@ function NavbarModal() {
               })}
             </Select>
           </Form.Item>
-          <Form.Item label="Short Summary" name="summary">
+          <Form.Item
+            label="Short Summary"
+            name="summary"
+            rules={[{ required: true, message: 'Please input your summary!' }]}
+          >
             <Input placeholder="Concisely summarize the issue in one or two sentences." />
           </Form.Item>
           <Form.Item label="Description" name="description">
@@ -248,8 +241,8 @@ function NavbarModal() {
             {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect
               value={reporter}
-              placeholder="Select users"
-              fetchOptions={fetchReporterList}
+              placeholder="Select reporter"
+              fetchOptions={fetchUser}
               onChange={(newValue) => {
                 setValue(newValue)
               }}
@@ -267,8 +260,8 @@ function NavbarModal() {
             {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect
               value={assignee}
-              placeholder="Select users"
-              fetchOptions={fetchAssigneeList}
+              placeholder="Select assignee"
+              fetchOptions={fetchUser}
               onChange={(newValue) => {
                 setValue(newValue)
               }}

@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 
 export const Des = styled.div`
+  margin-top: 10px;
   margin-left: 10px;
   font-family: CircularStdMedium;
 `
 export const Edit = styled.div`
-  margin-top: 10px;
+  margin-top: -6px;
 `
 export const EditContainer = styled.div`
   border: 1px solid #ccc;

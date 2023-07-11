@@ -1,6 +1,11 @@
 import { color, font } from '@/assets/styles/styles'
 import styled from 'styled-components'
 
+export const WarnText = styled.div`
+  margin: 0 0 20px 10px;
+  color: red;
+  font-size: 14px;
+`
 export const TextFunc = styled.div`
   margin: 10px 0px 0px 32px;
   .cancel {
@@ -18,7 +23,7 @@ export const CommentCreate = styled.div`
 export const TitleTextarea = styled.div`
   border-radius: 4px;
   transition: background 0.1s;
-  margin-bottom: 20px;
+
   &:hover:not(:focus) {
     background: ${color.backgroundLight};
   }
@@ -31,7 +36,7 @@ export const TitleTextarea = styled.div`
 `
 export const Comments = styled.div`
   font-family: CircularStdMedium;
-  margin: 10px 10px 0;
+  margin: 20px 10px 0;
 `
 export const Left = styled.div`
   width: 65%;

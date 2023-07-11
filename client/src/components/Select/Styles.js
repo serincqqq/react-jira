@@ -24,6 +24,7 @@ export const PrioritySelect = styled.div`
   color: ${color.textDarkest};
   padding: 2px 8px;
   display: flex;
+  align-items: center;
   font-size: 15px;
   ${font.regular}
 `
@@ -44,6 +45,7 @@ export const ValueContainer = styled.p`
   margin-right: 6px;
 `
 export const Options = styled.div`
+  margin-bottom: 10px;
   position: absolute;
   width: 300px;
   z-index: 10;
@@ -63,7 +65,7 @@ export const OptionsItem = styled.div`
   height: 25px;
   padding: 2px 8px;
   display: inline-flex;
-
+  align-items: center;
   border-radius: 4px;
   cursor: pointer;
   user-select: none;

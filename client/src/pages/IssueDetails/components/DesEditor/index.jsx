@@ -49,7 +49,7 @@ function DesEditor({ content, issueData }) {
   }
   return (
     <Des>
-      <span>Description</span>
+      <h4>Description</h4>
       {!isVisible ? (
         <Edit>
           <EditContainer>

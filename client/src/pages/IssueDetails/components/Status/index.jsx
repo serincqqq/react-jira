@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Select from '@/components/Select'
-export default function Status() {
+import { updateIssue } from '@/services'
+export default function Status({ issueData }) {
   const childRef = useRef(null)
   const statusOptions = [
     {
@@ -21,10 +22,7 @@ export default function Status() {
     },
   ]
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedStatus, setSelectedStatus] = useState({
-    label: 'in progress',
-    key: 'inprogress',
-  })
+  const [selectedStatus, setSelectedStatus] = useState(issueData.status)
 
   useEffect(() => {
     document.addEventListener('click', (e) => changeStatus(e))
@@ -45,6 +43,9 @@ export default function Status() {
   const selectStatus = (item, e) => {
     stopPropagation(e)
     setSelectedStatus(item)
+    console.log('xx', item)
+    updateIssue(issueData._id, { ...issueData, status: item }).then((res) => console.log('x', res))
+    //更新数据啊啊
     setIsDrawerOpen(!isDrawerOpen)
   }
   return (
