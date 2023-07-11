@@ -1,10 +1,8 @@
-import React, { Fragment, useState, useRef, useMemo, useEffect } from 'react'
+import React, { Fragment, useState, useRef, useMemo } from 'react'
 import debounce from 'lodash/debounce'
-import { nanoid } from 'nanoid'
-// import PropTypes from 'prop-types'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { Drawer, Modal, Select, Form, Input, Space, Spin, Button } from 'antd'
+import { Drawer, Modal, Select, Form, Input, Spin, Button } from 'antd'
 import {
   SearchOutlined,
   ArrowUpOutlined,
@@ -16,41 +14,10 @@ import PubSub from 'pubsub-js'
 import { SectionTitle, SearchInput, SearchInputDebounced } from './Styles'
 import Issue from '../Issue'
 import { getUserList, insertIssue } from '@/services'
-
-const { Option } = Select
+import SpaceOption from '../SpaceOption'
+import { issueType, prioritys } from './projectOption'
 //抽成常量存在一个文件
-const prioritys = [
-  {
-    icon: <ArrowUpOutlined style={{ color: '#CD1317' }} />,
-    label: 'Highest',
-  },
-  {
-    icon: <ArrowUpOutlined style={{ color: '#E9494A' }} />,
-    label: 'High',
-  },
-  {
-    icon: <ArrowUpOutlined style={{ color: '#E97F33' }} />,
-    label: 'Medium',
-  },
-  {
-    icon: <ArrowDownOutlined style={{ color: '#2D8738' }} />,
-    label: 'Low',
-  },
-  {
-    icon: <ArrowDownOutlined style={{ color: '#57A55A' }} />,
-    label: 'Lowest',
-  },
-]
-const issueType = [
-  {
-    icon: <CheckSquareFilled style={{ color: '#4FADE6' }} />,
-    label: 'Task',
-  },
-  {
-    icon: <ExclamationCircleFilled style={{ color: '#E44D42' }} />,
-    label: 'Bug',
-  },
-]
+
 function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
   const [fetching, setFetching] = useState(false)
   const [options, setOptions] = useState([])
@@ -108,7 +75,6 @@ function NavbarModal() {
     setCreateOpen(false)
   }
   const onFinish = (values) => {
-    //创建成功后正常来说要刷新问题列表，但是鉴于接口还没写完。。。默认放在未完成的列表中
     insertIssue({
       ...values,
       priority: {
@@ -131,8 +97,11 @@ function NavbarModal() {
     if (modalType.modal === 'modal_search') setSearchOpen(true)
     else setCreateOpen(true)
   })
-  const handleChange = (value) => {
-    console.log(`selected ${value}`)
+  const issuetypeChange = (value) => {
+    form.setFieldsValue({ issuetype: value })
+  }
+  const priorityChange = (value) => {
+    form.setFieldsValue({ priority: value })
   }
   return (
     <Fragment>
@@ -158,7 +127,6 @@ function NavbarModal() {
           form={form}
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 30 }}
-          initialValues={{ remember: true }}
           autoComplete="off"
         >
           <Form.Item
@@ -167,28 +135,7 @@ function NavbarModal() {
             name="issuetype"
             rules={[{ required: true, message: 'Please select your issuetype!' }]}
           >
-            {/* 这里也复用一下之前写的select */}
-            <Select optionLabelProp="label">
-              {issueType.map((item) => {
-                return (
-                  <Option
-                    key={nanoid()}
-                    value={item.label}
-                    label={
-                      <Space>
-                        {item.icon}
-                        {item.label}
-                      </Space>
-                    }
-                  >
-                    <Space>
-                      {item.icon}
-                      {item.label}
-                    </Space>
-                  </Option>
-                )
-              })}
-            </Select>
+            <SpaceOption onChange={issuetypeChange} options={issueType}></SpaceOption>
           </Form.Item>
           <Form.Item
             label="Short Summary"
@@ -206,39 +153,18 @@ function NavbarModal() {
             />
           </Form.Item>
           <Form.Item
-            initialValue="Medium"
             label="Priority"
             name="priority"
             rules={[{ required: true, message: 'Please select your priority!' }]}
           >
-            <Select optionLabelProp="label" onChange={handleChange}>
-              {prioritys.map((item) => {
-                return (
-                  <Option
-                    key={nanoid()}
-                    value={item.label}
-                    label={
-                      <Space>
-                        {item.icon}
-                        {item.label}
-                      </Space>
-                    }
-                  >
-                    <Space>
-                      {item.icon}
-                      {item.label}
-                    </Space>
-                  </Option>
-                )
-              })}
-            </Select>
+            <SpaceOption onChange={priorityChange} options={prioritys}></SpaceOption>
           </Form.Item>
           <Form.Item
             label="Reporter"
             name="reporter"
             rules={[{ required: true, message: 'Please input your reporter!' }]}
           >
-            {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
+            {/* 这个能不能抽成组件呢？ */}
             <DebounceSelect
               value={reporter}
               placeholder="Select reporter"
@@ -257,7 +183,6 @@ function NavbarModal() {
             name="assignee"
             rules={[{ required: true, message: 'Please input your assignee!' }]}
           >
-            {/* 将来要做成带搜索框的数据，而且数据要从接口获取 */}
             <DebounceSelect
               value={assignee}
               placeholder="Select assignee"
