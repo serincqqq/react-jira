@@ -32,15 +32,33 @@ projectsRouter.post('/create', async function (req, res) {
     res.status(500).send('Internal server error')
   }
 })
-projectsRouter.get('/info', async function (req, res) {
-  const a = req.query.a
-  res.send(`a=${a}`)
-})
+
 projectsRouter.get('/delete', async function (req, res) {
-  res.send('delete')
+  const { projectId } = req.query
+  try {
+    await Issue.deleteOne({ _id: projectId })
+    res.status(200).send({ code: 200 })
+  } catch (err) {
+    res.status(500).send('Internal server error')
+  }
 })
 projectsRouter.post('/edit', async function (req, res) {
-  console.log('edit')
-  res.send('edit')
+  const { projectId } = req.query
+  try {
+    const savedData = await Project.updateOne({ _id: projectId }, { $set: req.body })
+    res.status(200).json(savedData)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Internal server error')
+  }
 })
+projectsRouter.get('/detail', async function (req, res) {
+  const { projectId } = req.query
+  Project.findOne({
+    _id: projectId,
+  }).then((response) => {
+    res.send(response)
+  })
+})
+
 module.exports = projectsRouter

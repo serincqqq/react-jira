@@ -43,9 +43,9 @@ export default function Status({ issueData }) {
   const selectStatus = (item, e) => {
     stopPropagation(e)
     setSelectedStatus(item)
-    console.log('xx', item)
-    updateIssue(issueData._id, { ...issueData, status: item }).then((res) => console.log('x', res))
-    //更新数据啊啊
+    updateIssue(issueData._id, { ...issueData, status: item, updatedAt: new Date() }).then((res) =>
+      console.log('x', res)
+    )
     setIsDrawerOpen(!isDrawerOpen)
   }
   return (

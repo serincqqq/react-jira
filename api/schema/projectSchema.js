@@ -5,6 +5,7 @@ const Project = Mongoose.model(
   'Project',
   new Mongoose.Schema({
     projectName: String,
+    description: String,
     managerName: String,
     managerEmail: String,
     managerAvatar: String,

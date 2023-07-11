@@ -8,8 +8,8 @@ issuesRouter.get('/list', async function (req, res) {
 issuesRouter.get('/delete', async function (req, res) {
   const { issueId } = req.query
   try {
-    await  Issue.deleteOne({ _id: issueId })
-    res.status(200).send({code:200})
+    await Issue.deleteOne({ _id: issueId })
+    res.status(200).send({ code: 200 })
   } catch (err) {
     res.status(500).send('Internal server error')
   }
@@ -24,8 +24,6 @@ issuesRouter.get('/detail', async function (req, res) {
 })
 issuesRouter.post('/update', async function (req, res) {
   const { issueId } = req.query
-  //接受两种参数，一个是body一个是query
-  //const issue = new Issue(req.body)
   try {
     const savedData = await Issue.updateOne({ _id: issueId }, { $set: req.body })
     res.status(200).json(savedData)

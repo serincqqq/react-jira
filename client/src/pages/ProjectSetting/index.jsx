@@ -1,15 +1,27 @@
 import { useParams } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 import ReactQuill from 'react-quill'
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 import './quill.css'
 import { Setting, Nav, Divider } from './Styles'
+import { editProject, getProjectDetail } from '@/services'
 
 export default function ProjectSetting() {
   const params = useParams()
   const [form] = Form.useForm()
-  const Breadcrumbs = ['Projects', params.projectId, 'Project Details']
+  const { projectId } = params
+  const [projectData, setProjectData] = useState({})
+  const Breadcrumbs = ['Projects', projectId, 'Project Details']
   const [description, setDescription] = useState('')
+  useEffect(() => {
+    getProjectDetail(projectId).then((res) => {
+      form.setFieldsValue(res)
+      setProjectData(res)
+    })
+  }, [])
+  const onFinish = (values) => {
+    editProject(projectId, { ...projectData, ...values }).then((res) => console.log('x', res))
+  }
   return (
     <Setting>
       <Nav>
@@ -28,15 +40,16 @@ export default function ProjectSetting() {
         style={{ fontFamily: ' CircularStdBook', maxWidth: 600 }}
         layout="vertical"
         form={form}
+        onFinish={onFinish}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 30 }}
         initialValues={{ remember: true }}
         autoComplete="off"
       >
-        <Form.Item label="Name" name="name">
+        <Form.Item label="Name" name="projectName">
           <Input placeholder="choose project" />
         </Form.Item>
-        <Form.Item label="URL" name="Url">
+        <Form.Item label="Keyword" name="keyword">
           <Input placeholder="Concisely summarize the issue in one or two sentences." />
         </Form.Item>
         <Form.Item label="Description" name="description">

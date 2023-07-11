@@ -168,7 +168,7 @@ function NavbarModal() {
             rules={[{ required: true, message: 'Please select your issuetype!' }]}
           >
             {/* 这里也复用一下之前写的select */}
-            <Select optionLabelProp="label" onChange={handleChange}>
+            <Select optionLabelProp="label">
               {issueType.map((item) => {
                 return (
                   <Option

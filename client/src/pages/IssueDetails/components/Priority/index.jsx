@@ -1,7 +1,8 @@
-import { useState, useEffect, Fragment, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons'
 import Select from '@/components/Select'
 import './Styles.css'
+import { updateIssue } from '@/services'
 export default function Priority({ issueData }) {
   const ref = useRef(null)
   const priorityOptions = [
@@ -31,12 +32,9 @@ export default function Priority({ issueData }) {
       icon: ArrowDownOutlined,
     },
   ]
-
+  const temp = priorityOptions.find((item) => item.key === issueData.priority.key)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [selectedPriority, setSelectedPriority] = useState({
-    ...issueData.priority,
-    icon: ArrowUpOutlined,
-  })
+  const [selectedPriority, setSelectedPriority] = useState(temp)
 
   useEffect(() => {
     document.addEventListener('click', (e) => changeStatus(e))
@@ -52,7 +50,9 @@ export default function Priority({ issueData }) {
     }
   }
   const selectPriority = (item, e) => {
-    setSelectedPriority(item)
+    updateIssue(issueData._id, { ...issueData, priority: item, updatedAt: new Date() }).then(
+      (res) => setSelectedPriority(item)
+    )
     setIsDrawerOpen(!isDrawerOpen)
   }
   return (

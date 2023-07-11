@@ -180,6 +180,9 @@ export default function BrowseProjects() {
               >
                 <Input placeholder="input projectName" />
               </Form.Item>
+              <Form.Item label="Description" name="description">
+                <Input placeholder="input description" />
+              </Form.Item>
               <Form.Item
                 label="Project Type"
                 name="projectType"
@@ -205,6 +208,7 @@ export default function BrowseProjects() {
               >
                 <Input placeholder="input managerName" />
               </Form.Item>
+
               <Form.Item label="Manager Email" style={{ marginBottom: 0 }}>
                 <Space.Compact>
                   <Form.Item
@@ -220,15 +224,11 @@ export default function BrowseProjects() {
                     rules={[{ required: true, message: 'suffix is required' }]}
                   >
                     <Select>
-                      {/* 可以考虑下拉框的值不写死，从接口获取，然后提成循环渲染 */}
                       {suffixOption.map((item) => (
                         <Option key={item._id} value={item.value}>
                           {item.label}
                         </Option>
                       ))}
-                      {/* <Option value="@gmail.com">@gmail.com</Option>
-                      <Option value="@hotmail.com">@hotmail.com</Option>
-                      <Option value="@outlook.com">@outlook.com</Option> */}
                     </Select>
                   </Form.Item>
                 </Space.Compact>
