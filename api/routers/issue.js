@@ -22,7 +22,19 @@ issuesRouter.get('/detail', async function (req, res) {
     res.send(response)
   })
 })
+issuesRouter.post('/comments', async function (req, res) {
+  //如果直接赋值会造成覆盖数组对象，
+  const { issueId } = req.query
+  try {
+    const savedData = await Issue.updateOne({ _id: issueId },{ $addToSet: { comments: req.body.comments } })
+    res.status(200).json(savedData)
+  } catch (err) {
+    console.error(err)
+    res.status(500).send('Internal server error')
+  }
+})
 issuesRouter.post('/update', async function (req, res) {
+  //如果直接赋值会造成覆盖数组对象，
   const { issueId } = req.query
   try {
     const savedData = await Issue.updateOne({ _id: issueId }, { $set: req.body })
