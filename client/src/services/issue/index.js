@@ -30,5 +30,13 @@ const getIssueDetail = (data) =>
       issueId: data,
     },
   })
-
-export { updateIssue, getIssueList, insertIssue, deleteIssue, getIssueDetail }
+  const addComment = (id,data) =>
+  request.post({
+    url: '/issue/comments',
+    params: {
+      issueId: id,
+    },
+    data,
+  })
+  
+export { addComment,updateIssue, getIssueList, insertIssue, deleteIssue, getIssueDetail }

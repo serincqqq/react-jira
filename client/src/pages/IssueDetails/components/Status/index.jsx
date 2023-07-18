@@ -43,7 +43,7 @@ export default function Status({ issueData }) {
   const selectStatus = (item, e) => {
     stopPropagation(e)
     setSelectedStatus(item)
-    updateIssue(issueData._id, { ...issueData, status: item, updatedAt: new Date() }).then((res) =>
+    updateIssue(issueData._id, { status: item, updatedAt: new Date() }).then((res) =>
       console.log('x', res)
     )
     setIsDrawerOpen(!isDrawerOpen)

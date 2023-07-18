@@ -24,7 +24,7 @@ import DesEditor from './components/DesEditor'
 import Comment from './components/Comment'
 import Priority from './components/Priority'
 import AssigneesReporter from './components/AssigneesReporter'
-import { getIssueDetail, updateIssue, deleteIssue } from '@/services'
+import { getIssueDetail, updateIssue, deleteIssue,addComment } from '@/services'
 import Avatar from '@/components/Avatar'
 const { TextArea } = Input
 
@@ -88,10 +88,13 @@ export default function IssueDetails() {
       content: create,
       updatedAt: new Date(),
     }
-    //要有发表评论人的头像，id，名字，时间，内容
-    updateIssue(issueData._id, { ...issueData, comments: data }).then((res) =>
+    //要有发表评论人的头像，id，名字，时间，内容(注意接口那边收到值不要覆盖，而是要往数组去加)
+    addComment(issueData._id, {comments: data }).then((res) =>{
+      setContent('')
+    init()
+    }
     //想办法补一个message弹窗
-      console.log('x', res)
+    
     )
   }
   const handleBlur = () => {
@@ -100,7 +103,7 @@ export default function IssueDetails() {
       setBordered(false)
     } else {
       setShowWarn(false)
-      updateIssue(issueData._id, { ...issueData, summary: value, updatedAt: new Date() }).then(
+      updateIssue(issueData._id, { summary: value, updatedAt: new Date() }).then(
         () => setBordered(false)
       )
     }

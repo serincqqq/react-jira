@@ -50,7 +50,7 @@ export default function Priority({ issueData }) {
     }
   }
   const selectPriority = (item, e) => {
-    updateIssue(issueData._id, { ...issueData, priority: item, updatedAt: new Date() }).then(
+    updateIssue(issueData._id, { priority: item, updatedAt: new Date() }).then(
       (res) => setSelectedPriority(item)
     )
     setIsDrawerOpen(!isDrawerOpen)

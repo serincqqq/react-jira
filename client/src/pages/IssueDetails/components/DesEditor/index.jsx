@@ -45,7 +45,7 @@ function DesEditor({ content, issueData }) {
   }, [editor])
   const save = () => {
     setIsVisible(true)
-    updateIssue(issueData._id, { ...issueData, description: html })
+    updateIssue(issueData._id, { description: html })
   }
   return (
     <Des>
