@@ -5,7 +5,7 @@ import { Droppable, DragDropContext } from 'react-beautiful-dnd'
 import { Modal } from 'antd'
 import { List, Title, IssuesCount, Issues, Nav, Divider } from './Styles'
 import BoardIssue from './components/BoardIssue'
-import { getIssueList } from '@/services'
+import { getIssueList, updateIssue } from '@/services'
 export const IssueStatus = {
   BACKLOG: 'backlog',
   SELECTED: 'selected',
@@ -33,7 +33,6 @@ export default function ProjectBoard() {
   }, [])
 
   const Breadcrumbs = ['Projects', params.projectId, 'Project Details']
-  //const getSortedListIssues = (issues, status) => issues.filter((issue) => issue.status === status).sort((a, b) => a.listPosition - b.listPosition)
   const getSortedListIssues = (issues, status) =>
     issues.filter((issue) => issue.status.key === status)
   const hideModal = () => {
@@ -42,9 +41,9 @@ export default function ProjectBoard() {
   const handleDragUpdate = (dragUpdate) => {
     //实际接口中在这里修改状态
     const { destination, source, draggableId } = dragUpdate
-    let test = issues.filter((item) => item.id === Number(draggableId))
-    test[0].status = destination.droppableId
-
+    updateIssue(draggableId, { status: { label: destination.droppableId, key: destination.droppableId}, updatedAt: new Date() }).then((res) =>
+      init()
+    )
     if (!destination) {
       return
     }

@@ -1,19 +1,19 @@
-import React, { Fragment, useState, useRef, useMemo } from 'react'
+import React, { Fragment, useState, useRef, useMemo, useEffect, useCallback } from 'react'
 import debounce from 'lodash/debounce'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { Drawer, Modal, Select, Form, Input, Spin, Button } from 'antd'
-import {
-  SearchOutlined,
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-  ExclamationCircleFilled,
-  CheckSquareFilled,
-} from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
+import noResult from '@/assets/img/noresult.png'
+// ArrowUpOutlined,
+// ArrowDownOutlined,
+// ExclamationCircleFilled,
+// CheckSquareFilled,
 import PubSub from 'pubsub-js'
-import { SectionTitle, SearchInput, SearchInputDebounced } from './Styles'
+import './style.css'
+import { SectionTitle, SearchInput, SearchInputDebounced, NoResult } from './Styles'
 import Issue from '../Issue'
-import { getUserList, insertIssue } from '@/services'
+import { getRecIssue, getUserList, insertIssue, searchIssue } from '@/services'
 import SpaceOption from '../SpaceOption'
 import { issueType, prioritys } from './projectOption'
 //抽成常量存在一个文件
@@ -63,16 +63,61 @@ async function fetchUser(username) {
 
 function NavbarModal() {
   const [form] = Form.useForm()
+  const [searchResultText, setSearchResultText] = useState('Recent Issues')
+  const [searchInput, setSearchInput] = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
   const [createOpen, setCreateOpen] = useState(false)
   const [value, setValue] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [recIsssues, setRecIsssues] = useState([])
   const [reporter] = useState({})
   const [assignee] = useState({})
   const [description] = useState('')
+  const init = () => {
+    setSearchInput('')
+    setSearchResultText('Recent Issues')
+    getRecIssue().then((res) => {
+      setRecIsssues(res)
+    })
+  }
+  useEffect(() => {
+    if (searchInput !== '') {
+      setLoading(true)
+      const timer = setTimeout(() => {
+        searchIssue(searchInput).then((res) => {
+          if (res.code === 0) {
+            setLoading(false)
+            if (res.data.length === 0) {
+              setSearchResultText('')
+            } else {
+              setSearchResultText('MATCHING ISSUES')
+            }
+            setRecIsssues(res.data)
+          }
+        })
+      }, 1000)
 
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+  }, [searchInput])
+
+  useEffect(() => {
+    //订阅消息如果不放在生命周期钩子中就会调用多次
+    PubSub.subscribe('refresh', (_) => {
+      init()
+    })
+    init()
+  }, [])
+  const handleInputChange = useCallback((event) => {
+    const input = event.target.value
+    setSearchInput(input)
+  }, [])
   const onClose = () => {
     setSearchOpen(false)
     setCreateOpen(false)
+    init()
   }
   const onFinish = (values) => {
     insertIssue({
@@ -106,18 +151,36 @@ function NavbarModal() {
   return (
     <Fragment>
       <Drawer
-        style={{ width: '520px' }}
+        style={{ width: '520px', position: 'relative' }}
         placement="left"
         closable={false}
         onClose={onClose}
         open={searchOpen}
       >
+        {/* 搜索问题 */}
         <SearchInput>
           <SearchOutlined style={{ fontSize: '22px', marginTop: '2px' }} />
-          <SearchInputDebounced placeholder="Search issues by summary, description..."></SearchInputDebounced>
+          <SearchInputDebounced
+            onChange={handleInputChange}
+            value={searchInput}
+            placeholder="Search issues by summary, description..."
+          ></SearchInputDebounced>
+          {loading ? <Spin /> : <></>}
         </SearchInput>
-        <SectionTitle>Recent Issues</SectionTitle>
-        <Issue></Issue>
+        <SectionTitle>{searchResultText}</SectionTitle>
+        {/* 需要判断数组长度是否为0 */}
+        {recIsssues.length === 0 ? (
+          <NoResult>
+            <img src={noResult} alt="error" className="resImg"></img>
+            <h4>We couldn't find anything matching your search</h4>
+            <span>Try again with a different term.</span>
+          </NoResult>
+        ) : (
+          ''
+        )}
+        {recIsssues.map((item) => (
+          <Issue issue={item}></Issue>
+        ))}
       </Drawer>
       <Modal width={670} open={createOpen} onCancel={onClose} footer={null}>
         <Form

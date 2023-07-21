@@ -15,8 +15,9 @@ const Issue = Mongoose.model(
     multiple: String,
     status: Object,
     comments: Array,
-    originalEstimate: Number,
-    timeEstimate: Object,
+    timeRemaining: Number,
+    estimate: Number,
+    timeSpent:Number,
     createdAt: String,
     updatedAt: String,
   })

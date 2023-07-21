@@ -69,3 +69,8 @@ const modalStyles = {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
   `,
 }
+export const NoResult = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+`

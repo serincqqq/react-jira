@@ -5,19 +5,24 @@ import { FieldTimeOutlined } from '@ant-design/icons'
 import { SectionTitle } from '../../Styles'
 import './styles.css'
 import { TimeBox, Logged, Estimated, Tracking, Actions, InputLabel, InputCont } from './Styles'
+import { updateIssue } from '@/services'
 
 // const propTypes = {
 //   issue: PropTypes.object.isRequired,
 //   updateIssue: PropTypes.func.isRequired,
 // };
 
-export default function ProjectBoardIssueDetailsEstimateTracking() {
+export default function ProjectBoardIssueDetailsEstimateTracking({issueId}) {
+  const [estimate,setEstimate]=useState('')
   const [editTime, setEditTime] = useState(false)
   const [spent, setSpent] = useState(1)
   const [remaining, setRemaining] = useState(2)
   const [percent, setPercent] = useState(20.5)
   const handleOk = () => {
     setEditTime(false)
+    updateIssue(issueId, { timeRemaining:remaining,timeSpent:spent }).then(
+      (res) => console.log('r',res)
+    )
   }
   const reg = /^\d{0,6}$/
   const spentChange = (event) => {
@@ -25,6 +30,11 @@ export default function ProjectBoardIssueDetailsEstimateTracking() {
   }
   const remainingChange = (event) => {
     if (reg.test(event.target.value)) setRemaining(Number(event.target.value))
+  }
+  const handleBlur=()=>{
+    updateIssue(issueId, { estimate }).then(
+      (res) => console.log('r',res)
+    )
   }
   useEffect(() => {
     // 还需要用正则限制只能输入数字，其他的无法输入
@@ -37,7 +47,7 @@ export default function ProjectBoardIssueDetailsEstimateTracking() {
   return (
     <Fragment>
       <SectionTitle>Original Estimate (hours)</SectionTitle>
-      <Input placeholder="Basic usage" />
+      <Input placeholder="Basic usage" value={estimate} onChange={(e)=>setEstimate(e.target.value)} onBlur={handleBlur}/>
       <SectionTitle>Time Tracking</SectionTitle>
       <TimeBox onClick={() => setEditTime(true)}>
         <FieldTimeOutlined className="time-icon" />

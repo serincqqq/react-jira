@@ -171,7 +171,7 @@ export default function IssueDetails() {
               <AssigneesReporter type="Assignee" issueData={issueData.assignee} />
               <AssigneesReporter type="Reporter" issueData={issueData.reporter} />
               <Priority issueData={issueData} />
-              <EstimateTracking />
+              <EstimateTracking issueId={issueData._id} />
               <Divider />
               <span>{issueData.createdAt}</span>
             </div>

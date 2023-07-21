@@ -7,6 +7,11 @@ const updateIssue = (id, data) =>
     },
     data,
   })
+const getRecIssue = () =>
+  request.get({
+    url: '/issue/recent'
+  })
+  
 const deleteIssue = (data) =>
   request.get({
     url: '/issue/delete',
@@ -30,13 +35,19 @@ const getIssueDetail = (data) =>
       issueId: data,
     },
   })
-  const addComment = (id,data) =>
+const addComment = (id,data) =>
   request.post({
     url: '/issue/comments',
     params: {
       issueId: id,
     },
     data,
-  })
-  
-export { addComment,updateIssue, getIssueList, insertIssue, deleteIssue, getIssueDetail }
+})
+const searchIssue = (data) =>
+request.get({
+  url: '/issue/search',
+  params: {
+    searchQuery: data,
+  },
+}) 
+export { searchIssue,getRecIssue,addComment,updateIssue, getIssueList, insertIssue, deleteIssue, getIssueDetail }
