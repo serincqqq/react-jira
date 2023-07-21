@@ -10,7 +10,6 @@ import {
   Modal,
   Form,
   Upload,
-  message,
   Select,
   Space,
 } from 'antd'

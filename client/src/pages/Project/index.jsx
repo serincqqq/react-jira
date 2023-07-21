@@ -3,14 +3,15 @@ import { Outlet } from 'react-router-dom'
 import { ProjectPage } from './Styles'
 import NavbarLeft from '@/components/NavbarLeft'
 import Sidebar from '@/components/Sidebar'
-import Modal from '@/components/Modal'
-
+import SearchDrawer from './components/SearchDrawer'
+import CreateForm from './components/CreateForm'
 const Project = () => {
   return (
     <ProjectPage>
       <NavbarLeft />
       <Sidebar></Sidebar>
-      <Modal isOpen={true} />
+      <SearchDrawer isOpen={true} />
+      <CreateForm></CreateForm>
       <Outlet></Outlet>
     </ProjectPage>
   )

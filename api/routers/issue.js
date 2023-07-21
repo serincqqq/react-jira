@@ -56,7 +56,7 @@ issuesRouter.post('/create', async function (req, res) {
   const issue = new Issue(req.body)
   try {
     const savedData = await issue.save()
-    res.status(200).json(savedData)
+    res.status(200).json({ code: 0, data: savedData })
   } catch (err) {
     console.error(err)
     res.status(500).send('Internal server error')
@@ -68,7 +68,6 @@ issuesRouter.get('/search', async function (req, res) {
     $or: [{ summary: { $regex: searchQuery, $options: 'i' } }],
   }).then((response) => {
     res.json({ code: 0, data: response })
-    // res.send(response)
   })
 })
 module.exports = issuesRouter

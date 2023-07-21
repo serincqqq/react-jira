@@ -43,7 +43,6 @@ export default function ProjectSetting() {
         onFinish={onFinish}
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 30 }}
-        initialValues={{ remember: true }}
         autoComplete="off"
       >
         <Form.Item label="Name" name="projectName">
