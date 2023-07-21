@@ -10,6 +10,7 @@ import {
   Option,
   PrioritySelect,
   IconStyle,
+  SelectLabel
 } from './Styles'
 function Priority({ selected }) {
   return (
@@ -66,7 +67,7 @@ function ItemTag(type, item) {
 export default function Select({ name, isDrawerOpen, title, options, selected, select }) {
   return (
     <>
-      <p style={{ margin: '20px 0 10px 0' }}>{title}</p>
+      <SelectLabel style={{ }}>{title}</SelectLabel>
       {createChildComponent(name, selected)}
 
       {isDrawerOpen ? (

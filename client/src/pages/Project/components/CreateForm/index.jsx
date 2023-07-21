@@ -3,7 +3,7 @@ import 'react-quill/dist/quill.snow.css'
 import { Form, Input, Button, Modal } from 'antd'
 import { useState } from 'react'
 import PubSub from 'pubsub-js'
-import { issueType, prioritys } from './projectOption'
+import { issueType, prioritys } from '@/shared/staticData/projectOption'
 import SpaceOption from '@/components/SpaceOption'
 import { insertIssue } from '@/services'
 import SearchSelect from '../SearchSelect'
@@ -36,7 +36,6 @@ function CreateForm() {
       newLoadings[0] = true
       return newLoadings
     })
-    console.log('vv', values)
     insertIssue({
       ...values,
       priority: {

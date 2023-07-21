@@ -93,6 +93,6 @@ export const IconStyle = styled.div`
   line-height: 18px;
   color: ${(props) => issuePriorityColors[props.priority]};
 `
-export const avatarLabel = {
-  marginLeft: '10px',
-}
+export const SelectLabel=styled.p`
+ margin: 20px 0 10px 0;
+`

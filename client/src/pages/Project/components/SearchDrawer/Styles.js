@@ -73,4 +73,7 @@ export const NoResult = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  .resImg{
+    margin-bottom: 20px;
+  }
 `

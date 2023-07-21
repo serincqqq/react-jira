@@ -3,16 +3,18 @@ import { Drawer, Spin } from 'antd'
 import { SearchOutlined } from '@ant-design/icons'
 import noResult from '@/assets/img/noresult.png'
 import PubSub from 'pubsub-js'
-import './style.css'
 import { SectionTitle, SearchInput, SearchInputDebounced, NoResult } from './Styles'
 import Issue from '@/components/Issue'
 import { getRecIssue, searchIssue } from '@/services'
+import { useLocation } from 'react-router-dom'
+
 function SearchDrawer() {
   const [searchResultText, setSearchResultText] = useState('Recent Issues')
   const [searchInput, setSearchInput] = useState('')
   const [searchOpen, setSearchOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [recIsssues, setRecIsssues] = useState([])
+  const location = useLocation()
   const init = () => {
     setSearchInput('')
     setSearchResultText('Recent Issues')
@@ -25,7 +27,7 @@ function SearchDrawer() {
       setLoading(true)
       const timer = setTimeout(() => {
         searchIssue(searchInput).then((res) => {
-          if (res.code === 0) {
+          if (res.code === 0) {      
             setLoading(false)
             if (res.data.length === 0) {
               setSearchResultText('')
@@ -42,18 +44,24 @@ function SearchDrawer() {
       }
     }
   }, [searchInput])
-
   useEffect(() => {
-    //订阅消息如果不放在生命周期钩子中就会调用多次
     init()
   }, [])
-
+  /* 这里有一个很特别的bug,如果把location和searchInput都写在一个副作用中，
+  补充：还是不能放一起，因为一个属性的改变会导致两部分代码都执行，交互会乱
+  (注意：这里的代码执行的前后顺序决定了)是否出现这个bug，如果setSearchOpen(false)在前没问题，
+  在后有问题
+  那么正常情况下可以检测到路由变化，但是点击搜索出来的数据却无法检测路由变化*/
+  useEffect(() => {
+    setSearchOpen(false)
+  }, [location]);
   const handleInputChange = useCallback((event) => {
     const input = event.target.value
     setSearchInput(input)
   }, [])
   const onClose = () => {
     setSearchOpen(false)
+    setLoading(false)
     init()
   }
 
@@ -95,8 +103,5 @@ function SearchDrawer() {
     </Fragment>
   )
 }
-
-// Modal.propTypes = propTypes;
-// Modal.defaultProps = defaultProps;
 
 export default SearchDrawer

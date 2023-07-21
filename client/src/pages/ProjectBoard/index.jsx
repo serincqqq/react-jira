@@ -41,9 +41,10 @@ export default function ProjectBoard() {
   const handleDragUpdate = (dragUpdate) => {
     //实际接口中在这里修改状态
     const { destination, source, draggableId } = dragUpdate
-    updateIssue(draggableId, { status: { label: destination.droppableId, key: destination.droppableId}, updatedAt: new Date() }).then((res) =>
-      init()
-    )
+    updateIssue(draggableId, {
+      status: { label: destination.droppableId, key: destination.droppableId },
+      updatedAt: new Date(),
+    }).then((res) => init())
     if (!destination) {
       return
     }
@@ -75,6 +76,7 @@ export default function ProjectBoard() {
                   <List>
                     <Title>
                       {status}
+                      {/* 这里记得改 */}
                       <IssuesCount>1</IssuesCount>
                     </Title>
                     <Issues {...provided.droppableProps} ref={provided.innerRef}>

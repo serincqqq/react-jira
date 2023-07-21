@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import { color, mixin, font } from '@/assets/styles/styles'
+import { Link } from 'react-router-dom'
 
-export const IssueSearch = styled.div`
+export const IssueSearch = styled(Link)`
   display: flex;
   align-items: center;
   padding: 4px 10px;
