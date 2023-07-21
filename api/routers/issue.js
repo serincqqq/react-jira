@@ -46,7 +46,7 @@ issuesRouter.post('/update', async function (req, res) {
   const { issueId } = req.query
   try {
     const savedData = await Issue.updateOne({ _id: issueId }, { $set: req.body })
-    res.status(200).json(savedData)
+    res.status(200).json({ code: 0, msg:savedData })
   } catch (err) {
     console.error(err)
     res.status(500).send('Internal server error')

@@ -25,8 +25,7 @@ projectsRouter.post('/create', async function (req, res) {
   const project = new Project(req.body)
   try {
     const savedData = await project.save()
-    console.log(savedData)
-    res.status(200).json(savedData)
+    res.status(200).json({code:0,data:savedData})
   } catch (err) {
     console.error(err)
     res.status(500).send('Internal server error')
@@ -46,7 +45,7 @@ projectsRouter.post('/edit', async function (req, res) {
   const { projectId } = req.query
   try {
     const savedData = await Project.updateOne({ _id: projectId }, { $set: req.body })
-    res.status(200).json(savedData)
+    res.status(200).json({code:0,data:savedData})
   } catch (err) {
     console.error(err)
     res.status(500).send('Internal server error')

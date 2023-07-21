@@ -19,7 +19,7 @@ export default function BoardIssue({ issue, index }) {
   const TypeIcon = ({ type, color }) => {
     const IconComponent = type === 'Task' ? CheckSquareFilled : ExclamationCircleFilled
 
-    return <IconComponent style={{ color, marginRight: '10px', marginTop: '2px' }} />
+    return <IconComponent style={{ color, marginRight: '10px', }} />
   }
   return (
     <>

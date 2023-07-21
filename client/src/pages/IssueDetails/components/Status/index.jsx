@@ -44,7 +44,7 @@ export default function Status({ issueData }) {
     stopPropagation(e)
     setSelectedStatus(item)
     updateIssue(issueData._id, { status: item, updatedAt: new Date() }).then((res) =>
-    // 记得改
+    // 记得改（补弹窗
       console.log('x', res)
     )
     setIsDrawerOpen(!isDrawerOpen)
