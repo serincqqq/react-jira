@@ -22,11 +22,7 @@ const editProject = (id, data) =>
   })
 const searchProject = (data, type) =>
   request.get({
-    url: '/project/search',
-    query: {
-      searchQuery: data,
-      searchType: type,
-    },
+    url: `/project/search?searchType=${type}&searchQuery=${data}`,
   })
 const deleteProject = (id) =>
   request.get({

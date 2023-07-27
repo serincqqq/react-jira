@@ -121,6 +121,7 @@ export default function BrowseProjects() {
 
   // 动态计算样式名
   const onSearch = (value) => {
+    console.log(typeof value)
     searchProject(value, searchType).then((res) => {
       setData(res.data)
     })
@@ -131,6 +132,7 @@ export default function BrowseProjects() {
       .map((k) => values.managerEmail[k])
       .join('')
     insertProject(values).then((res) => {
+      console.log('vv',res)
       setCreateOpen(false)
       form.resetFields()
       init()

@@ -15,7 +15,7 @@ const request = new Request({
       return error
     },
     responseInterceptor: (response) => {
-      if (response.status !== 200) {
+      if (response.status !== 0) {
         console.error(response.statusText)
       }
       return response

@@ -28,10 +28,12 @@ export class UserController {
   }
 
   @Get('userList')
-  async findItems(@Param('_id') _id: string): Promise<UserResponse<User[]>> {
+  async findItems(
+    @Query('searchQuery') searchQuery: string,
+  ): Promise<UserResponse<User[]>> {
     return {
       code: 0,
-      data: await this.userService.findItems(_id),
+      data: await this.userService.findItems(searchQuery),
       message: 'Success.',
     };
   }

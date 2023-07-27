@@ -28,12 +28,9 @@ const getIssueList = (data) =>
   request.get({
     url: '/issue/list',
   })
-const getIssueDetail = (data) =>
+const getIssueDetail = (id) =>
   request.get({
-    url: '/issue/detail',
-    params: {
-      issueId: data,
-    },
+    url: `/issue/detail?issueId=${id}`,
   })
 const addComment = (id,data) =>
   request.post({
@@ -45,9 +42,11 @@ const addComment = (id,data) =>
 })
 const searchIssue = (data) =>
 request.get({
-  url: '/issue/search',
-  params: {
-    searchQuery: data,
-  },
+  //两种写法的效果是一样的
+  url: `/issue/search?searchQuery=${data}`,
+  // url:'/issue/search' ,
+  // params:{
+  //   searchQuery:data
+  // }
 }) 
 export { searchIssue,getRecIssue,addComment,updateIssue, getIssueList, insertIssue, deleteIssue, getIssueDetail }

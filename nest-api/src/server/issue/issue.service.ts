@@ -18,7 +18,7 @@ export class IssueService {
   async searchItems(searchQuery: string): Promise<Issue[]> {
     return await this.issueModel.find({
       $or: [
-        { _id: { $regex: searchQuery, $options: 'i' } },
+        // { _id: { $regex: searchQuery, $options: 'i' } },
         { summary: { $regex: searchQuery, $options: 'i' } },
         { description: { $regex: searchQuery, $options: 'i' } },
       ],

@@ -48,6 +48,7 @@ function CreateForm() {
       },
       createdAt: new Date(),
     }).then((res) => {
+      console.log('bbb',res)
       if (res.code === 0) {
         setLoadings((prevLoadings) => {
           const newLoadings = [...prevLoadings]

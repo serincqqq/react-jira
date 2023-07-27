@@ -1,8 +1,8 @@
-import { Controller, Get, Param, Query, Body, Post } from '@nestjs/common';
+import { Controller, Get, Query, Body, Post } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { Project } from './project.interface';
 import { EditProjectDTO } from './project.dto';
-import { ProjectResponse, generateResponse } from '../response';
+import { Response, generateResponse } from '../response';
 
 @Controller('/jira/project')
 export class ProjectController {
@@ -10,38 +10,40 @@ export class ProjectController {
 
   @Get('list')
   // @Header('Access-Control-Allow-Origin', 'http://localhost:3002')
-  async findAll(): Promise<ProjectResponse<Project[]>> {
+  async findAll(): Promise<Response<Project[]>> {
     const data = await this.projectService.findAll();
     return generateResponse(data);
   }
   @Get('search')
   async searchAll(
-    @Param('searchQuery') searchQuery: string,
-    @Param('searchType') searchType: string,
-  ): Promise<ProjectResponse<Project[]>> {
+    @Query('searchQuery') searchQuery: string,
+    @Query('searchType') searchType: string,
+  ): Promise<Response<Project[]>> {
     const data = await this.projectService.searchAll(searchQuery, searchType);
     return generateResponse(data);
+  }
+  @Post('create')
+  async createOne(@Body() body: EditProjectDTO): Promise<Response<void>> {
+    await this.projectService.createOne(body);
+    return generateResponse(undefined);
   }
   @Post('edit')
   async editOne(
     @Query('projectId') projectId: string,
     @Body() body: EditProjectDTO,
-  ): Promise<ProjectResponse> {
+  ): Promise<Response> {
     await this.projectService.editOne(projectId, body);
     return generateResponse(undefined);
   }
   @Get('detail')
   async findOne(
-    @Param('projectId') projectId: string,
-  ): Promise<ProjectResponse<Project>> {
-    console.log('bb', projectId);
+    @Query('projectId') projectId: string,
+  ): Promise<Response<Project>> {
     const data = await this.projectService.findOne(projectId);
     return generateResponse(data);
   }
   @Get('delete')
-  async deleteOne(
-    @Query('projectId') projectId: string,
-  ): Promise<ProjectResponse> {
+  async deleteOne(@Query('projectId') projectId: string): Promise<Response> {
     await this.projectService.deleteOne(projectId);
     return generateResponse(undefined);
   }
