@@ -6,7 +6,7 @@ export default function AssigneesReporter({ type, issueData }) {
   const init = () => {
     getAllUserList().then((res) => {
       setOptions(
-        res.map((item) => {
+        res.data.map((item) => {
           return { label: item.userName, key: item._id, avatar: item.userAvatar }
         })
       )
@@ -15,7 +15,7 @@ export default function AssigneesReporter({ type, issueData }) {
   useEffect(() => {
     init()
     getUserAvatar(issueData?.key).then((res) => {
-      setSelectedStatus({ ...issueData, avatar: res.userAvatar })
+      setSelectedStatus({ ...issueData, avatar: res.data.userAvatar })
     })
   }, [issueData, issueData?.key])
   const assigneesRef = useRef(null)

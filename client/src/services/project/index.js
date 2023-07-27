@@ -1,10 +1,7 @@
 import request from '../http'
-const getProjectDetail = (data) =>
+const getProjectDetail = (id) =>
   request.get({
-    url: '/project/detail',
-    params: {
-      projectId: data,
-    },
+    url: `/project/detail?projectId=${id}`,
   })
 const insertProject = (data) =>
   request.post({
@@ -26,7 +23,7 @@ const editProject = (id, data) =>
 const searchProject = (data, type) =>
   request.get({
     url: '/project/search',
-    params: {
+    query: {
       searchQuery: data,
       searchType: type,
     },

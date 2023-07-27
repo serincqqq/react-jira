@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { insertProject, getProject, searchProject, getSuffixOption } from '@/services'
+import { insertProject, getProject, searchProject, getSuffixOption, deleteProject } from '@/services'
 import {
   Input,
   Layout,
@@ -29,63 +29,77 @@ import {
 const { Sider, Content } = Layout
 const { Search } = Input
 const { Option } = Select
-const CustomOverlay = (record) => (
-  <PersonInfo>
-    <img src="https://via.placeholder.com/40" alt="placeholder" />
-    <PersonText>
-      <span>{record.managerName}</span>
-      <p>{record.managerEmail}</p>
-    </PersonText>
-  </PersonInfo>
-)
 
-const columns = [
-  {
-    title: 'ProjectName',
-    dataIndex: 'projectName',
-    key: 'projectName',
-    render: (_, record) => (
-      <ProjectLink to={`/project/${record._id}/board`} target="_blank">
-        {record.projectName}
-      </ProjectLink>
-    ),
-  },
-  {
-    title: 'keyword',
-    dataIndex: 'keyword',
-    key: 'keyword',
-  },
-  {
-    title: 'ProjectType',
-    //通过这一项来匹配表格字段
-    dataIndex: 'projectType',
-    key: 'projectType',
-    render: (_, record) => (
-      <div>
-        {record.projectType === 'Software' ? (
-          <BuildOutlined style={softIcon} />
-        ) : (
-          <PicRightOutlined style={businessIcon} />
-        )}
-        <span>{record.projectType}</span>
-      </div>
-    ),
-  },
-  {
-    title: 'managerName',
-    dataIndex: 'managerName',
-    key: 'managerName',
-    render: (_, record) => (
-      <Tooltip placement="bottomLeft" overlay={CustomOverlay(record)}>
-        <div>
-          <span>{record.managerName}</span>
-        </div>
-      </Tooltip>
-    ),
-  },
-]
 
 export default function BrowseProjects() {
+  const CustomOverlay = (record) => (
+    <PersonInfo>
+      <img src="https://via.placeholder.com/40" alt="placeholder" />
+      <PersonText>
+        <span>{record.managerName}</span>
+        <p>{record.managerEmail}</p>
+      </PersonText>
+    </PersonInfo>
+  )
+  const deleteAction=(record)=>{
+    deleteProject(record._id).then((res)=>{
+      if(res.code===0) init()
+    })
+  }
+  const columns = [
+    {
+      title: 'ProjectName',
+      dataIndex: 'projectName',
+      key: 'projectName',
+      render: (_, record) => (
+        <ProjectLink to={`/project/${record._id}/board`} target="_blank">
+          {record.projectName}
+        </ProjectLink>
+      ),
+    },
+    {
+      title: 'keyword',
+      dataIndex: 'keyword',
+      key: 'keyword',
+    },
+    {
+      title: 'ProjectType',
+      //通过这一项来匹配表格字段
+      dataIndex: 'projectType',
+      key: 'projectType',
+      render: (_, record) => (
+        <div>
+          {record.projectType === 'Software' ? (
+            <BuildOutlined style={softIcon} />
+          ) : (
+            <PicRightOutlined style={businessIcon} />
+          )}
+          <span>{record.projectType}</span>
+        </div>
+      ),
+    },
+    {
+      title: 'managerName',
+      dataIndex: 'managerName',
+      key: 'managerName',
+      render: (_, record) => (
+        <Tooltip placement="bottomLeft" overlay={CustomOverlay(record)}>
+          <div>
+            <span>{record.managerName}</span>
+          </div>
+        </Tooltip>
+      ),
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+           <Button type="link" onClick={()=>deleteAction(record)}>Delete</Button>
+        </Space>
+      ),
+    },
+  ]
   const [form] = Form.useForm()
   const [data, setData] = useState([])
   const [fileList, setFileList] = useState([])
@@ -94,20 +108,21 @@ export default function BrowseProjects() {
   const [suffixOption, setSuffixOption] = useState([])
   const init = () => {
     getProject().then((res) => {
-      setData(res)
+      setData(res.data)
     })
   }
   useEffect(() => {
     getSuffixOption().then((res) => {
-      setSuffixOption(res)
+      setSuffixOption(res.data)
     })
     init()
   }, [])
 
+
   // 动态计算样式名
   const onSearch = (value) => {
     searchProject(value, searchType).then((res) => {
-      setData(res)
+      setData(res.data)
     })
   }
 

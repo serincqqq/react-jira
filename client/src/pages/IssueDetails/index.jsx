@@ -49,10 +49,11 @@ export default function IssueDetails() {
 
   const init = () => {
     getIssueDetail(params.issueId).then((res) => {
-      setValue(res.summary)
-      setContent(res.description)
-      setComments(res.comments)
-      setIssueData(res)
+      const {summary,description,comments}=res.data
+      setValue(summary)
+      setContent(description)
+      setComments(comments)
+      setIssueData(res.data)
     })
   }
   useEffect(() => {
@@ -71,7 +72,7 @@ export default function IssueDetails() {
   }
   const deleteItem = () => {
     deleteIssue(params.issueId).then((res) => {
-      if (res.code === 200) {
+      if (res.code === 0) {
         navigate(-1)
         PubSub.publish('refresh')
       }

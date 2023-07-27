@@ -5,7 +5,6 @@ const getUserList = (data) =>
     url: '/user/userList',
     params: {
       searchQuery: data,
-      // type,
     },
   })
 const getUserAvatar = (id) =>

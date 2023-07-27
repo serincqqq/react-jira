@@ -21,7 +21,7 @@ export default function ProjectBoard() {
 
   const init = () => {
     getIssueList().then((res) => {
-      setIssues(res)
+      setIssues(res.data)
     })
   }
   useEffect(() => {

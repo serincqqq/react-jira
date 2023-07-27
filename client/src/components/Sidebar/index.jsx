@@ -19,10 +19,12 @@ export default function Sidebar() {
   const params = useParams()
   const { projectId } = params
   useEffect(() => {
-    getProjectDetail(projectId).then((res) => {
-      setProjectName(res.projectName)
-      setProjectType(res.projectType)
-    })
+    console.log('ddd',projectId)
+    // getProjectDetail(projectId).then((res) => {
+    //   const {projectName,projectType}=res.data
+    //   setProjectName(projectName)
+    //   setProjectType(projectType)
+    // })
   }, [])
   return (
     <ProjectInfo>

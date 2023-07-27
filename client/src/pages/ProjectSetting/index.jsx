@@ -15,8 +15,8 @@ export default function ProjectSetting() {
   const [description, setDescription] = useState('')
   useEffect(() => {
     getProjectDetail(projectId).then((res) => {
-      form.setFieldsValue(res)
-      setProjectData(res)
+      form.setFieldsValue(res.data)
+      setProjectData(res.data)
     })
   }, [])
   const onFinish = (values) => {

@@ -19,7 +19,7 @@ function SearchDrawer() {
     setSearchInput('')
     setSearchResultText('Recent Issues')
     getRecIssue().then((res) => {
-      setRecIsssues(res)
+      setRecIsssues(res.data)
     })
   }
   useEffect(() => {

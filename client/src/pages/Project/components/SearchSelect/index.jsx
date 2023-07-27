@@ -38,7 +38,7 @@ function DebounceSelect({ fetchOptions, debounceTimeout = 800, ...props }) {
 }
 async function fetchUser(username) {
   return getUserList(username).then((res) =>
-    res.map((user) => ({
+    res.data.map((user) => ({
       label: user.userName,
       value: user._id,
     }))
