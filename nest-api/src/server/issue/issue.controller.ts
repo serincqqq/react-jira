@@ -8,8 +8,10 @@ import { Response, generateResponse } from '../response';
 export class IssueController {
   constructor(private readonly issueService: IssueService) {}
   @Get('list')
-  async findAll(): Promise<Response<Issue[]>> {
-    const data = await this.issueService.findAll();
+  async findAll(
+    @Query('connectedProject') connectedProject: string,
+  ): Promise<Response<Issue[]>> {
+    const data = await this.issueService.findAll(connectedProject);
     return generateResponse(data);
   }
   @Get('delete')

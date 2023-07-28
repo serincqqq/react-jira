@@ -14,13 +14,13 @@ export const IssueStatus = {
 }
 
 export default function ProjectBoard() {
-  const params = useParams()
+  const { issueId, projectId } = useParams()
   const location = useLocation()
   const navigate = useNavigate()
   const [issues, setIssues] = useState([])
 
   const init = () => {
-    getIssueList().then((res) => {
+    getIssueList(projectId).then((res) => {
       setIssues(res.data)
     })
   }
@@ -32,7 +32,7 @@ export default function ProjectBoard() {
     init()
   }, [])
 
-  const Breadcrumbs = ['Projects', params.projectId, 'Project Details']
+  const Breadcrumbs = ['Projects', projectId, 'Project Details']
   const getSortedListIssues = (issues, status) =>
     issues.filter((issue) => issue.status.key === status)
   const hideModal = () => {
@@ -96,7 +96,7 @@ export default function ProjectBoard() {
       <Modal
         footer={null}
         width={950}
-        open={location.pathname === `/project/${params.projectId}/board/issue/${params.issueId}`}
+        open={location.pathname === `/project/${projectId}/board/issue/${issueId}`}
         onOk={hideModal}
         onCancel={hideModal}
         okText="确认"

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, message } from 'antd'
 import ReactQuill from 'react-quill'
 import { useState, Fragment, useEffect } from 'react'
 import './quill.css'
@@ -7,6 +7,7 @@ import { Setting, Nav, Divider } from './Styles'
 import { editProject, getProjectDetail } from '@/services'
 
 export default function ProjectSetting() {
+  const [messageApi, contextHolder] = message.useMessage()
   const params = useParams()
   const [form] = Form.useForm()
   const { projectId } = params
@@ -20,7 +21,9 @@ export default function ProjectSetting() {
     })
   }, [])
   const onFinish = (values) => {
-    editProject(projectId, { ...projectData, ...values }).then((res) => console.log('x', res))
+    editProject(projectId, { ...projectData, ...values }).then((res) => {
+      if (res.code === 0) message.success('Updated successfully!')
+    })
   }
   return (
     <Setting>

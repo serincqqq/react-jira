@@ -15,4 +15,5 @@ export const issueSchema = new Schema({
   timeSpent: Number,
   createdAt: String,
   updatedAt: String,
+  connectedProject: { type: String, required: true },
 });

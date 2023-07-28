@@ -9,9 +9,9 @@ const updateIssue = (id, data) =>
   })
 const getRecIssue = () =>
   request.get({
-    url: '/issue/recent'
+    url: '/issue/recent',
   })
-  
+
 const deleteIssue = (data) =>
   request.get({
     url: '/issue/delete',
@@ -27,26 +27,38 @@ const insertIssue = (data) =>
 const getIssueList = (data) =>
   request.get({
     url: '/issue/list',
+    params: {
+      connectedProject: data,
+    },
   })
 const getIssueDetail = (id) =>
   request.get({
     url: `/issue/detail?issueId=${id}`,
   })
-const addComment = (id,data) =>
+const addComment = (id, data) =>
   request.post({
     url: '/issue/comments',
     params: {
       issueId: id,
     },
     data,
-})
+  })
 const searchIssue = (data) =>
-request.get({
-  //两种写法的效果是一样的
-  url: `/issue/search?searchQuery=${data}`,
-  // url:'/issue/search' ,
-  // params:{
-  //   searchQuery:data
-  // }
-}) 
-export { searchIssue,getRecIssue,addComment,updateIssue, getIssueList, insertIssue, deleteIssue, getIssueDetail }
+  request.get({
+    //两种写法的效果是一样的
+    url: `/issue/search?searchQuery=${data}`,
+    // url:'/issue/search' ,
+    // params:{
+    //   searchQuery:data
+    // }
+  })
+export {
+  searchIssue,
+  getRecIssue,
+  addComment,
+  updateIssue,
+  getIssueList,
+  insertIssue,
+  deleteIssue,
+  getIssueDetail,
+}

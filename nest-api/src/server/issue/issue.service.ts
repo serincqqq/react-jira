@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Query } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateIssueDTO, CreateCommentDTO } from './issue.dto';
@@ -8,8 +8,8 @@ export class IssueService {
   constructor(
     @InjectModel('Issue') private readonly issueModel: Model<Issue>,
   ) {}
-  async findAll(): Promise<Issue[]> {
-    const issues = await this.issueModel.find();
+  async findAll(connectedProject: string): Promise<Issue[]> {
+    const issues = await this.issueModel.find({ connectedProject });
     return issues;
   }
   async deleteOne(issueId: string): Promise<void> {

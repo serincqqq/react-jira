@@ -1,13 +1,15 @@
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { Form, Input, Button, Modal } from 'antd'
+import { Form, Input, Button, Modal, message } from 'antd'
 import { useState } from 'react'
 import PubSub from 'pubsub-js'
 import { issueType, prioritys } from '@/shared/staticData/projectOption'
 import SpaceOption from '@/components/SpaceOption'
 import { insertIssue } from '@/services'
 import SearchSelect from '../SearchSelect'
+import { useParams } from 'react-router-dom'
 function CreateForm() {
+  const { projectId } = useParams()
   const [description] = useState('')
   const [loadings, setLoadings] = useState([])
   const [form] = Form.useForm()
@@ -36,7 +38,7 @@ function CreateForm() {
       newLoadings[0] = true
       return newLoadings
     })
-    insertIssue({
+    const data = {
       ...values,
       priority: {
         label: values.priority,
@@ -47,8 +49,9 @@ function CreateForm() {
         key: 'backlog',
       },
       createdAt: new Date(),
-    }).then((res) => {
-      console.log('bbb',res)
+      connectedProject: projectId,
+    }
+    insertIssue(data).then((res) => {
       if (res.code === 0) {
         setLoadings((prevLoadings) => {
           const newLoadings = [...prevLoadings]
@@ -56,6 +59,7 @@ function CreateForm() {
           return newLoadings
         })
         setCreateOpen(false)
+        message.success('Created successfully!')
         form.resetFields()
         PubSub.publish('refresh')
       }

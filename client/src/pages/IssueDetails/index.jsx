@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 import PubSub from 'pubsub-js'
 import { CheckSquareFilled, LinkOutlined, DeleteOutlined } from '@ant-design/icons'
-import { Input, Button, Divider } from 'antd'
+import { Input, Button, Divider, message } from 'antd'
 import { Title } from '../ProjectBoard/Styles'
 import {
   TitleTextarea,
@@ -64,6 +64,7 @@ export default function IssueDetails() {
     navigator.clipboard
       .writeText(currentUrl)
       .then(() => {
+        message.success('Copied successfully!')
         setLink('Link Copied')
       })
       .catch((error) => {
@@ -74,6 +75,7 @@ export default function IssueDetails() {
     deleteIssue(params.issueId).then((res) => {
       if (res.code === 0) {
         navigate(-1)
+        message.success('Deleted successfully!')
         PubSub.publish('refresh')
       }
     })
@@ -90,15 +92,13 @@ export default function IssueDetails() {
       updatedAt: new Date(),
     }
     //要有发表评论人的头像，id，名字，时间，内容(注意接口那边收到值不要覆盖，而是要往数组去加)
-    addComment(issueData._id, data).then(
-      (res) => {
-        if (res.code === 0) {
-          setContent('')
-          init()
-        }
+    addComment(issueData._id, data).then((res) => {
+      if (res.code === 0) {
+        setContent('')
+        message.success('Added successfully!')
+        init()
       }
-      //想办法补一个message弹窗
-    )
+    })
   }
   const handleBlur = () => {
     if (value === '') {

@@ -19,19 +19,17 @@ export default function Sidebar() {
   const params = useParams()
   const { projectId } = params
   useEffect(() => {
-    console.log('ddd',projectId)
-    // getProjectDetail(projectId).then((res) => {
-    //   const {projectName,projectType}=res.data
-    //   setProjectName(projectName)
-    //   setProjectType(projectType)
-    // })
+    getProjectDetail(projectId).then((res) => {
+      const { projectName, projectType } = res.data
+      setProjectName(projectName)
+      setProjectType(projectType)
+    })
   }, [])
   return (
     <ProjectInfo>
       <ProjectHeader>
         <ProjectAvatar></ProjectAvatar>
         <ProjectTexts>
-          {/* 这里也得改名字，需要一个project的根据id搜索的detail接口 */}
           <ProjectTitle>{projectName}</ProjectTitle>
           <ProjectDes>{projectType + ' Project'}</ProjectDes>
         </ProjectTexts>

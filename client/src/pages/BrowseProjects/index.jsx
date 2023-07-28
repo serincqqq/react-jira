@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getProject, searchProject, deleteProject } from '@/services'
 import PubSub from 'pubsub-js'
-import { Input, Layout, Divider, Table, Tooltip, Button, Space, Menu } from 'antd'
+import { Input, Layout, Divider, Table, Tooltip, Button, Space, Menu, message } from 'antd'
 import { PicRightOutlined, BuildOutlined } from '@ant-design/icons'
 import {
   siderStyle,
@@ -18,20 +18,6 @@ const { Sider, Content } = Layout
 const { Search } = Input
 
 export default function BrowseProjects() {
-  const CustomOverlay = (record) => (
-    <PersonInfo>
-      <img src="https://via.placeholder.com/40" alt="placeholder" />
-      <PersonText>
-        <span>{record.managerName}</span>
-        <p>{record.managerEmail}</p>
-      </PersonText>
-    </PersonInfo>
-  )
-  const deleteAction = (record) => {
-    deleteProject(record._id).then((res) => {
-      if (res.code === 0) init()
-    })
-  }
   const columns = [
     {
       title: 'ProjectName',
@@ -91,6 +77,24 @@ export default function BrowseProjects() {
   const [data, setData] = useState([])
   const [createOpen, setCreateOpen] = useState(false)
   const [searchType, setSearchType] = useState('Software')
+  const CustomOverlay = (record) => (
+    <PersonInfo>
+      <img src="https://via.placeholder.com/40" alt="placeholder" />
+      <PersonText>
+        <span>{record.managerName}</span>
+        <p>{record.managerEmail}</p>
+      </PersonText>
+    </PersonInfo>
+  )
+  const deleteAction = (record) => {
+    deleteProject(record._id).then((res) => {
+      if (res.code === 0) {
+        message.success('Deleted successfully!')
+        init()
+      }
+    })
+  }
+
   const init = () => {
     getProject().then((res) => {
       setData(res.data)
@@ -98,6 +102,8 @@ export default function BrowseProjects() {
   }
   useEffect(() => {
     PubSub.subscribe('refreshProject', (_) => {
+      setCreateOpen(false)
+      message.success('Created successfully!')
       init()
     })
     PubSub.subscribe('closeModal', (_) => {
