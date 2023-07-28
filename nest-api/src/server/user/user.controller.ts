@@ -2,16 +2,11 @@
  * 新建 controller
  * @dependence nest g controller user server
  */
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { CreateUserDTO } from './user.dto';
 import { User } from './user.interface';
 import { UserService } from './user.service';
-
-interface UserResponse<T = unknown> {
-  code: number;
-  data?: T;
-  message: string;
-}
+import { Response, generateResponse } from '../response';
 
 @Controller('jira/user')
 export class UserController {
@@ -19,30 +14,21 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('allUser')
-  async findAll(): Promise<UserResponse<User[]>> {
-    return {
-      code: 0,
-      data: await this.userService.findAll(),
-      message: 'Success.',
-    };
+  async findAll(): Promise<Response<User[]>> {
+    const data = await this.userService.findAll();
+    return generateResponse(data);
   }
 
   @Get('userList')
   async findItems(
     @Query('searchQuery') searchQuery: string,
-  ): Promise<UserResponse<User[]>> {
-    return {
-      code: 0,
-      data: await this.userService.findItems(searchQuery),
-      message: 'Success.',
-    };
+  ): Promise<Response<User[]>> {
+    const data = await this.userService.findItems(searchQuery);
+    return generateResponse(data);
   }
   @Get('userAvatar')
-  async findOneAvatar(@Query('id') id: string): Promise<UserResponse> {
-    return {
-      code: 0,
-      data: await this.userService.findOneAvatar(id),
-      message: 'Success.',
-    };
+  async findOneAvatar(@Query('id') id: string): Promise<Response> {
+    const data = await this.userService.findOneAvatar(id);
+    return generateResponse(data);
   }
 }

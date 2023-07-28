@@ -1,40 +1,21 @@
 import React, { useState, useEffect } from 'react'
+import { getProject, searchProject, deleteProject } from '@/services'
+import PubSub from 'pubsub-js'
+import { Input, Layout, Divider, Table, Tooltip, Button, Space, Menu } from 'antd'
+import { PicRightOutlined, BuildOutlined } from '@ant-design/icons'
 import {
-  insertProject,
-  getProject,
-  searchProject,
-  getSuffixOption,
-  deleteProject,
-} from '@/services'
-import {
-  Input,
-  Layout,
-  Divider,
-  Table,
-  Tooltip,
-  Button,
-  Modal,
-  Form,
-  Upload,
-  Select,
-  Space,
-} from 'antd'
-import { PicRightOutlined, BuildOutlined, UploadOutlined } from '@ant-design/icons'
-import {
-  TypeLabel,
   siderStyle,
   ProjectType,
   contentStyle,
-  Type,
   ProjectLink,
   PersonInfo,
   PersonText,
   softIcon,
   businessIcon,
 } from './Styles'
+import CreateProject from './components/CreateProject'
 const { Sider, Content } = Layout
 const { Search } = Input
-const { Option } = Select
 
 export default function BrowseProjects() {
   const CustomOverlay = (record) => (
@@ -100,55 +81,38 @@ export default function BrowseProjects() {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Button type="link" onClick={() => deleteAction(record)}>
+          <Button type="link" danger onClick={() => deleteAction(record)}>
             Delete
           </Button>
         </Space>
       ),
     },
   ]
-  const [form] = Form.useForm()
   const [data, setData] = useState([])
-  const [fileList, setFileList] = useState([])
   const [createOpen, setCreateOpen] = useState(false)
   const [searchType, setSearchType] = useState('Software')
-  const [suffixOption, setSuffixOption] = useState([])
   const init = () => {
     getProject().then((res) => {
       setData(res.data)
     })
   }
   useEffect(() => {
-    getSuffixOption().then((res) => {
-      setSuffixOption(res.data)
+    PubSub.subscribe('refreshProject', (_) => {
+      init()
     })
+    PubSub.subscribe('closeModal', (_) => {
+      setCreateOpen(false)
+    })
+
     init()
   }, [])
 
-  // 动态计算样式名
   const onSearch = (value) => {
-    console.log(typeof value)
     searchProject(value, searchType).then((res) => {
       setData(res.data)
     })
   }
 
-  const onFinish = (values) => {
-    values.managerEmail = Object.keys(values.managerEmail)
-      .map((k) => values.managerEmail[k])
-      .join('')
-    insertProject(values).then((res) => {
-      if (res.code === 0) {
-        setCreateOpen(false)
-        form.resetFields()
-        init()
-      }
-    })
-  }
-  const cancel = () => {
-    setCreateOpen(false)
-    form.resetFields()
-  }
   return (
     <Layout>
       <Sider width="250" style={siderStyle}>
@@ -156,18 +120,31 @@ export default function BrowseProjects() {
         <Divider />
         <ProjectType>
           <h4>All project types</h4>
-          {/* 不能用foucus，一旦失去焦点又没颜色了 */}
-          <Type autoFocus onClick={() => setSearchType('Software')} software>
-            <BuildOutlined className="icon" />
-            <span>Software</span>
-          </Type>
-          <Type onClick={() => setSearchType('Business')}>
-            <PicRightOutlined className="icon" />
-            <TypeLabel>Business</TypeLabel>
-          </Type>
+          <Menu
+            onClick={(e) => setSearchType(e.key)}
+            style={{ background: 'rgb(244, 245, 247)', border: 'none' }}
+            defaultSelectedKeys={['Software']}
+            items={[
+              {
+                key: 'Software',
+                icon: <BuildOutlined className="icon" />,
+                label: 'Software',
+              },
+              {
+                key: 'Business',
+                icon: <PicRightOutlined className="icon" />,
+                label: 'Business',
+              },
+            ]}
+          />
         </ProjectType>
       </Sider>
-      <Layout>
+      <Layout
+        style={{
+          marginLeft: 200,
+          background: 'white',
+        }}
+      >
         <Content style={contentStyle}>
           <h3>{searchType} - All project types</h3>
 
@@ -179,102 +156,14 @@ export default function BrowseProjects() {
           />
           <Button
             onClick={() => setCreateOpen(true)}
-            style={{ float: 'right', marginRight: '100px' }}
+            style={{ float: 'right', margin: '20px 30px 0 0' }}
             type="primary"
           >
-            create project
+            Create project
           </Button>
           <Table columns={columns} dataSource={data} rowKey="_id" />
-          <Modal width={500} open={createOpen} footer={null} onCancel={() => setCreateOpen(false)}>
-            <Form
-              onFinish={onFinish}
-              style={{ fontFamily: ' CircularStdBook' }}
-              layout="vertical"
-              form={form}
-              labelCol={{ span: 10 }}
-              wrapperCol={{ span: 24 }}
-              autoComplete="off"
-              initialValues={{ projectType: 'Software', managerEmail: { suffix: '@gmail.com' } }}
-            >
-              <Form.Item
-                label="Project Name"
-                name="projectName"
-                rules={[{ required: true, message: 'Please input your projectName!' }]}
-              >
-                <Input placeholder="input projectName" />
-              </Form.Item>
-              <Form.Item label="Description" name="description">
-                <Input placeholder="input description" />
-              </Form.Item>
-              <Form.Item
-                label="Project Type"
-                name="projectType"
-                rules={[{ required: true, message: 'Please select your type!' }]}
-              >
-                <Select
-                  options={[
-                    {
-                      value: 'Software',
-                      label: 'Software',
-                    },
-                    {
-                      value: 'Business',
-                      label: 'Business',
-                    },
-                  ]}
-                />
-              </Form.Item>
-              <Form.Item
-                label="Manager Name"
-                name="managerName"
-                rules={[{ required: true, message: 'Please input your managerName!' }]}
-              >
-                <Input placeholder="input managerName" />
-              </Form.Item>
-
-              <Form.Item label="Manager Email" style={{ marginBottom: 0 }}>
-                <Space.Compact>
-                  <Form.Item
-                    name={['managerEmail', 'content']}
-                    style={{ width: '300px' }}
-                    rules={[{ required: true, message: 'content is required' }]}
-                  >
-                    <Input placeholder="Input street" />
-                  </Form.Item>
-                  <Form.Item
-                    name={['managerEmail', 'suffix']}
-                    style={{ width: '150px' }}
-                    rules={[{ required: true, message: 'suffix is required' }]}
-                  >
-                    <Select>
-                      {suffixOption.map((item) => (
-                        <Option key={item._id} value={item.value}>
-                          {item.label}
-                        </Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                </Space.Compact>
-              </Form.Item>
-
-              <Form.Item label="Manager Avatar" name="managerAvatar">
-                <Upload fileList={fileList} maxCount={1} action="/upload.do" listType="picture">
-                  <Button icon={<UploadOutlined />}>Upload (Max: 1)</Button>
-                </Upload>
-              </Form.Item>
-              <Form.Item label="KeyWord" name="keyword">
-                <Input placeholder="input keyword" />
-              </Form.Item>
-              <Button style={{ marginLeft: '260px' }} onClick={cancel}>
-                Cancel
-              </Button>
-              <Button type="primary" style={{ marginLeft: '20px' }} htmlType="submit">
-                Submit
-              </Button>
-            </Form>
-          </Modal>
+          <CreateProject createOpen={createOpen}></CreateProject>
         </Content>
-        {/* <Footer>Footer</Footer> */}
       </Layout>
     </Layout>
   )

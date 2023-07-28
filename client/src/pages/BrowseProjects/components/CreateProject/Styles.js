@@ -26,7 +26,6 @@ export const siderStyle = {
 export const contentStyle = {
   margin: '24px 100px 0',
   overflow: 'initial',
-  // padding: '20px',
   backgroundColor: 'white',
 }
 
