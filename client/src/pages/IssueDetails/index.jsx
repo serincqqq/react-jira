@@ -24,7 +24,7 @@ import DesEditor from './components/DesEditor'
 import Comment from './components/Comment'
 import Priority from './components/Priority'
 import AssigneesReporter from './components/AssigneesReporter'
-import { getIssueDetail, updateIssue, deleteIssue,addComment } from '@/services'
+import { getIssueDetail, updateIssue, deleteIssue, addComment } from '@/services'
 import Avatar from '@/components/Avatar'
 const { TextArea } = Input
 
@@ -49,7 +49,7 @@ export default function IssueDetails() {
 
   const init = () => {
     getIssueDetail(params.issueId).then((res) => {
-      const {summary,description,comments}=res.data
+      const { summary, description, comments } = res.data
       setValue(summary)
       setContent(description)
       setComments(comments)
@@ -90,12 +90,14 @@ export default function IssueDetails() {
       updatedAt: new Date(),
     }
     //要有发表评论人的头像，id，名字，时间，内容(注意接口那边收到值不要覆盖，而是要往数组去加)
-    addComment(issueData._id, {comments: data }).then((res) =>{
-      setContent('')
-    init()
-    }
-    //想办法补一个message弹窗
-    
+    addComment(issueData._id, data).then(
+      (res) => {
+        if (res.code === 0) {
+          setContent('')
+          init()
+        }
+      }
+      //想办法补一个message弹窗
     )
   }
   const handleBlur = () => {
@@ -104,8 +106,8 @@ export default function IssueDetails() {
       setBordered(false)
     } else {
       setShowWarn(false)
-      updateIssue(issueData._id, { summary: value, updatedAt: new Date() }).then(
-        () => setBordered(false)
+      updateIssue(issueData._id, { summary: value, updatedAt: new Date() }).then(() =>
+        setBordered(false)
       )
     }
   }
@@ -161,7 +163,7 @@ export default function IssueDetails() {
               <Button className="cancel">Cancel</Button>
             </TextFunc>
             {comments.map((comment) => (
-              <Comment key={comment._id} comment={comment} />
+              <Comment key={comment.id} comment={comment} />
             ))}
           </Comments>
         </Left>

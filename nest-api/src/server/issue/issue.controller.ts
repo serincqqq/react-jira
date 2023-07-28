@@ -1,4 +1,12 @@
-import { Controller, Body, Query, Param, Post, Get } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Query,
+  Param,
+  Post,
+  Get,
+  HttpCode,
+} from '@nestjs/common';
 import { CreateCommentDTO, CreateIssueDTO } from './issue.dto';
 import { Issue } from './issue.interface';
 import { IssueService } from './issue.service';
@@ -13,9 +21,7 @@ export class IssueController {
     return generateResponse(data);
   }
   @Get('delete')
-  async deleteOne(
-    @Param('issueId') issueId: string,
-  ): Promise<Response<Issue[]>> {
+  async deleteOne(@Query('issueId') issueId: string): Promise<Response> {
     await this.issueService.deleteOne(issueId);
     return generateResponse(undefined);
   }
@@ -31,10 +37,12 @@ export class IssueController {
   }
 
   @Post('comments')
+  @HttpCode(200)
   async updateComment(
-    @Param('issueId') issueId: string,
+    @Query('issueId') issueId: string,
     @Body() comment: CreateCommentDTO,
-  ): Promise<Response<Issue[]>> {
+  ): Promise<Response> {
+    console.log('vv', issueId);
     await this.issueService.updateComment(issueId, comment);
     return generateResponse(undefined);
   }
@@ -42,12 +50,13 @@ export class IssueController {
   async update(
     @Param('issueId') issueId: string,
     @Body() body: CreateIssueDTO,
-  ): Promise<Response<Issue[]>> {
+  ): Promise<Response> {
     await this.issueService.updateOne(issueId, body);
     return generateResponse(undefined);
   }
   @Post('create')
-  async addOne(@Body() body: CreateIssueDTO): Promise<Response<Issue[]>> {
+  @HttpCode(200)
+  async addOne(@Body() body: CreateIssueDTO): Promise<Response> {
     await this.issueService.addOne(body);
     return generateResponse(undefined);
   }

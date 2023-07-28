@@ -76,7 +76,9 @@ export default function ProjectBoard() {
                   <List>
                     <Title>
                       {status}
-                      <IssuesCount>{issues.filter(obj => obj.status.key === status).length}</IssuesCount>
+                      <IssuesCount>
+                        {issues.filter((obj) => obj.status.key === status).length}
+                      </IssuesCount>
                     </Title>
                     <Issues {...provided.droppableProps} ref={provided.innerRef}>
                       {getSortedListIssues(issues, status).map((item, index) => {

@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Body, Post } from '@nestjs/common';
+import { Controller, Get, Query, Body, Post, HttpCode } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { Project } from './project.interface';
 import { EditProjectDTO } from './project.dto';
@@ -23,11 +23,13 @@ export class ProjectController {
     return generateResponse(data);
   }
   @Post('create')
-  async createOne(@Body() body: EditProjectDTO): Promise<Response<void>> {
+  @HttpCode(200)
+  async createOne(@Body() body: EditProjectDTO): Promise<Response<any>> {
     await this.projectService.createOne(body);
     return generateResponse(undefined);
   }
   @Post('edit')
+  @HttpCode(200)
   async editOne(
     @Query('projectId') projectId: string,
     @Body() body: EditProjectDTO,

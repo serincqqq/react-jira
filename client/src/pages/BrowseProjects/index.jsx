@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { insertProject, getProject, searchProject, getSuffixOption, deleteProject } from '@/services'
+import {
+  insertProject,
+  getProject,
+  searchProject,
+  getSuffixOption,
+  deleteProject,
+} from '@/services'
 import {
   Input,
   Layout,
@@ -30,7 +36,6 @@ const { Sider, Content } = Layout
 const { Search } = Input
 const { Option } = Select
 
-
 export default function BrowseProjects() {
   const CustomOverlay = (record) => (
     <PersonInfo>
@@ -41,9 +46,9 @@ export default function BrowseProjects() {
       </PersonText>
     </PersonInfo>
   )
-  const deleteAction=(record)=>{
-    deleteProject(record._id).then((res)=>{
-      if(res.code===0) init()
+  const deleteAction = (record) => {
+    deleteProject(record._id).then((res) => {
+      if (res.code === 0) init()
     })
   }
   const columns = [
@@ -95,7 +100,9 @@ export default function BrowseProjects() {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-           <Button type="link" onClick={()=>deleteAction(record)}>Delete</Button>
+          <Button type="link" onClick={() => deleteAction(record)}>
+            Delete
+          </Button>
         </Space>
       ),
     },
@@ -118,7 +125,6 @@ export default function BrowseProjects() {
     init()
   }, [])
 
-
   // 动态计算样式名
   const onSearch = (value) => {
     console.log(typeof value)
@@ -132,10 +138,11 @@ export default function BrowseProjects() {
       .map((k) => values.managerEmail[k])
       .join('')
     insertProject(values).then((res) => {
-      console.log('vv',res)
-      setCreateOpen(false)
-      form.resetFields()
-      init()
+      if (res.code === 0) {
+        setCreateOpen(false)
+        form.resetFields()
+        init()
+      }
     })
   }
   const cancel = () => {

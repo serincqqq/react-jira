@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "npm-run-all --parallel dev-api dev-client",
-    "dev-api": "cd api && nodemon index",
+    "dev-api": "cd nest-api && npm run start:dev",
     "dev-client": "cd client && npm run start"
   },
   "devDependencies": {
