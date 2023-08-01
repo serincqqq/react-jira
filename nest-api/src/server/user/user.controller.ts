@@ -7,7 +7,8 @@ import { CreateUserDTO } from './user.dto';
 import { User } from './user.interface';
 import { UserService } from './user.service';
 import { Response, generateResponse } from '../response';
-
+// import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 @Controller('jira/user')
 export class UserController {
   // 实例化 provider
@@ -30,5 +31,14 @@ export class UserController {
   async findOneAvatar(@Query('id') id: string): Promise<Response> {
     const data = await this.userService.findOneAvatar(id);
     return generateResponse(data);
+  }
+  @Get('profile')
+  async findOneUser(
+    @Query('userName') userName: string,
+    @Query('password') password: string,
+  ): Promise<Response> {
+    const data = await this.userService.findUser(userName, password);
+    const token = jwt.sign({ userId: data._id }, 'cq277', { expiresIn: '1h' });
+    return generateResponse(token);
   }
 }

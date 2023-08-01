@@ -21,8 +21,8 @@ const request = new Request({
       return response
     },
     responseInterceptorCatch: (error) => {
-      console.error(error.response?.data?.msg)
-      message.error(error.response?.data?.msg)
+      console.error(error.response?.message)
+      message.error(error.response?.message)
       return error
     },
   },

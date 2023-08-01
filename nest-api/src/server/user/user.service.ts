@@ -24,4 +24,10 @@ export class UserService {
       userName: { $regex: searchQuery, $options: 'i' },
     });
   }
+  async findUser(userName: string, password: string): Promise<User> {
+    return await this.userModel.findOne({
+      userName,
+      password,
+    });
+  }
 }

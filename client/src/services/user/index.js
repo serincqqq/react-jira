@@ -19,5 +19,12 @@ const getAllUserList = () =>
   request.get({
     url: '/user/allUser',
   })
-
-export { getUserList, getAllUserList, getUserAvatar }
+const login = (data) =>
+  request.get({
+    url: '/user/profile',
+    params: {
+      userName: data.userName,
+      password: data.password,
+    },
+  })
+export { login, getUserList, getAllUserList, getUserAvatar }
