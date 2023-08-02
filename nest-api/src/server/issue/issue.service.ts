@@ -12,6 +12,13 @@ export class IssueService {
     const issues = await this.issueModel.find({ connectedProject });
     return issues;
   }
+  async findOwn(connectedUser: string, projectId: string): Promise<Issue[]> {
+    const issues = await this.issueModel.find({
+      'assignee.key': connectedUser,
+      connectedProject: projectId,
+    });
+    return issues;
+  }
   async deleteOne(issueId: string): Promise<void> {
     await this.issueModel.findByIdAndDelete(issueId);
   }

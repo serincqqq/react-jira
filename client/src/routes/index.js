@@ -5,7 +5,7 @@ import IssueDetails from '../pages/IssueDetails'
 import BrowseProjects from '../pages/BrowseProjects'
 import { Navigate } from 'react-router-dom'
 import Login from '@/pages/Login'
-
+import MyIssue from '@/pages/MyIssue'
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
   {
@@ -24,14 +24,24 @@ export default [
     auth: true,
     children: [
       {
-        path: 'board',
-        element: <ProjectBoard></ProjectBoard>,
+        path: 'myIssue',
+        element: <MyIssue></MyIssue>,
         children: [
           {
             path: 'issue/:issueId',
             element: <IssueDetails></IssueDetails>,
           },
         ],
+      },
+      {
+        path: 'board',
+        element: <ProjectBoard></ProjectBoard>,
+        // children: [
+        //   {
+        //     path: 'issue/:issueId',
+        //     element: <IssueDetails></IssueDetails>,
+        //   },
+        // ],
       },
       {
         path: 'setting',

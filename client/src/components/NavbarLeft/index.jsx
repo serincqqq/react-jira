@@ -1,44 +1,64 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import { Popover, Button } from 'antd'
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons'
 import PubSub from 'pubsub-js'
 import { NavLeft, LogoLink, StyledLogo, UserAvatar, Item, ItemText } from './Styles'
+import { useLocation, useNavigate } from 'react-router-dom'
 
-// const propTypes = {
-//   issueSearchModalOpen: PropTypes.func.isRequired,
-//   issueCreateModalOpen: PropTypes.func.isRequired,
-// };
-const issueSearchModalOpen = () => {
-  PubSub.publish('modalType', { modal: 'modal_search' })
-}
-const issueCreateModalOpen = () => {
-  PubSub.publish('modalType', { modal: 'modal_create' })
-}
 export default function NavbarLeft() {
-  const [userData, setUserData] = useState({})
+  const navigate = useNavigate()
+
+  const location = useLocation()
+  const isProject = location.pathname === '/browseProjects'
+  const [userData, setUserData] = useState({
+    userAvatar: '',
+    userName: '',
+  })
   useEffect(() => {
     setUserData(JSON.parse(localStorage.getItem('userData')))
   }, [])
-
+  const issueSearchModalOpen = () => {
+    if (!isProject) PubSub.publish('modalType', { modal: 'modal_search' })
+  }
+  const issueCreateModalOpen = () => {
+    if (isProject) PubSub.publish('openModal')
+    else PubSub.publish('modalType', { modal: 'modal_create' })
+  }
+  const logout = () => {
+    localStorage.removeItem('jiraToken')
+    localStorage.removeItem('userData')
+    navigate('/login')
+  }
   return (
     <NavLeft>
       <LogoLink to="/">
         <StyledLogo color="#fff" />
       </LogoLink>
-
-      <Item>
-        <UserAvatar avatar={userData.userAvatar} />
-        <ItemText>{userData.userName}</ItemText>
-      </Item>
-
-      <Item onClick={issueSearchModalOpen}>
-        <SearchOutlined style={{ fontSize: '24px' }} />
-        <ItemText>Search issues</ItemText>
-      </Item>
+      <Popover
+        content={
+          <Button onClick={logout} danger type="text">
+            Log Out
+          </Button>
+        }
+        trigger="click"
+      >
+        <Item>
+          <UserAvatar avatar={userData?.userAvatar} />
+          <ItemText>{userData?.userName}</ItemText>
+        </Item>
+      </Popover>
+      {isProject ? (
+        ''
+      ) : (
+        <Item onClick={issueSearchModalOpen}>
+          <SearchOutlined style={{ fontSize: '24px' }} />
+          <ItemText>Search issues</ItemText>
+        </Item>
+      )}
 
       <Item onClick={issueCreateModalOpen}>
         <PlusOutlined style={{ fontSize: '24px' }} />
-        <ItemText>Create Issue</ItemText>
+        <ItemText>Create {isProject ? 'Project' : 'Issue'}</ItemText>
       </Item>
     </NavLeft>
   )

@@ -8,9 +8,11 @@ import SpaceOption from '@/components/SpaceOption'
 import { insertIssue } from '@/services'
 import SearchSelect from '../SearchSelect'
 import { useParams } from 'react-router-dom'
+import dayjs from 'dayjs'
 function CreateForm() {
   const { projectId } = useParams()
   const [description] = useState('')
+  const date = dayjs()
   const [loadings, setLoadings] = useState([])
   const [form] = Form.useForm()
   const [createOpen, setCreateOpen] = useState(false)
@@ -48,7 +50,7 @@ function CreateForm() {
         label: 'backlog',
         key: 'backlog',
       },
-      createdAt: new Date(),
+      createdAt: date.format('YYYY-MM-DD HH:mm:ss'),
       connectedProject: projectId,
     }
     insertIssue(data).then((res) => {

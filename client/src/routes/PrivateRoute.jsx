@@ -6,12 +6,13 @@ export default function PrivateRoute({ auth, children }) {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const token = localStorage.getItem('jiraToken') || ''
+  const token = localStorage.getItem('jiraToken') || sessionStorage.getItem('jiraToken')
+  console.log(token === null)
   const mathchs = matchRoutes(routes, location)
   const isExist = mathchs?.some((item) => item.pathname === location.pathname)
   const loginState = 'login'
   useEffect(() => {
-    if (token === '' && auth) {
+    if (token === null && auth) {
       message.error('token 过期，请重新登录!')
       navigate('/login')
     }

@@ -20,9 +20,6 @@ const { Sider, Content } = Layout
 const { Search } = Input
 
 export default function BrowseProjects() {
-  console.log('kk',store.getState())
-  // to={`/project/${record._id}/board`}
-  // to={{ pathname: "/home/message/detail/", state: { id: msgObj.id, title: msgObj.title } }}
   const columns = [
     {
       title: 'ProjectName',
@@ -114,6 +111,9 @@ export default function BrowseProjects() {
     PubSub.subscribe('closeModal', (_) => {
       setCreateOpen(false)
     })
+    PubSub.subscribe('openModal', (_) => {
+      setCreateOpen(true)
+    })
 
     init()
   }, [])
@@ -126,59 +126,52 @@ export default function BrowseProjects() {
 
   return (
     <>
-    <NavbarLeft></NavbarLeft>
-    <Layout>
-      <Sider width="250" style={siderStyle}>
-        <h3>Browse project</h3>
-        <Divider />
-        <ProjectType>
-          <h4>All project types</h4>
-          <Menu
-            onClick={(e) => setSearchType(e.key)}
-            style={{ background: 'rgb(244, 245, 247)', border: 'none' }}
-            defaultSelectedKeys={['Software']}
-            items={[
-              {
-                key: 'Software',
-                icon: <BuildOutlined className="icon" />,
-                label: 'Software',
-              },
-              {
-                key: 'Business',
-                icon: <PicRightOutlined className="icon" />,
-                label: 'Business',
-              },
-            ]}
-          />
-        </ProjectType>
-      </Sider>
-      <Layout
-        style={{
-          marginLeft: 200,
-          background: 'white',
-        }}
-      >
-        <Content style={contentStyle}>
-          <h3>{searchType} - All project types</h3>
+      <NavbarLeft></NavbarLeft>
+      <Layout>
+        <Sider width="250" style={siderStyle}>
+          <h3>Browse project</h3>
+          <Divider />
+          <ProjectType>
+            <h4>All project types</h4>
+            <Menu
+              onClick={(e) => setSearchType(e.key)}
+              style={{ background: 'rgb(244, 245, 247)', border: 'none' }}
+              defaultSelectedKeys={['Software']}
+              items={[
+                {
+                  key: 'Software',
+                  icon: <BuildOutlined className="icon" />,
+                  label: 'Software',
+                },
+                {
+                  key: 'Business',
+                  icon: <PicRightOutlined className="icon" />,
+                  label: 'Business',
+                },
+              ]}
+            />
+          </ProjectType>
+        </Sider>
+        <Layout
+          style={{
+            marginLeft: 200,
+            background: 'white',
+          }}
+        >
+          <Content style={contentStyle}>
+            <h3>{searchType} - All project types</h3>
 
-          <Search
-            style={{ width: '260px', margin: '20px 0' }}
-            placeholder="input search text"
-            onSearch={onSearch}
-            enterButton
-          />
-          <Button
-            onClick={() => setCreateOpen(true)}
-            style={{ float: 'right', margin: '20px 30px 0 0' }}
-            type="primary"
-          >
-            Create project
-          </Button>
-          <Table columns={columns} dataSource={data} rowKey="_id" />
-          <CreateProject createOpen={createOpen}></CreateProject>
-        </Content>
+            <Search
+              style={{ width: '260px', margin: '20px 0' }}
+              placeholder="input search text"
+              onSearch={onSearch}
+              enterButton
+            />
+            <Table columns={columns} dataSource={data} rowKey="_id" />
+            <CreateProject createOpen={createOpen}></CreateProject>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
     </>
   )
 }

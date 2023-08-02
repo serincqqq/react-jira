@@ -1,5 +1,5 @@
 import { NavLink, useParams } from 'react-router-dom'
-import { SettingOutlined, FundProjectionScreenOutlined } from '@ant-design/icons'
+import { SettingOutlined, FundProjectionScreenOutlined, LaptopOutlined } from '@ant-design/icons'
 
 import {
   LinkItem,
@@ -17,19 +17,18 @@ import { getProjectDetail } from '@/services'
 export default function Sidebar() {
   const [projectName, setProjectName] = useState('')
   const [projectType, setProjectType] = useState('')
-  const [userData,setUserData]=useState({})
- 
+  const [userData, setUserData] = useState({})
+
   const params = useParams()
   const { projectId } = params
   useEffect(() => {
-    setUserData(JSON.parse(localStorage.getItem('userData')) ) 
+    setUserData(JSON.parse(localStorage.getItem('userData')))
     getProjectDetail(projectId).then((res) => {
       const { projectName, projectType } = res.data
       setProjectName(projectName)
       setProjectType(projectType)
     })
   }, [])
-  // avatar={}
   return (
     <ProjectInfo>
       <ProjectHeader>
@@ -39,6 +38,10 @@ export default function Sidebar() {
           <ProjectDes>{projectType + ' Project'}</ProjectDes>
         </ProjectTexts>
       </ProjectHeader>
+      <LinkItem as={NavLink} to={`/project/${projectId}/myIssue`}>
+        <LaptopOutlined style={{ fontSize: '18px', marginRight: '20px' }} />
+        <LinkText>My Issue</LinkText>
+      </LinkItem>
       <LinkItem as={NavLink} to={`/project/${projectId}/board`}>
         <FundProjectionScreenOutlined style={{ fontSize: '18px', marginRight: '20px' }} />
         <LinkText>Kanban Board</LinkText>

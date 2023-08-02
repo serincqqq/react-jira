@@ -5,12 +5,17 @@ import { LoginPage, LoginContainer } from './Style'
 import { login } from '@/services'
 export default function Login() {
   const navigate = useNavigate()
+
   const onFinish = (values) => {
     login(values).then((res) => {
       if (res.code === 0) {
-        localStorage.setItem('jiraToken', res.token)
-        localStorage.setItem('userData', JSON.stringify(res.data))
-
+        if (values.remember) {
+          localStorage.setItem('jiraToken', res.token)
+          localStorage.setItem('userData', JSON.stringify(res.data))
+        } else {
+          sessionStorage.setItem('jiraToken', res.token)
+          sessionStorage.setItem('userData', JSON.stringify(res.data))
+        }
         navigate('/browseProjects')
       }
     })

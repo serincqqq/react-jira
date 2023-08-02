@@ -11,7 +11,14 @@ const getRecIssue = () =>
   request.get({
     url: '/issue/recent',
   })
-
+const getMyIssue = (projectId, id) =>
+  request.get({
+    url: '/issue/own',
+    params: {
+      connectedUser: id,
+      projectId,
+    },
+  })
 const deleteIssue = (data) =>
   request.get({
     url: '/issue/delete',
@@ -53,6 +60,7 @@ const searchIssue = (data) =>
     // }
   })
 export {
+  getMyIssue,
   searchIssue,
   getRecIssue,
   addComment,

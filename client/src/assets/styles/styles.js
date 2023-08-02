@@ -47,7 +47,7 @@ export const issuePriorityColors = {
 }
 export const sizes = {
   appNavBarLeftWidth: 64,
-  secondarySideBarWidth: 230,
+  secondarySideBarWidth: 210,
   minViewportWidth: 1000,
 }
 

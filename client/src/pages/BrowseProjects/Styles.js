@@ -20,7 +20,7 @@ export const siderStyle = {
   left: '64px',
   top: 0,
   bottom: 0,
-  padding: '20px',
+  padding: '20px 14px',
   backgroundColor: 'rgb(244, 245, 247)',
 }
 export const contentStyle = {

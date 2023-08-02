@@ -14,6 +14,14 @@ export class IssueController {
     const data = await this.issueService.findAll(connectedProject);
     return generateResponse(data);
   }
+  @Get('own')
+  async findOwn(
+    @Query('connectedUser') connectedUser: string,
+    @Query('projectId') projectId: string,
+  ): Promise<Response<Issue[]>> {
+    const data = await this.issueService.findOwn(connectedUser, projectId);
+    return generateResponse(data);
+  }
   @Get('delete')
   async deleteOne(@Query('issueId') issueId: string): Promise<Response> {
     await this.issueService.deleteOne(issueId);

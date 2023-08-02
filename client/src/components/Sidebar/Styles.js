@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { font } from '@/assets/styles/styles'
 
 export const ProjectInfo = styled.div`
-  @media (max-width:1000px) {
+  @media (max-width: 1000px) {
     display: none;
   }
   height: 100vh;
@@ -19,19 +19,18 @@ export const ProjectInfo = styled.div`
 `
 export const ProjectAvatar = styled.div`
   display: inline-block;
-  width: 48px;
-  height: 48px;
-  background-image: url(https://i.ibb.co/7JM1P2r/picke-rick.jpg);
+  width: 44px;
+  height: 44px;
+  background-image: url(https://i.ibb.co/rZM6f7M/jira-ivorreic-com.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #ebecf0;
 `
 export const ProjectTitle = styled.span`
   color: #42526e;
-  font-size: 15px;
   font-family: 'CircularStdMedium';
   font-weight: normal;
-  ${font.size(18)};
+  ${font.size(16)};
 `
 export const ProjectTexts = styled.div`
   display: flex;
@@ -55,6 +54,7 @@ export const ProjectHeader = styled.div`
   padding: 24px 4px;
 `
 export const LinkItem = styled.div`
+  margin-bottom: 6px;
   position: relative;
   display: flex;
   padding: 10px 12px;
