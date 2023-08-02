@@ -13,18 +13,23 @@ import {
 } from './Styles'
 import { useEffect, useState } from 'react'
 import { getProjectDetail } from '@/services'
+
 export default function Sidebar() {
   const [projectName, setProjectName] = useState('')
   const [projectType, setProjectType] = useState('')
+  const [userData,setUserData]=useState({})
+ 
   const params = useParams()
   const { projectId } = params
   useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem('userData')) ) 
     getProjectDetail(projectId).then((res) => {
       const { projectName, projectType } = res.data
       setProjectName(projectName)
       setProjectType(projectType)
     })
   }, [])
+  // avatar={}
   return (
     <ProjectInfo>
       <ProjectHeader>

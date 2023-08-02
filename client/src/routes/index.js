@@ -3,9 +3,9 @@ import ProjectSetting from '../pages/ProjectSetting'
 import ProjectBoard from '../pages/ProjectBoard'
 import IssueDetails from '../pages/IssueDetails'
 import BrowseProjects from '../pages/BrowseProjects'
-// import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import Login from '@/pages/Login'
-import { Layout } from 'antd'
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
   {
@@ -17,6 +17,27 @@ export default [
     path: '/browseProjects',
     element: <BrowseProjects></BrowseProjects>,
     auth: true,
+  },
+  {
+    path: '/project/:projectId',
+    element: <Project></Project>,
+    auth: true,
+    children: [
+      {
+        path: 'board',
+        element: <ProjectBoard></ProjectBoard>,
+        children: [
+          {
+            path: 'issue/:issueId',
+            element: <IssueDetails></IssueDetails>,
+          },
+        ],
+      },
+      {
+        path: 'setting',
+        element: <ProjectSetting></ProjectSetting>,
+      },
+    ],
   },
   // {
   //   path: '/',
@@ -52,9 +73,9 @@ export default [
   //   ],
   // },
 
-  // {
-  //   path: '/',
-  //   element: <Navigate to="/login" />,
-  // },
+  {
+    path: '/',
+    element: <Navigate to="/login" />,
+  },
 ]
 // https://pythonjishu.com/qpoeonfhqgofzlm/

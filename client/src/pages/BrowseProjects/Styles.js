@@ -17,14 +17,14 @@ export const siderStyle = {
   overflow: 'auto',
   height: '100vh',
   position: 'fixed',
-  left: 0,
+  left: '64px',
   top: 0,
   bottom: 0,
   padding: '20px',
   backgroundColor: 'rgb(244, 245, 247)',
 }
 export const contentStyle = {
-  margin: '24px 100px 0',
+  margin: '24px 160px 0',
   overflow: 'initial',
   // padding: '20px',
   backgroundColor: 'white',

@@ -3,6 +3,7 @@ import { getProject, searchProject, deleteProject } from '@/services'
 import PubSub from 'pubsub-js'
 import { Input, Layout, Divider, Table, Tooltip, Button, Space, Menu, message } from 'antd'
 import { PicRightOutlined, BuildOutlined } from '@ant-design/icons'
+import NavbarLeft from '@/components/NavbarLeft'
 import {
   siderStyle,
   ProjectType,
@@ -14,10 +15,14 @@ import {
   businessIcon,
 } from './Styles'
 import CreateProject from './components/CreateProject'
+import store from '@/redux/store'
 const { Sider, Content } = Layout
 const { Search } = Input
 
 export default function BrowseProjects() {
+  console.log('kk',store.getState())
+  // to={`/project/${record._id}/board`}
+  // to={{ pathname: "/home/message/detail/", state: { id: msgObj.id, title: msgObj.title } }}
   const columns = [
     {
       title: 'ProjectName',
@@ -120,6 +125,8 @@ export default function BrowseProjects() {
   }
 
   return (
+    <>
+    <NavbarLeft></NavbarLeft>
     <Layout>
       <Sider width="250" style={siderStyle}>
         <h3>Browse project</h3>
@@ -172,5 +179,6 @@ export default function BrowseProjects() {
         </Content>
       </Layout>
     </Layout>
+    </>
   )
 }

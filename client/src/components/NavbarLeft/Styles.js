@@ -4,6 +4,16 @@ import { NavLink } from 'react-router-dom'
 import { font, sizes, color, mixin, zIndexValues } from '@/assets/styles/styles'
 import Logo from '../Logo'
 
+export const UserAvatar = styled.div`
+  height: 24px;
+  flex-shrink: 0;
+  width: 24px;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(${(props) => props.avatar});
+  display: inline-block;
+`
 export const NavLeft = styled.aside`
   z-index: ${zIndexValues.navLeft};
   position: fixed;
@@ -16,7 +26,7 @@ export const NavLeft = styled.aside`
   transition: all 0.1s;
   ${mixin.hardwareAccelerate}
   &:hover {
-    width: 200px;
+    width: ${sizes.secondarySideBarWidth}px;
     box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.6);
   }
 `
@@ -46,6 +56,7 @@ export const Bottom = styled.div`
 export const Item = styled.div`
   display: flex;
   height: 38px;
+  align-items: center;
   line-height: 30px;
   margin-bottom: 10px;
   padding: 6px 0 0 20px;
@@ -58,7 +69,7 @@ export const Item = styled.div`
 `
 
 export const ItemText = styled.div`
-  margin-left: 22px;
+  margin-left: 14px;
   visibility: hidden;
   opacity: 0;
   text-transform: uppercase;

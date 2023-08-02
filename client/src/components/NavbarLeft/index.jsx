@@ -1,37 +1,45 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
-import PubSub from "pubsub-js";
-import { NavLeft, LogoLink, StyledLogo, Bottom, Item, ItemText } from "./Styles";
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import { SearchOutlined, PlusOutlined } from '@ant-design/icons'
+import PubSub from 'pubsub-js'
+import { NavLeft, LogoLink, StyledLogo, UserAvatar, Item, ItemText } from './Styles'
 
 // const propTypes = {
 //   issueSearchModalOpen: PropTypes.func.isRequired,
 //   issueCreateModalOpen: PropTypes.func.isRequired,
 // };
 const issueSearchModalOpen = () => {
-  PubSub.publish("modalType", { modal: "modal_search" });
-};
+  PubSub.publish('modalType', { modal: 'modal_search' })
+}
 const issueCreateModalOpen = () => {
-  PubSub.publish("modalType", { modal: "modal_create" });
-};
-const NavbarLeft = () => (
-  <NavLeft>
-    <LogoLink to="/">
-      <StyledLogo color="#fff" />
-    </LogoLink>
+  PubSub.publish('modalType', { modal: 'modal_create' })
+}
+export default function NavbarLeft() {
+  const [userData, setUserData] = useState({})
+  useEffect(() => {
+    setUserData(JSON.parse(localStorage.getItem('userData')))
+  }, [])
 
-    <Item onClick={issueSearchModalOpen}>
-      <SearchOutlined style={{ fontSize: "24px" }} />
-      <ItemText>Search issues</ItemText>
-    </Item>
+  return (
+    <NavLeft>
+      <LogoLink to="/">
+        <StyledLogo color="#fff" />
+      </LogoLink>
 
-    <Item onClick={issueCreateModalOpen}>
-      <PlusOutlined style={{ fontSize: "24px" }} />
-      <ItemText>Create Issue</ItemText>
-    </Item>
-  </NavLeft>
-);
+      <Item>
+        <UserAvatar avatar={userData.userAvatar} />
+        <ItemText>{userData.userName}</ItemText>
+      </Item>
 
-// ProjectNavbarLeft.propTypes = propTypes;
+      <Item onClick={issueSearchModalOpen}>
+        <SearchOutlined style={{ fontSize: '24px' }} />
+        <ItemText>Search issues</ItemText>
+      </Item>
 
-export default NavbarLeft;
+      <Item onClick={issueCreateModalOpen}>
+        <PlusOutlined style={{ fontSize: '24px' }} />
+        <ItemText>Create Issue</ItemText>
+      </Item>
+    </NavLeft>
+  )
+}

@@ -13,7 +13,7 @@ export const IssueStatus = {
   DONE: 'done',
 }
 
-export default function ProjectBoard() {
+export default function ProjectBoard(props) {
   const { issueId, projectId } = useParams()
   const location = useLocation()
   const navigate = useNavigate()

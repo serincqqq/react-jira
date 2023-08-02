@@ -8,6 +8,7 @@ import { User } from './user.interface';
 import { UserService } from './user.service';
 import { Response, generateResponse } from '../response';
 // import jwt from 'jsonwebtoken';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const jwt = require('jsonwebtoken');
 @Controller('jira/user')
 export class UserController {
@@ -36,9 +37,9 @@ export class UserController {
   async findOneUser(
     @Query('userName') userName: string,
     @Query('password') password: string,
-  ): Promise<Response> {
+  ): Promise<unknown> {
     const data = await this.userService.findUser(userName, password);
     const token = jwt.sign({ userId: data._id }, 'cq277', { expiresIn: '1h' });
-    return generateResponse(token);
+    return { token, ...generateResponse(data) };
   }
 }

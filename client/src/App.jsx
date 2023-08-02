@@ -1,5 +1,6 @@
 import { useRoutes, Route, Routes } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
+import store from './redux/store'
 import './App.css'
 import 'antd/dist/reset.css'
 import './fontStyles.css'
@@ -9,11 +10,8 @@ import BaseStyles from './BaseStyles'
 import PrivateRoute from './routes/PrivateRoute'
 
 function App() {
-  // const element = useRoutes(routes)
-  // const role = false
   const RouteAuthFun = (routeList) => {
     return routeList.map((item) => {
-      // console.log('bb', item)
       return (
         <Route
           path={item.path}
@@ -41,7 +39,6 @@ function App() {
       <BaseStyles></BaseStyles>
       <NormalizeStyles></NormalizeStyles>
       <Routes>{RouteAuthFun(routes)}</Routes>
-      {/* {element} */}
     </ConfigProvider>
   )
 }

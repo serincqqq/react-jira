@@ -17,6 +17,7 @@ export default function PrivateRoute({ auth, children }) {
     }
     if (token && isExist && loginState === 'login') {
       if (location.pathname === '/' || location.pathname === '/login') {
+        message.success('登录成功!')
         navigate('/browseProjects')
       } else {
         navigate(location.pathname)
