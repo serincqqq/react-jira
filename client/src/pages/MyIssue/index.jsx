@@ -37,7 +37,7 @@ export default function MyIssue() {
   const getSortedListIssues = (issues, status) =>
     issues.filter((issue) => issue.status.key === status)
   const hideModal = () => {
-    navigate(-1)
+    navigate(location.pathname.substring(0, location.pathname.indexOf("/issue")))
   }
   const handleDragUpdate = (dragUpdate) => {
     //实际接口中在这里修改状态
@@ -97,13 +97,13 @@ export default function MyIssue() {
       <Modal
         footer={null}
         width={950}
-        open={location.pathname === `/project/${projectId}/board/issue/${issueId}`}
+        open={location.pathname === `/project/${projectId}/issue/${issueId}`}
         onOk={hideModal}
         onCancel={hideModal}
         okText="确认"
         cancelText="取消"
       >
-        <Outlet></Outlet>
+        {/* <Outlet></Outlet> */}
       </Modal>
     </>
   )

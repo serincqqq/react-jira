@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npm-run-all --parallel dev-api dev-client",
     "dev-api": "cd nest-api && npm run start:dev",
-    "dev-client": "cd client && npm run start"
+    "dev-client": "cd client && set PORT=3002 && npm run start"
   },
   "devDependencies": {
     "husky": "^4.0.0-beta.5",

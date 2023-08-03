@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { font } from '@/assets/styles/styles'
-export const Setting = styled.div``
+export const Setting = styled.div`
+  margin-left: 50px;
+`
 export const Nav = styled.div`
   display: flex;
   font-family: CircularStdBook;

@@ -1,17 +1,27 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { Table, Tag } from 'antd'
 import PubSub from 'pubsub-js'
 import { getIssueList } from '@/services'
-
-import dayjs from 'dayjs'
+import { IssueLink } from './components/BoardIssue/Styles'
 export default function ProjectBoard(props) {
+  const location = useLocation()
+  const path=location.pathname.substring(0, location.pathname.indexOf("/board"))
+  console.log('vv',path)
   const columns = [
     {
       title: 'summary',
       //通过这一项来匹配表格字段
       dataIndex: 'summary',
       key: 'summary',
+      render: (_, record) => (
+        <IssueLink to={`${path}/myIssue/issue/${record._id}`}>
+          {record.summary}
+        </IssueLink>
+      ),
+      // render: (_, record) => (
+      //   <IssueLink to={`${location.pathname}/issue/${record._id}`}>{record.summary}</IssueLink>
+      // ),
     },
     {
       title: ' issuetype',

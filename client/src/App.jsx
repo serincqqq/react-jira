@@ -22,7 +22,7 @@ function App() {
           }
           key={item.path}
         >
-          {item.children && RouteAuthFun(item.children)}
+          {item?.children && RouteAuthFun(item.children)}
         </Route>
       )
     })

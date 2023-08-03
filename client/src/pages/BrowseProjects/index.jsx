@@ -26,7 +26,7 @@ export default function BrowseProjects() {
       dataIndex: 'projectName',
       key: 'projectName',
       render: (_, record) => (
-        <ProjectLink to={`/project/${record._id}/board`} target="_blank">
+        <ProjectLink to={`/project/${record._id}/myIssue`} target="_blank">
           {record.projectName}
         </ProjectLink>
       ),

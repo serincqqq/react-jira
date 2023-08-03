@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { font } from '@/assets/styles/styles'
 
 export const ProjectInfo = styled.div`
-  @media (max-width: 1000px) {
+  @media (max-width: 900px) {
     display: none;
   }
   height: 100vh;
