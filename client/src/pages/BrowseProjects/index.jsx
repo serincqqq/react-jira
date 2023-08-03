@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getProject, searchProject, deleteProject } from '@/services'
 import PubSub from 'pubsub-js'
+import i18n from 'i18next'
 import { Input, Layout, Divider, Table, Tooltip, Button, Space, Menu, message } from 'antd'
 import { PicRightOutlined, BuildOutlined } from '@ant-design/icons'
 import NavbarLeft from '@/components/NavbarLeft'
@@ -15,7 +16,7 @@ import {
   businessIcon,
 } from './Styles'
 import CreateProject from './components/CreateProject'
-import store from '@/redux/store'
+import { useTranslation } from 'react-i18next'
 const { Sider, Content } = Layout
 const { Search } = Input
 
@@ -76,6 +77,7 @@ export default function BrowseProjects() {
       ),
     },
   ]
+  const { t } = useTranslation()
   const [data, setData] = useState([])
   const [createOpen, setCreateOpen] = useState(false)
   const [searchType, setSearchType] = useState('Software')
@@ -123,13 +125,17 @@ export default function BrowseProjects() {
       setData(res.data)
     })
   }
-
+  const changeLanguage = (val) => {
+    i18n.changeLanguage(val) // val入参值为'en'或'zh'
+  }
   return (
     <>
       <NavbarLeft></NavbarLeft>
       <Layout>
+        {/* <Button>click</Button> */}
         <Sider width="250" style={siderStyle}>
-          <h3>Browse project</h3>
+          {/* <h3>Browse project</h3> */}
+          <h3>{t('header.home')}</h3>
           <Divider />
           <ProjectType>
             <h4>All project types</h4>
@@ -160,7 +166,7 @@ export default function BrowseProjects() {
         >
           <Content style={contentStyle}>
             <h3>{searchType} - All project types</h3>
-
+            <Button onClick={() => changeLanguage('en')}>click</Button>
             <Search
               style={{ width: '260px', margin: '20px 0' }}
               placeholder="input search text"

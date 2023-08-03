@@ -1,8 +1,9 @@
 import { useState, Fragment, useEffect } from 'react'
-import { Outlet, useParams, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useParams, useLocation, useNavigate, Route } from 'react-router-dom'
 import PubSub from 'pubsub-js'
 import { Droppable, DragDropContext } from 'react-beautiful-dnd'
 import { Modal } from 'antd'
+import IssueDetails from '../IssueDetails'
 import { List, Title, IssuesCount, Issues, Nav, Divider } from './Styles'
 import BoardIssue from './components/BoardIssue'
 import { getIssueList, getMyIssue, updateIssue } from '@/services'
@@ -97,13 +98,13 @@ export default function MyIssue() {
       <Modal
         footer={null}
         width={950}
-        open={location.pathname === `/project/${projectId}/issue/${issueId}`}
+        open={location.pathname === `/project/${projectId}/myIssue/issue/${issueId}`}
         onOk={hideModal}
         onCancel={hideModal}
         okText="确认"
         cancelText="取消"
       >
-        {/* <Outlet></Outlet> */}
+        <Outlet></Outlet>
       </Modal>
     </>
   )

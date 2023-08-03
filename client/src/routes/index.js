@@ -36,13 +36,17 @@ export default [
       {
         path: 'board',
         element: <ProjectBoard></ProjectBoard>,
-        // children: [
-        //   {
+        children: [
+          {
+            path: 'issue/:issueId',
+            element: <IssueDetails></IssueDetails>,
+          },
+        ],
+      },
+        //  {
         //     path: 'issue/:issueId',
         //     element: <IssueDetails></IssueDetails>,
         //   },
-        // ],
-      },
       {
         path: 'setting',
         element: <ProjectSetting></ProjectSetting>,

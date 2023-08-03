@@ -1,6 +1,6 @@
 import { useRoutes, Route, Routes } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
-import store from './redux/store'
+import './i18n/config.js'
 import './App.css'
 import 'antd/dist/reset.css'
 import './fontStyles.css'
