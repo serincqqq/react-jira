@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import Avatar from '../Avatar'
 import Icon, { DownOutlined } from '@ant-design/icons'
 import {
@@ -10,8 +9,9 @@ import {
   Option,
   PrioritySelect,
   IconStyle,
-  SelectLabel
+  SelectLabel,
 } from './Styles'
+import { t } from 'i18next'
 function Priority({ selected }) {
   return (
     <PrioritySelect color={selected.key}>
@@ -44,7 +44,9 @@ function createChildComponent(type, data) {
       return <Priority selected={data} />
     case 'status':
       return <Status selected={data} />
-    case 'assignees':
+    case 'assignee':
+      return <AssigneesReporter selected={data} />
+    case 'reporter':
       return <AssigneesReporter selected={data} />
     default:
       return null // 未知类型，返回空
@@ -58,7 +60,9 @@ function ItemTag(type, item) {
           <Icon component={item.icon} />
         </IconStyle>
       )
-    case 'assignees':
+    case 'assignee':
+      return <Avatar assignees={item.avatar} />
+    case 'reporter':
       return <Avatar assignees={item.avatar} />
     default:
       return null // 未知类型，返回空
@@ -67,7 +71,7 @@ function ItemTag(type, item) {
 export default function Select({ name, isDrawerOpen, title, options, selected, select }) {
   return (
     <>
-      <SelectLabel style={{ }}>{title}</SelectLabel>
+      <SelectLabel>{t(`edit.${name}`)}</SelectLabel>
       {createChildComponent(name, selected)}
 
       {isDrawerOpen ? (

@@ -48,7 +48,7 @@ export default function AssigneesReporter({ type, issueData }) {
   return (
     <div ref={assigneesRef}>
       <Select
-        name="assignees"
+        name={type}
         select={selectStatus}
         onClick={changeStatus}
         isDrawerOpen={isDrawerOpen}

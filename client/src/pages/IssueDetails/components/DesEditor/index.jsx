@@ -4,6 +4,7 @@ import { Button } from 'antd'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import { Des, Edit, EditContainer } from './Styles'
 import { updateIssue } from '@/services'
+import { t } from 'i18next'
 function DesEditor({ content, issueData }) {
   const [editor, setEditor] = useState(null) // 存储 editor 实例
   const [html, setHtml] = useState('')
@@ -49,7 +50,7 @@ function DesEditor({ content, issueData }) {
   }
   return (
     <Des>
-      <h4>Description</h4>
+      <h4>{t('edit.des')}</h4>
       {!isVisible ? (
         <Edit>
           <EditContainer>

@@ -93,6 +93,7 @@ export const IconStyle = styled.div`
   line-height: 18px;
   color: ${(props) => issuePriorityColors[props.priority]};
 `
-export const SelectLabel=styled.p`
- margin: 20px 0 10px 0;
+export const SelectLabel = styled.p`
+  margin: 20px 0 10px 0;
+  text-transform: uppercase;
 `

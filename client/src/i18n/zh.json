@@ -22,7 +22,7 @@
     "board": "看板",
     "own": "与我有关的问题",
     "setting": "项目配置",
-    "searchIssues": "Search issues"
+    "searchIssues": "搜索问题"
   },
   "iTable": {
     "summary": "概述",
@@ -33,9 +33,19 @@
     "assignee": "经办人",
     "createdAt": "问题创建时间"
   },
+  "edit": {
+    "des": "问题描述",
+    "status": "状态",
+    "priority": "优先级",
+    "assignee": "经办人",
+    "reporter": "汇报人",
+    "comments": "评论",
+    "original": "最初估算时间",
+    "track": "时间追踪"
+  },
   "tips": {
     "add": "添加成功！",
-    "cpoy": "复制成功！",
+    "copy": "复制成功！",
     "delete": "删除成功！",
     "create": "创建成功！",
     "update": "更新成功！",

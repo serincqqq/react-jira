@@ -1,4 +1,4 @@
-import { useRoutes, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import './i18n/config.js'
 import './App.css'

@@ -33,9 +33,19 @@
     "assignee": "assignee",
     "createdAt": "createdAt"
   },
+  "edit": {
+    "des": "Description",
+    "status": "status",
+    "priority": "priority",
+    "assignee": "assignee",
+    "reporter": "reporter",
+    "comments": "Comments",
+    "original": "Original Estimate (hours)",
+    "track": "Time Tracking"
+  },
   "tips": {
     "add": "Added successfully!",
-    "cpoy": "Copied successfully!",
+    "copy": "Copied successfully!",
     "delete": "Deleted successfully!",
     "create": "'Created successfully!'",
     "update": "Updated successfully!",

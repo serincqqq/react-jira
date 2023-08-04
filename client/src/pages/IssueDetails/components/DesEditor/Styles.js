@@ -6,7 +6,7 @@ export const Des = styled.div`
   font-family: CircularStdMedium;
 `
 export const Edit = styled.div`
-  margin-top: -6px;
+  margin-top: -2px;
 `
 export const EditContainer = styled.div`
   border: 1px solid #ccc;

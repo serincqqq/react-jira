@@ -26,7 +26,7 @@ import Priority from './components/Priority'
 import AssigneesReporter from './components/AssigneesReporter'
 import { getIssueDetail, updateIssue, deleteIssue, addComment } from '@/services'
 import Avatar from '@/components/Avatar'
-import { useTranslation } from 'react-i18next'
+import { t } from 'i18next'
 const { TextArea } = Input
 
 const assignees = [
@@ -46,7 +46,6 @@ export default function IssueDetails() {
   //搜索算法，拿一下路由的参数
   const [comments, setComments] = useState([])
   const [showWarn, setShowWarn] = useState(false)
-  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const init = () => {
@@ -145,7 +144,7 @@ export default function IssueDetails() {
           {showWarn ? <WarnText>This field is required</WarnText> : ''}
           <DesEditor content={content} issueData={issueData}></DesEditor>
           <Comments>
-            <h4>Comments</h4>
+            <h4>{t('edit.comments')}</h4>
             <CommentCreate>
               <Avatar assignees={assignees} />
               <TextArea
@@ -173,8 +172,8 @@ export default function IssueDetails() {
           {issueData ? (
             <div>
               <Status issueData={issueData} />
-              <AssigneesReporter type="Assignee" issueData={issueData.assignee} />
-              <AssigneesReporter type="Reporter" issueData={issueData.reporter} />
+              <AssigneesReporter type="assignee" issueData={issueData.assignee} />
+              <AssigneesReporter type="reporter" issueData={issueData.reporter} />
               <Priority issueData={issueData} />
               <EstimateTracking issueId={issueData._id} />
               <Divider />
