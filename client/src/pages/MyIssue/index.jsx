@@ -3,10 +3,10 @@ import { Outlet, useParams, useLocation, useNavigate, Route } from 'react-router
 import PubSub from 'pubsub-js'
 import { Droppable, DragDropContext } from 'react-beautiful-dnd'
 import { Modal } from 'antd'
-import IssueDetails from '../IssueDetails'
 import { List, Title, IssuesCount, Issues, Nav, Divider } from './Styles'
 import BoardIssue from './components/BoardIssue'
-import { getIssueList, getMyIssue, updateIssue } from '@/services'
+import { getMyIssue, updateIssue } from '@/services'
+import { useTranslation } from 'react-i18next'
 export const IssueStatus = {
   BACKLOG: 'backlog',
   SELECTED: 'selected',
@@ -16,13 +16,14 @@ export const IssueStatus = {
 
 export default function MyIssue() {
   const { issueId, projectId } = useParams()
+  const { t } = useTranslation()
   const location = useLocation()
   const navigate = useNavigate()
   const [issues, setIssues] = useState([])
   const user = JSON.parse(localStorage.getItem('userData') || sessionStorage.getItem('userData'))
   const init = () => {
     getMyIssue(projectId, user._id).then((res) => {
-      console.log('res', res)
+      // if(res)
       setIssues(res.data)
     })
   }
@@ -38,7 +39,7 @@ export default function MyIssue() {
   const getSortedListIssues = (issues, status) =>
     issues.filter((issue) => issue.status.key === status)
   const hideModal = () => {
-    navigate(location.pathname.substring(0, location.pathname.indexOf("/issue")))
+    navigate(location.pathname.substring(0, location.pathname.indexOf('/issue')))
   }
   const handleDragUpdate = (dragUpdate) => {
     //实际接口中在这里修改状态
@@ -68,7 +69,7 @@ export default function MyIssue() {
           )
         })}
       </Nav>
-      <h2>Kanban board</h2>
+      <h2>{t('issue.board')}</h2>
       <DragDropContext onDragUpdate={handleDragUpdate}>
         <div style={{ display: 'flex' }}>
           {Object.values(IssueStatus).map((status) => {

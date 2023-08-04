@@ -1,15 +1,27 @@
 {
   "header": {
-      "register":"注册",
-      "signin":"登陆",
-      "home": "首页"
+    "title": "浏览项目",
+    "subtitle": "所有项目类型",
+    "seatchText": "搜索"
   },
-  "footer": {
-      "detail" : "版权所有 @ React"
+  "table": {
+    "name": "项目名称",
+    "keyword": "关键词",
+    "type": "项目类型",
+    "mName": "负责人",
+    "action": "操作"
   },
-  "home": {
-      "hot_recommended": "爆款推荐",
-      "new_arrival": "新品上市",
-      "joint_venture": "合作企业"
+  "nav": {
+    "createProject": "创建项目",
+    "createIssue": "创建问题",
+    "logout": "登出",
+    "searchIssues": "搜索问题",
+    "trans": "翻译"
+  },
+  "issue": {
+    "board": "看板",
+    "own": "与我有关的问题",
+    "setting": "项目配置",
+    "searchIssues": "Search issues"
   }
 }

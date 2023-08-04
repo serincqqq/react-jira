@@ -4,10 +4,12 @@ import { SearchOutlined, PlusOutlined } from '@ant-design/icons'
 import PubSub from 'pubsub-js'
 import { NavLeft, LogoLink, StyledLogo, UserAvatar, Item, ItemText } from './Styles'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import TransBtn from '../TransBtn'
 
 export default function NavbarLeft() {
   const navigate = useNavigate()
-
+  const { t } = useTranslation()
   const location = useLocation()
   const isProject = location.pathname === '/browseProjects'
   const [userData, setUserData] = useState({
@@ -37,7 +39,7 @@ export default function NavbarLeft() {
       <Popover
         content={
           <Button onClick={logout} danger type="text">
-            Log Out
+            {t('nav.logout')}
           </Button>
         }
         trigger="click"
@@ -52,13 +54,17 @@ export default function NavbarLeft() {
       ) : (
         <Item onClick={issueSearchModalOpen}>
           <SearchOutlined style={{ fontSize: '24px' }} />
-          <ItemText>Search issues</ItemText>
+          <ItemText>{t('nav.searchIssues')}</ItemText>
         </Item>
       )}
 
       <Item onClick={issueCreateModalOpen}>
         <PlusOutlined style={{ fontSize: '24px' }} />
-        <ItemText>Create {isProject ? 'Project' : 'Issue'}</ItemText>
+        <ItemText>{isProject ? t('nav.createProject') : t('nav.createIssue')}</ItemText>
+      </Item>
+      <Item>
+        <TransBtn></TransBtn>
+        <ItemText> {t('nav.createIssue')}</ItemText>
       </Item>
     </NavLeft>
   )

@@ -21,9 +21,10 @@ const { Sider, Content } = Layout
 const { Search } = Input
 
 export default function BrowseProjects() {
+  const { t } = useTranslation()
   const columns = [
     {
-      title: 'ProjectName',
+      title: t('table.name'),
       dataIndex: 'projectName',
       key: 'projectName',
       render: (_, record) => (
@@ -33,12 +34,12 @@ export default function BrowseProjects() {
       ),
     },
     {
-      title: 'keyword',
+      title: t('table.keyword'),
       dataIndex: 'keyword',
       key: 'keyword',
     },
     {
-      title: 'ProjectType',
+      title: t('table.type'),
       //通过这一项来匹配表格字段
       dataIndex: 'projectType',
       key: 'projectType',
@@ -54,7 +55,7 @@ export default function BrowseProjects() {
       ),
     },
     {
-      title: 'managerName',
+      title: t('table.mName'),
       dataIndex: 'managerName',
       key: 'managerName',
       render: (_, record) => (
@@ -66,7 +67,7 @@ export default function BrowseProjects() {
       ),
     },
     {
-      title: 'Action',
+      title: t('table.action'),
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
@@ -77,7 +78,7 @@ export default function BrowseProjects() {
       ),
     },
   ]
-  const { t } = useTranslation()
+
   const [data, setData] = useState([])
   const [createOpen, setCreateOpen] = useState(false)
   const [searchType, setSearchType] = useState('Software')
@@ -132,13 +133,11 @@ export default function BrowseProjects() {
     <>
       <NavbarLeft></NavbarLeft>
       <Layout>
-        {/* <Button>click</Button> */}
         <Sider width="250" style={siderStyle}>
-          {/* <h3>Browse project</h3> */}
-          <h3>{t('header.home')}</h3>
+          <h3>{t('header.title')}</h3>
           <Divider />
           <ProjectType>
-            <h4>All project types</h4>
+            <h4>{t('header.subtitle')}</h4>
             <Menu
               onClick={(e) => setSearchType(e.key)}
               style={{ background: 'rgb(244, 245, 247)', border: 'none' }}
@@ -165,11 +164,12 @@ export default function BrowseProjects() {
           }}
         >
           <Content style={contentStyle}>
-            <h3>{searchType} - All project types</h3>
-            <Button onClick={() => changeLanguage('en')}>click</Button>
+            <h3>
+              {searchType} - {t('header.subtitle')}
+            </h3>
             <Search
               style={{ width: '260px', margin: '20px 0' }}
-              placeholder="input search text"
+              placeholder={t('header.seatchText')}
               onSearch={onSearch}
               enterButton
             />

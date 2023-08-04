@@ -3,13 +3,10 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Modal, Table, Tag } from 'antd'
 import PubSub from 'pubsub-js'
 import { getIssueList } from '@/services'
-import { IssueLink } from './components/BoardIssue/Styles'
 import { ProjectLink } from '../BrowseProjects/Styles'
 export default function ProjectBoard(props) {
   const location = useLocation()
   const { issueId } = useParams()
-  const path=location.pathname.substring(0, location.pathname.indexOf("/board"))
-  console.log('vv',path)
   const columns = [
     {
       title: 'summary',
@@ -17,16 +14,13 @@ export default function ProjectBoard(props) {
       dataIndex: 'summary',
       key: 'summary',
       render: (_, record) => (
-        <ProjectLink to={`${location.pathname}/issue/${record._id}`}>
-          {record.summary}
-        </ProjectLink>
+        <ProjectLink to={`${location.pathname}/issue/${record._id}`}>{record.summary}</ProjectLink>
       ),
     },
     {
       title: ' issuetype',
       dataIndex: 'issuetype',
       key: 'issuetype',
-     
     },
 
     {
@@ -66,15 +60,15 @@ export default function ProjectBoard(props) {
     },
   ]
   const { projectId } = useParams()
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [data, setData] = useState([])
   const init = () => {
     getIssueList(projectId).then((res) => {
       setData(res.data)
     })
   }
-  const hideModal=()=>{
-    navigate(location.pathname.substring(0, location.pathname.indexOf("/issue")))
+  const hideModal = () => {
+    navigate(location.pathname.substring(0, location.pathname.indexOf('/issue')))
   }
   useEffect(() => {
     //订阅消息如果不放在生命周期钩子中就会调用多次
@@ -85,18 +79,18 @@ export default function ProjectBoard(props) {
   }, [])
   return (
     <>
-  <Table columns={columns} dataSource={data} rowKey="_id" />
-  <Modal
-  footer={null}
-  width={950}
-  open={location.pathname === `/project/${projectId}/board/issue/${issueId}`}
-  onOk={hideModal}
-  onCancel={hideModal}
-  okText="确认"
-  cancelText="取消"
->
-  <Outlet></Outlet>
-</Modal>
-</>
+      <Table columns={columns} dataSource={data} rowKey="_id" />
+      <Modal
+        footer={null}
+        width={950}
+        open={location.pathname === `/project/${projectId}/board/issue/${issueId}`}
+        onOk={hideModal}
+        onCancel={hideModal}
+        okText="确认"
+        cancelText="取消"
+      >
+        <Outlet></Outlet>
+      </Modal>
+    </>
   )
 }
