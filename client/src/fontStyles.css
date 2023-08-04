@@ -6,6 +6,18 @@
   font-style: normal;
 }
 @font-face {
+  font-family: 'Zhenyan';
+  src: url('./assets/fonts/zhenyan.ttf') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Hanyi';
+  src: url('./assets/fonts/hanyijiangjun45w.ttf') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+3 @font-face {
   font-family: 'CircularStdBold';
   src: url('./assets/fonts/CircularStd-Bold.woff2') format('woff2'),
     url('./assets/fonts/CircularStd-Bold.woff') format('woff');

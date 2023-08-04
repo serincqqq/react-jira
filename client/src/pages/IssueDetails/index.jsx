@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import dayjs from 'dayjs'
 import PubSub from 'pubsub-js'
 import { CheckSquareFilled, LinkOutlined, DeleteOutlined } from '@ant-design/icons'
@@ -37,6 +37,8 @@ const assignees = [
 ]
 export default function IssueDetails() {
   const params = useParams()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [value, setValue] = useState('')
   const [content, setContent] = useState('')
   const [issueData, setIssueData] = useState()
@@ -46,7 +48,6 @@ export default function IssueDetails() {
   //搜索算法，拿一下路由的参数
   const [comments, setComments] = useState([])
   const [showWarn, setShowWarn] = useState(false)
-  const navigate = useNavigate()
 
   const init = () => {
     getIssueDetail(params.issueId).then((res) => {
@@ -75,7 +76,7 @@ export default function IssueDetails() {
   const deleteItem = () => {
     deleteIssue(params.issueId).then((res) => {
       if (res.code === 0) {
-        navigate(-1)
+        navigate(location.pathname.substring(0, location.pathname.indexOf('/issue')))
         message.success(t('tips.delete'))
         PubSub.publish('refresh')
       }

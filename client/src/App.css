@@ -3,14 +3,17 @@ label {
   color: rgb(94, 108, 132) !important;
 }
 button {
-  font-family: 'CircularStdMedium' !important;
+  font-family: 'CircularStdMedium', 'Zhenyan' !important;
 }
 h3 {
-  font-family: 'CircularStdBook' !important;
+  font-family: 'CircularStdBook', 'Zhenyan' !important;
   font-size: 24px;
   color: #42526e;
 }
 h4 {
   font-size: 16px;
   color: #5e6c84;
+}
+body {
+  font-family: 'Microsoft SimSun' !important;
 }

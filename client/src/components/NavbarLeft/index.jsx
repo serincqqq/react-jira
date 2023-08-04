@@ -32,7 +32,7 @@ export default function NavbarLeft() {
   }
   return (
     <NavLeft>
-      <LogoLink to="/">
+      <LogoLink to="/browseProjects">
         <StyledLogo color="#fff" />
       </LogoLink>
       <Popover

@@ -9,7 +9,8 @@
     "keyword": "keyword",
     "type": "ProjectType",
     "mName": "managerName",
-    "action": "Action"
+    "action": "Action",
+    "delete": "Delete"
   },
   "nav": {
     "createProject": "create Project",

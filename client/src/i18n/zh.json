@@ -9,7 +9,8 @@
     "keyword": "关键词",
     "type": "项目类型",
     "mName": "负责人",
-    "action": "操作"
+    "action": "操作",
+    "delete": "删除"
   },
   "nav": {
     "createProject": "创建项目",

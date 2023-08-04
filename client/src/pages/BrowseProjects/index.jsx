@@ -72,7 +72,7 @@ export default function BrowseProjects() {
       render: (_, record) => (
         <Space size="middle">
           <Button type="link" danger onClick={() => deleteAction(record)}>
-            Delete
+            {t('table.delete')}
           </Button>
         </Space>
       ),
