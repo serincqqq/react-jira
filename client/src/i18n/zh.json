@@ -23,5 +23,23 @@
     "own": "与我有关的问题",
     "setting": "项目配置",
     "searchIssues": "Search issues"
+  },
+  "iTable": {
+    "summary": "概述",
+    "type": "问题类型",
+    "status": "状态",
+    "priority": "优先级",
+    "reporter": "汇报人",
+    "assignee": "经办人",
+    "createdAt": "问题创建时间"
+  },
+  "tips": {
+    "add": "添加成功！",
+    "cpoy": "复制成功！",
+    "delete": "删除成功！",
+    "create": "创建成功！",
+    "update": "更新成功！",
+    "login": "登录成功！",
+    "token": "token 过期，请重新登录!"
   }
 }

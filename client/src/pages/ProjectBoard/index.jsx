@@ -4,12 +4,14 @@ import { Modal, Table, Tag } from 'antd'
 import PubSub from 'pubsub-js'
 import { getIssueList } from '@/services'
 import { ProjectLink } from '../BrowseProjects/Styles'
+import { useTranslation } from 'react-i18next'
 export default function ProjectBoard(props) {
   const location = useLocation()
+  const { t } = useTranslation()
   const { issueId } = useParams()
   const columns = [
     {
-      title: 'summary',
+      title: t('iTable.summary'),
       //通过这一项来匹配表格字段
       dataIndex: 'summary',
       key: 'summary',
@@ -18,13 +20,13 @@ export default function ProjectBoard(props) {
       ),
     },
     {
-      title: ' issuetype',
+      title: t('iTable.type'),
       dataIndex: 'issuetype',
       key: 'issuetype',
     },
 
     {
-      title: 'status',
+      title: t('iTable.status'),
       dataIndex: 'status',
       key: 'status',
       render: (_, { status }) => (
@@ -34,7 +36,7 @@ export default function ProjectBoard(props) {
       ),
     },
     {
-      title: 'priority',
+      title: t('iTable.priority'),
       dataIndex: 'priority',
       key: 'priority',
       // 可以进行一下颜色控制
@@ -42,19 +44,19 @@ export default function ProjectBoard(props) {
     },
 
     {
-      title: 'reporter',
+      title: t('iTable.reporter'),
       dataIndex: 'reporter',
       key: 'reporter',
       render: (_, { reporter }) => <span>{reporter.label}</span>,
     },
     {
-      title: 'assignee',
+      title: t('iTable.assignee'),
       dataIndex: 'assignee',
       key: 'assignee',
       render: (_, { assignee }) => <span>{assignee.label}</span>,
     },
     {
-      title: 'createdAt',
+      title: t('iTable.createdAt'),
       dataIndex: 'createdAt',
       key: 'createdAt',
     },

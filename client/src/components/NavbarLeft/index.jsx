@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Popover, Button } from 'antd'
-import { SearchOutlined, PlusOutlined } from '@ant-design/icons'
+import { TranslationOutlined, SearchOutlined, PlusOutlined } from '@ant-design/icons'
 import PubSub from 'pubsub-js'
 import { NavLeft, LogoLink, StyledLogo, UserAvatar, Item, ItemText } from './Styles'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import TransBtn from '../TransBtn'
-
+import i18n from 'i18next'
 export default function NavbarLeft() {
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -62,9 +61,9 @@ export default function NavbarLeft() {
         <PlusOutlined style={{ fontSize: '24px' }} />
         <ItemText>{isProject ? t('nav.createProject') : t('nav.createIssue')}</ItemText>
       </Item>
-      <Item>
-        <TransBtn></TransBtn>
-        <ItemText> {t('nav.createIssue')}</ItemText>
+      <Item onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'zh' : 'en')}>
+        <TranslationOutlined style={{ fontSize: '20px', marginLeft: '2px' }} />
+        <ItemText> {t('nav.trans')}</ItemText>
       </Item>
     </NavLeft>
   )

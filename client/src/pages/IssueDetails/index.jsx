@@ -26,6 +26,7 @@ import Priority from './components/Priority'
 import AssigneesReporter from './components/AssigneesReporter'
 import { getIssueDetail, updateIssue, deleteIssue, addComment } from '@/services'
 import Avatar from '@/components/Avatar'
+import { useTranslation } from 'react-i18next'
 const { TextArea } = Input
 
 const assignees = [
@@ -45,6 +46,7 @@ export default function IssueDetails() {
   //搜索算法，拿一下路由的参数
   const [comments, setComments] = useState([])
   const [showWarn, setShowWarn] = useState(false)
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const init = () => {
@@ -64,7 +66,7 @@ export default function IssueDetails() {
     navigator.clipboard
       .writeText(currentUrl)
       .then(() => {
-        message.success('Copied successfully!')
+        message.success(t('tips.copy'))
         setLink('Link Copied')
       })
       .catch((error) => {
@@ -75,7 +77,7 @@ export default function IssueDetails() {
     deleteIssue(params.issueId).then((res) => {
       if (res.code === 0) {
         navigate(-1)
-        message.success('Deleted successfully!')
+        message.success(t('tips.delete'))
         PubSub.publish('refresh')
       }
     })
@@ -95,7 +97,7 @@ export default function IssueDetails() {
     addComment(issueData._id, data).then((res) => {
       if (res.code === 0) {
         setContent('')
-        message.success('Added successfully!')
+        message.success(t('tips.add'))
         init()
       }
     })

@@ -23,5 +23,23 @@
     "own": "My Issue",
     "setting": "Log Out",
     "searchIssues": "Search issues"
+  },
+  "iTable": {
+    "summary": "summary",
+    "type": "issuetype",
+    "status": "status",
+    "priority": "priority",
+    "reporter": "reporter",
+    "assignee": "assignee",
+    "createdAt": "createdAt"
+  },
+  "tips": {
+    "add": "Added successfully!",
+    "cpoy": "Copied successfully!",
+    "delete": "Deleted successfully!",
+    "create": "'Created successfully!'",
+    "update": "Updated successfully!",
+    "login": "Login succeeded!",
+    "token": "Token expired, please log in again!"
   }
 }

@@ -5,15 +5,16 @@ import { useState, Fragment, useEffect } from 'react'
 import './quill.css'
 import { Setting, Nav, Divider } from './Styles'
 import { editProject, getProjectDetail } from '@/services'
+import { useTranslation } from 'react-i18next'
 
 export default function ProjectSetting() {
-  const [messageApi, contextHolder] = message.useMessage()
   const params = useParams()
   const [form] = Form.useForm()
   const { projectId } = params
   const [projectData, setProjectData] = useState({})
   const Breadcrumbs = ['Projects', projectId, 'Project Details']
   const [description, setDescription] = useState('')
+  const { t } = useTranslation()
   useEffect(() => {
     getProjectDetail(projectId).then((res) => {
       form.setFieldsValue(res.data)
@@ -22,7 +23,7 @@ export default function ProjectSetting() {
   }, [])
   const onFinish = (values) => {
     editProject(projectId, { ...projectData, ...values }).then((res) => {
-      if (res.code === 0) message.success('Updated successfully!')
+      if (res.code === 0) message.success(t('tips.update'))
     })
   }
   return (

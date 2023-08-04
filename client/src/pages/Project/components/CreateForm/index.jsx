@@ -9,7 +9,9 @@ import { insertIssue } from '@/services'
 import SearchSelect from '../SearchSelect'
 import { useParams } from 'react-router-dom'
 import dayjs from 'dayjs'
+import { useTranslation } from 'react-i18next'
 function CreateForm() {
+  const { t } = useTranslation()
   const { projectId } = useParams()
   const [description] = useState('')
   const date = dayjs()
@@ -61,7 +63,7 @@ function CreateForm() {
           return newLoadings
         })
         setCreateOpen(false)
-        message.success('Created successfully!')
+        message.success(t('tips.create'))
         form.resetFields()
         PubSub.publish('refresh')
       }

@@ -94,7 +94,7 @@ export default function BrowseProjects() {
   const deleteAction = (record) => {
     deleteProject(record._id).then((res) => {
       if (res.code === 0) {
-        message.success('Deleted successfully!')
+        message.success(t('tips.delete'))
         init()
       }
     })
@@ -108,7 +108,7 @@ export default function BrowseProjects() {
   useEffect(() => {
     PubSub.subscribe('refreshProject', (_) => {
       setCreateOpen(false)
-      message.success('Created successfully!')
+      message.success(t('tips.create'))
       init()
     })
     PubSub.subscribe('closeModal', (_) => {
