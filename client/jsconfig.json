@@ -4,6 +4,6 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   }
 }

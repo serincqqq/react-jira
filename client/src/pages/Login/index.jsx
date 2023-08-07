@@ -8,6 +8,7 @@ export default function Login() {
 
   const onFinish = (values) => {
     login(values).then((res) => {
+      console.log('tr',res)
       if (res.code === 0) {
         if (values.remember) {
           localStorage.setItem('jiraToken', res.token)

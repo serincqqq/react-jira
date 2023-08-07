@@ -19,12 +19,12 @@ const getAllUserList = () =>
   request.get({
     url: '/user/allUser',
   })
-const login = (data) =>
-  request.get({
+const login = (data = {}) =>
+  request.post({
     url: '/user/profile',
-    params: {
-      userName: data.userName,
-      password: data.password,
+    headers: {
+      Authorization: localStorage.getItem('jiraToken') || sessionStorage.getItem('jiraToken'),
     },
+    data,
   })
 export { login, getUserList, getAllUserList, getUserAvatar }

@@ -8,9 +8,9 @@ const insertProject = (data) =>
     url: '/project/create',
     data,
   })
-const getProject = () =>
+const getProject = (type = 'all') =>
   request.get({
-    url: '/project/list',
+    url: `/project/list?type=${type}`,
   })
 const editProject = (id, data) =>
   request.post({

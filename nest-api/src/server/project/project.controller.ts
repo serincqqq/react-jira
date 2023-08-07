@@ -10,8 +10,8 @@ export class ProjectController {
 
   @Get('list')
   // @Header('Access-Control-Allow-Origin', 'http://localhost:3002')
-  async findAll(): Promise<Response<Project[]>> {
-    const data = await this.projectService.findAll();
+  async findAll(@Query('type') type: string): Promise<Response<Project[]>> {
+    const data = await this.projectService.findAll(type);
     return generateResponse(data);
   }
   @Get('search')

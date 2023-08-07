@@ -8,8 +8,14 @@ export class ProjectService {
   constructor(
     @InjectModel('Projects') private readonly projectModel: Model<Project>,
   ) {}
-  async findAll(): Promise<Project[]> {
-    const projects = await this.projectModel.find();
+  async findAll(type: string): Promise<Project[]> {
+    let projects;
+    if (type === 'all') {
+      projects = await this.projectModel.find();
+    } else {
+      projects = await this.projectModel.find({ projectType: type });
+    }
+
     return projects;
   }
 

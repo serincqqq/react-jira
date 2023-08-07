@@ -15,15 +15,15 @@ const request = new Request({
       return error
     },
     responseInterceptor: (response) => {
-      if (response.status !== 200) {
-        console.error(response.statusText)
-      }
+      // if (response.status !== 200) {
+      //   console.error(response.statusText)
+      // }
       return response
     },
     responseInterceptorCatch: (error) => {
-      console.error(error.response?.message)
-      message.error(error.response?.message)
-      return error
+      // console.error(error.response.data.message)
+      // message.error(error.response?.data.message)
+      throw new Error(error)
     },
   },
 })

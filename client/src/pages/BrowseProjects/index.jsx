@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { getProject, searchProject, deleteProject } from '@/services'
 import PubSub from 'pubsub-js'
-import i18n from 'i18next'
 import { Input, Layout, Divider, Table, Tooltip, Button, Space, Menu, message } from 'antd'
-import { PicRightOutlined, BuildOutlined } from '@ant-design/icons'
+import { PicRightOutlined, BuildOutlined, LayoutOutlined } from '@ant-design/icons'
 import NavbarLeft from '@/components/NavbarLeft'
 import {
   siderStyle,
@@ -81,7 +80,7 @@ export default function BrowseProjects() {
 
   const [data, setData] = useState([])
   const [createOpen, setCreateOpen] = useState(false)
-  const [searchType, setSearchType] = useState('Software')
+  const [searchType, setSearchType] = useState('all')
   const CustomOverlay = (record) => (
     <PersonInfo>
       <img src="https://via.placeholder.com/40" alt="placeholder" />
@@ -101,7 +100,7 @@ export default function BrowseProjects() {
   }
 
   const init = () => {
-    getProject().then((res) => {
+    getProject(searchType).then((res) => {
       setData(res.data)
     })
   }
@@ -126,8 +125,11 @@ export default function BrowseProjects() {
       setData(res.data)
     })
   }
-  const changeLanguage = (val) => {
-    i18n.changeLanguage(val) // val入参值为'en'或'zh'
+  useMemo(() => {
+    init()
+  }, [searchType])
+  const changeType = (e) => {
+    setSearchType(e.key)
   }
   return (
     <>
@@ -139,10 +141,15 @@ export default function BrowseProjects() {
           <ProjectType>
             <h4>{t('header.subtitle')}</h4>
             <Menu
-              onClick={(e) => setSearchType(e.key)}
+              onClick={changeType}
               style={{ background: 'rgb(244, 245, 247)', border: 'none' }}
-              defaultSelectedKeys={['Software']}
+              defaultSelectedKeys={['all']}
               items={[
+                {
+                  key: 'all',
+                  icon: <LayoutOutlined className="icon" />,
+                  label: 'All Project',
+                },
                 {
                   key: 'Software',
                   icon: <BuildOutlined className="icon" />,

@@ -51,6 +51,7 @@
     "create": "'Created successfully!'",
     "update": "Updated successfully!",
     "login": "Login succeeded!",
+    "fail":"Login Failed",
     "token": "Token expired, please log in again!"
   }
 }
