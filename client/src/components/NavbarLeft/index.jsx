@@ -16,7 +16,7 @@ export default function NavbarLeft() {
     userName: '',
   })
   useEffect(() => {
-    setUserData(JSON.parse(localStorage.getItem('userData')))
+    setUserData(JSON.parse(localStorage.getItem('userData') || sessionStorage.getItem('userData')))
   }, [])
   const issueSearchModalOpen = () => {
     if (!isProject) PubSub.publish('modalType', { modal: 'modal_search' })

@@ -23,7 +23,7 @@ export default function Sidebar() {
   const params = useParams()
   const { projectId } = params
   useEffect(() => {
-    setUserData(JSON.parse(localStorage.getItem('userData')))
+    setUserData(JSON.parse(sessionStorage.getItem('userData')))
     getProjectDetail(projectId).then((res) => {
       const { projectName, projectType } = res.data
       setProjectName(projectName)

@@ -75,7 +75,6 @@ export class UserController {
   @Post('profile')
   @HttpCode(200)
   async findOneUser(@Request() req): Promise<unknown> {
-    console.log('vc', req.body, req.headers.authorization);
     const { userName, password } = req.body;
     const token = req.headers.authorization;
     if (token) {
@@ -92,11 +91,15 @@ export class UserController {
       return p;
     } else {
       // 第一次请求，返回 Token
-      const data = await this.userService.findUser(userName, password);
-      const token = jwt.sign({ userId: data._id }, 'cq277', {
-        expiresIn: '1m',
-      });
-      return { token, ...generateResponse(data) };
+      if (Object.keys(req.body).length !== 0) {
+        const data = await this.userService.findUser(userName, password);
+        const token = jwt.sign({ userId: data._id }, 'cq277', {
+          expiresIn: '1h',
+        });
+        return { token, ...generateResponse(data) };
+      } else {
+        return { code: 500 };
+      }
     }
   }
 }
