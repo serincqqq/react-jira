@@ -46,7 +46,6 @@ export class ProjectController {
   }
   @Get('delete')
   async deleteOne(@Query('projectId') projectId: string): Promise<Response> {
-    console.log('cc', projectId);
     await this.projectService.deleteOne(projectId);
     return generateResponse(undefined);
   }
